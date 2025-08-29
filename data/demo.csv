@@ -1,0 +1,1025 @@
+text,label
+"Symptoms include rash, sudden difficulty speaking or understanding, burning sensation when urinating, urgency to urinate, lower abdominal pain.",urinary_tract_infection
+"Noted vomiting, anxiety, congestion, loss of appetite, lightheadedness over the last 48 hours.",myocardial_infarction_heart_attack
+"Symptoms include anxiety, shortness of breath, chest pain, facial droop, difficulty speaking in full sentences.",asthma_attack
+"Complaints: itchy eyes, loss of taste or smell, visual aura, chills, muscle aches.",covid_19
+"Patient reports cloudy urine, wheezing, dark urine, frequent urination, lower abdominal pain.",urinary_tract_infection
+"Complaints: runny nose, watery eyes, hives, rash, nasal congestion.",allergy
+"Patient reports difficulty speaking in full sentences, pallor, nasal congestion, nausea, palpitations.",vasovagal_syncope
+"Complaints: visual aura, loss of balance or coordination, fatigue, diarrhea, loss of appetite.",food_poisoning
+"Symptoms include facial droop, confusion, constipation or diarrhea, mild fever, seizures.",stroke
+"Complaints: burning sensation when urinating, lower abdominal pain, cloudy urine, cough (productive or dry), sudden difficulty speaking or understanding.",urinary_tract_infection
+"Complaints: sudden difficulty speaking or understanding, diarrhea, fatigue, sudden vision changes, seizures.",stroke
+"Symptoms include diarrhea, wheezing, difficulty speaking in full sentences, pallor, shortness of breath.",asthma_attack
+"Complaints: sudden severe headache, difficulty speaking in full sentences, coughing, urgency to urinate, shortness of breath.",asthma_attack
+"Patient reports dizziness, difficulty speaking in full sentences, loss of balance, lightheadedness, burning sensation when urinating.",low_blood_pressure_hypotension
+"Symptoms include confusion, abdominal tenderness, shortness of breath, blurred vision, cough (productive or dry).",hypertension_high_blood_pressure_crisis
+"Complaints: sensitivity to light, stomach cramps, fatigue, diarrhea, nausea.",gastroenteritis
+"Patient reports diarrhea, loss of appetite, dehydration, sudden difficulty speaking or understanding, urgency to urinate.",gastroenteritis
+"Complaints: sensitivity to sound, sensitivity to light, vomiting, sneezing, frequent urination.",migraine
+"Noted watery eyes, rash, runny nose, nasal congestion, sneezing over the last 48 hours.",common_cold
+"Patient reports coughing, anxiety, shortness of breath, mild headache, nosebleeds.",asthma_attack
+"Symptoms include runny nose, rash, anxiety, itchy eyes, sneezing.",allergy
+"Complaints: confusion, dizziness, facial droop, mild headache, fainting.",low_blood_pressure_hypotension
+"Patient reports nausea, blurred vision, chest pain, mild headache, shortness of breath.",hypertension_high_blood_pressure_crisis
+"Noted chills, fatigue, mild headache, cloudy urine, loss of appetite over the last 48 hours.",influenza
+"Patient reports muscle aches, watery eyes, itchy eyes, sneezing, sore throat.",common_cold
+"Noted body aches, chills, loss of taste or smell, fatigue, sensitivity to light over the last 48 hours.",influenza
+"Symptoms include dizziness, lightheadedness, palpitations, headache, pallor.",vasovagal_syncope
+"Patient reports vomiting, sweating, diarrhea, itchy eyes, stomach cramps.",food_poisoning
+"Patient reports anxiety, difficulty speaking in full sentences, chest pain, visual aura, chest tightness.",asthma_attack
+"Complaints: runny nose, fever, sore throat, vomiting, mild cough.",common_cold
+"Noted sore throat, nausea, abdominal pain (lower right quadrant), wheezing, abdominal tenderness over the last 48 hours.",appendicitis
+"Complaints: nausea, hives, congestion, constipation or diarrhea, abdominal tenderness.",appendicitis
+"Complaints: blurred vision, dizziness, pallor, runny nose, shortness of breath.",vasovagal_syncope
+"Symptoms include nosebleeds, palpitations, confusion, shortness of breath, burning sensation when urinating.",hypertension_high_blood_pressure_crisis
+"Patient reports lightheadedness, runny nose, abdominal pain (lower right quadrant), vomiting, anxiety.",myocardial_infarction_heart_attack
+"Noted sensitivity to sound, shortness of breath, fatigue, chest pain or pressure, sudden severe headache over the last 48 hours.",myocardial_infarction_heart_attack
+"Patient reports sore throat, fever, fatigue, diarrhea, palpitations.",food_poisoning
+"Complaints: chills, watery eyes, burning sensation when urinating, nasal congestion, hives.",allergy
+"Noted mild fever, cloudy urine, anxiety, burning sensation when urinating, frequent urination over the last 48 hours.",urinary_tract_infection
+"Symptoms include coughing, chest tightness, chills, shortness of breath, anxiety.",asthma_attack
+"Patient reports loss of balance or coordination, chills, anxiety, sudden numbness or weakness, sudden vision changes.",stroke
+"Noted sudden difficulty speaking or understanding, nausea, anxiety, vomiting, constipation or diarrhea over the last 48 hours.",appendicitis
+"Patient reports sensitivity to light, fatigue, lightheadedness, confusion, runny nose.",low_blood_pressure_hypotension
+"Patient reports fever, cough (productive or dry), chest pain, sudden vision changes, cyanosis.",pneumonia
+"Symptoms include anxiety, runny nose, difficulty speaking in full sentences, shortness of breath, urgency to urinate.",asthma_attack
+"Patient reports body aches, hives, nausea, anxiety, lightheadedness.",myocardial_infarction_heart_attack
+"Symptoms include dizziness, sensitivity to sound, cyanosis, nausea, visual aura.",migraine
+"Symptoms include nausea, dizziness, sudden vision changes, headache, congestion.",dehydration
+"Noted chest pain, chills, shortness of breath, loss of appetite, muscle aches over the last 48 hours.",pneumonia
+"Complaints: chest pain or pressure, shortness of breath, sudden vision changes, lightheadedness, cyanosis.",myocardial_infarction_heart_attack
+"Symptoms include nausea, fever, mild fever, stomach cramps, cough (productive or dry).",food_poisoning
+"Complaints: confusion, fatigue, abdominal tenderness, fever, blurred vision.",low_blood_pressure_hypotension
+"Noted confusion, facial droop, lower abdominal pain, urgency to urinate, frequent urination over the last 48 hours.",urinary_tract_infection
+"Complaints: sensitivity to sound, constipation or diarrhea, runny nose, headache, fever.",influenza
+"Noted vomiting, mild headache, stomach cramps, palpitations, diarrhea over the last 48 hours.",food_poisoning
+"Complaints: hives, coughing, runny nose, itchy eyes, sudden vision changes.",allergy
+"Patient reports frequent urination, diarrhea, shortness of breath, nosebleeds, blurred vision.",hypertension_high_blood_pressure_crisis
+"Noted headache, vomiting, nausea, dark urine, dizziness over the last 48 hours.",migraine
+"Noted sensitivity to light, palpitations, dizziness, lightheadedness, nausea over the last 48 hours.",vasovagal_syncope
+"Symptoms include shortness of breath, wheezing, chest tightness, loss of taste or smell, nosebleeds.",asthma_attack
+"Symptoms include fever, severe headache, dry cough, runny nose, pallor.",influenza
+"Complaints: diarrhea, seizures, sensitivity to sound, vomiting, fever.",gastroenteritis
+"Patient reports dehydration, sensitivity to light, confusion, dizziness, dry mouth.",dehydration
+"Noted shortness of breath, chest tightness, coughing, wheezing, muscle aches over the last 48 hours.",asthma_attack
+"Complaints: confusion, burning sensation when urinating, mild fever, nosebleeds, urgency to urinate.",urinary_tract_infection
+"Patient reports sweating, pallor, mild fever, chest tightness, palpitations.",vasovagal_syncope
+"Patient reports confusion, facial droop, chest tightness, nosebleeds, anxiety.",hypertension_high_blood_pressure_crisis
+"Symptoms include dizziness, abdominal pain (lower right quadrant), nausea, body aches, sweating.",vasovagal_syncope
+"Noted diarrhea, nausea, constipation or diarrhea, cyanosis, abdominal pain (lower right quadrant) over the last 48 hours.",appendicitis
+"Noted difficulty speaking in full sentences, coughing, shortness of breath, nausea, sweating over the last 48 hours.",asthma_attack
+"Noted chills, loss of appetite, dark urine, vomiting, nausea over the last 48 hours.",appendicitis
+"Patient reports sweating, seizures, pallor, palpitations, chills.",vasovagal_syncope
+"Symptoms include coughing, stomach cramps, facial droop, wheezing, anxiety.",asthma_attack
+"Complaints: fever, sudden vision changes, fatigue, sore throat, sneezing.",covid_19
+"Patient reports abdominal pain (lower right quadrant), chills, sore throat, chest tightness, fever.",influenza
+"Patient reports palpitations, sweating, loss of balance, shortness of breath, sudden difficulty speaking or understanding.",myocardial_infarction_heart_attack
+"Symptoms include fainting, wheezing, loss of taste or smell, difficulty speaking in full sentences, shortness of breath.",asthma_attack
+"Symptoms include dry cough, sore throat, diarrhea, muscle aches, headache.",influenza
+"Complaints: dry cough, sudden vision changes, dark urine, headache, loss of appetite.",influenza
+"Symptoms include fatigue, dizziness, severe headache, mild headache, fainting.",low_blood_pressure_hypotension
+"Noted fatigue, sensitivity to sound, throbbing pain, vomiting, chest pain over the last 48 hours.",migraine
+"Complaints: abdominal pain (lower right quadrant), fatigue, loss of taste or smell, muscle aches, wheezing.",covid_19
+"Complaints: vomiting, nausea, wheezing, stomach cramps, severe headache.",food_poisoning
+"Symptoms include chest tightness, anxiety, constipation or diarrhea, burning sensation when urinating, shortness of breath.",asthma_attack
+"Complaints: palpitations, diarrhea, blurred vision, sudden difficulty speaking or understanding, sweating.",vasovagal_syncope
+"Complaints: confusion, body aches, fatigue, nausea, stomach cramps.",dehydration
+"Noted blurred vision, fainting, stomach cramps, pallor, palpitations over the last 48 hours.",vasovagal_syncope
+"Noted hives, dry cough, lightheadedness, headache, fatigue over the last 48 hours.",influenza
+"Patient reports vomiting, nausea, blurred vision, throbbing pain, palpitations.",migraine
+"Complaints: confusion, dizziness, dark urine, coughing, burning sensation when urinating.",dehydration
+"Noted loss of appetite, severe headache, mild fever, confusion, shortness of breath over the last 48 hours.",hypertension_high_blood_pressure_crisis
+"Noted sudden difficulty speaking or understanding, wheezing, sudden severe headache, seizures, sudden vision changes over the last 48 hours.",stroke
+"Symptoms include anxiety, stomach cramps, fatigue, fever, dehydration.",food_poisoning
+"Complaints: fever, stomach cramps, abdominal tenderness, sudden vision changes, dehydration.",food_poisoning
+"Symptoms include nausea, runny nose, abdominal tenderness, confusion, loss of appetite.",appendicitis
+"Noted sudden numbness or weakness, nosebleeds, loss of balance or coordination, sudden severe headache, headache over the last 48 hours.",stroke
+"Complaints: runny nose, throbbing pain, fever, loss of appetite, sudden severe headache.",influenza
+"Complaints: congestion, watery eyes, sudden numbness or weakness, runny nose, sudden vision changes.",common_cold
+"Complaints: sudden difficulty speaking or understanding, fatigue, dizziness, nausea, lightheadedness.",low_blood_pressure_hypotension
+"Patient reports loss of balance or coordination, congestion, loss of taste or smell, sudden vision changes, seizures.",stroke
+"Noted sore throat, blurred vision, visual aura, dizziness, fainting over the last 48 hours.",vasovagal_syncope
+"Patient reports vomiting, nausea, abdominal pain (lower right quadrant), fever, body aches.",appendicitis
+"Patient reports burning sensation when urinating, fatigue, vomiting, loss of appetite, stomach cramps.",gastroenteritis
+"Noted nausea, stomach cramps, palpitations, fatigue, chest tightness over the last 48 hours.",food_poisoning
+"Complaints: diarrhea, sore throat, fever, rash, vomiting.",gastroenteritis
+"Patient reports nausea, palpitations, chest pain or pressure, lightheadedness, shortness of breath.",myocardial_infarction_heart_attack
+"Complaints: constipation or diarrhea, loss of balance, fainting, confusion, body aches.",low_blood_pressure_hypotension
+"Noted dry mouth, diarrhea, dizziness, dark urine, abdominal pain (lower right quadrant) over the last 48 hours.",dehydration
+"Noted sudden severe headache, sudden numbness or weakness, shortness of breath, sudden difficulty speaking or understanding, vomiting over the last 48 hours.",stroke
+"Complaints: severe headache, dehydration, loss of appetite, cloudy urine, fatigue.",gastroenteritis
+"Symptoms include visual aura, headache, shortness of breath, rash, chills.",covid_19
+"Symptoms include sensitivity to sound, congestion, severe headache, runny nose, watery eyes.",common_cold
+"Patient reports dry mouth, nosebleeds, itchy eyes, lightheadedness, dark urine.",dehydration
+"Noted chest tightness, wheezing, difficulty speaking in full sentences, sudden difficulty speaking or understanding, pallor over the last 48 hours.",asthma_attack
+"Symptoms include anxiety, mild fever, difficulty speaking in full sentences, chest tightness, chest pain or pressure.",asthma_attack
+"Symptoms include coughing, cyanosis, sudden numbness or weakness, runny nose, nasal congestion.",allergy
+"Patient reports sensitivity to light, loss of appetite, difficulty speaking in full sentences, abdominal tenderness, vomiting.",appendicitis
+"Complaints: hives, nasal congestion, sneezing, cloudy urine, burning sensation when urinating.",allergy
+"Complaints: fever, seizures, loss of taste or smell, nosebleeds, sore throat.",covid_19
+"Complaints: throbbing pain, fever, dehydration, sensitivity to light, diarrhea.",gastroenteritis
+"Noted lightheadedness, confusion, fainting, facial droop, abdominal tenderness over the last 48 hours.",low_blood_pressure_hypotension
+"Symptoms include dehydration, itchy eyes, stomach cramps, cyanosis, diarrhea.",gastroenteritis
+"Patient reports sneezing, hives, dehydration, rash, chest tightness.",allergy
+"Symptoms include confusion, dark urine, fatigue, dry mouth, sneezing.",dehydration
+"Symptoms include fatigue, wheezing, anxiety, lower abdominal pain, coughing.",asthma_attack
+"Symptoms include body aches, itchy eyes, sensitivity to sound, sore throat, runny nose.",influenza
+"Symptoms include loss of balance, chills, body aches, sore throat, coughing.",influenza
+"Symptoms include constipation or diarrhea, diarrhea, loss of appetite, mild fever, fever.",gastroenteritis
+"Patient reports runny nose, loss of appetite, coughing, watery eyes, sensitivity to sound.",allergy
+"Complaints: loss of taste or smell, difficulty speaking in full sentences, sweating, coughing, wheezing.",asthma_attack
+"Symptoms include headache, sudden vision changes, loss of appetite, chills, mild fever.",influenza
+"Complaints: dry mouth, nausea, loss of appetite, abdominal tenderness, abdominal pain (lower right quadrant).",appendicitis
+"Symptoms include nausea, runny nose, dehydration, fatigue, shortness of breath.",gastroenteritis
+"Symptoms include sweating, sudden difficulty speaking or understanding, throbbing pain, vomiting, nausea.",migraine
+"Complaints: chills, fever, severe headache, sweating, loss of taste or smell.",pneumonia
+"Complaints: diarrhea, anxiety, chest pain or pressure, shortness of breath, body aches.",myocardial_infarction_heart_attack
+"Complaints: urgency to urinate, sneezing, nasal congestion, runny nose, constipation or diarrhea.",allergy
+"Complaints: cough (productive or dry), urgency to urinate, mild fever, burning sensation when urinating, sweating.",urinary_tract_infection
+"Patient reports sudden vision changes, loss of appetite, facial droop, confusion, burning sensation when urinating.",stroke
+"Symptoms include loss of appetite, palpitations, throbbing pain, fever, abdominal tenderness.",appendicitis
+"Complaints: shortness of breath, chest pain or pressure, sudden difficulty speaking or understanding, cough (productive or dry), fatigue.",pneumonia
+"Complaints: hives, runny nose, chest tightness, fainting, watery eyes.",allergy
+"Complaints: mild fever, sneezing, stomach cramps, runny nose, itchy eyes.",allergy
+"Complaints: nosebleeds, cloudy urine, pallor, blurred vision, shortness of breath.",hypertension_high_blood_pressure_crisis
+"Patient reports fatigue, shortness of breath, seizures, fever, sensitivity to sound.",covid_19
+"Patient reports coughing, frequent urination, difficulty speaking in full sentences, muscle aches, chest tightness.",asthma_attack
+"Noted shortness of breath, sudden vision changes, dry cough, fever, nausea over the last 48 hours.",covid_19
+"Noted fever, fatigue, shortness of breath, nasal congestion, sneezing over the last 48 hours.",covid_19
+"Noted loss of appetite, wheezing, cough (productive or dry), nasal congestion, chest pain over the last 48 hours.",pneumonia
+"Complaints: mild cough, lightheadedness, sneezing, rash, congestion.",common_cold
+"Symptoms include frequent urination, shortness of breath, loss of balance or coordination, anxiety, coughing.",asthma_attack
+"Patient reports loss of balance or coordination, coughing, mild cough, rash, sneezing.",allergy
+"Noted constipation or diarrhea, abdominal pain (lower right quadrant), fever, facial droop, abdominal tenderness over the last 48 hours.",appendicitis
+"Symptoms include stomach cramps, dehydration, nausea, nasal congestion, loss of appetite.",food_poisoning
+"Symptoms include shortness of breath, chills, watery eyes, chest pain, diarrhea.",pneumonia
+"Symptoms include vomiting, loss of taste or smell, sweating, chills, muscle aches.",covid_19
+"Complaints: loss of appetite, fever, watery eyes, congestion, sneezing.",common_cold
+"Complaints: loss of appetite, abdominal pain (lower right quadrant), mild cough, constipation or diarrhea, severe headache.",appendicitis
+"Symptoms include fatigue, dizziness, chest pain or pressure, anxiety, dark urine.",dehydration
+"Patient reports confusion, difficulty speaking in full sentences, pallor, nosebleeds, blurred vision.",hypertension_high_blood_pressure_crisis
+"Complaints: lightheadedness, dark urine, fainting, dizziness, body aches.",low_blood_pressure_hypotension
+"Patient reports sudden severe headache, cloudy urine, mild fever, urgency to urinate, dehydration.",urinary_tract_infection
+"Patient reports fainting, anxiety, lightheadedness, frequent urination, sweating.",myocardial_infarction_heart_attack
+"Patient reports anxiety, hives, mild fever, nosebleeds, shortness of breath.",hypertension_high_blood_pressure_crisis
+"Symptoms include blurred vision, confusion, anxiety, congestion, nausea.",hypertension_high_blood_pressure_crisis
+"Complaints: stomach cramps, vomiting, dry mouth, chills, dehydration.",food_poisoning
+"Symptoms include nausea, confusion, dark urine, cough (productive or dry), seizures.",dehydration
+"Symptoms include wheezing, anxiety, shortness of breath, seizures, visual aura.",asthma_attack
+"Noted fever, chest pain, sweating, cough (productive or dry), nosebleeds over the last 48 hours.",pneumonia
+"Symptoms include muscle aches, chills, sudden severe headache, headache, burning sensation when urinating.",covid_19
+"Noted sudden severe headache, facial droop, seizures, sneezing, itchy eyes over the last 48 hours.",stroke
+"Patient reports mild fever, lower abdominal pain, burning sensation when urinating, dry mouth, cough (productive or dry).",urinary_tract_infection
+"Complaints: sneezing, facial droop, mild cough, chest tightness, sore throat.",common_cold
+"Noted coughing, sneezing, dark urine, itchy eyes, sudden vision changes over the last 48 hours.",allergy
+"Complaints: vomiting, sweating, palpitations, mild headache, constipation or diarrhea.",myocardial_infarction_heart_attack
+"Noted chest tightness, fever, headache, fatigue, visual aura over the last 48 hours.",influenza
+"Complaints: loss of taste or smell, seizures, chills, dry mouth, fever.",covid_19
+"Noted sudden difficulty speaking or understanding, chest tightness, constipation or diarrhea, facial droop, sudden severe headache over the last 48 hours.",stroke
+"Noted nausea, dry mouth, vomiting, anxiety, hives over the last 48 hours.",myocardial_infarction_heart_attack
+"Noted mild fever, lightheadedness, dizziness, headache, blurred vision over the last 48 hours.",vasovagal_syncope
+"Noted shortness of breath, blurred vision, chest pain, body aches, abdominal pain (lower right quadrant) over the last 48 hours.",hypertension_high_blood_pressure_crisis
+"Symptoms include mild headache, fatigue, sweating, loss of appetite, chest pain.",pneumonia
+"Symptoms include loss of appetite, dehydration, fever, chest pain, cloudy urine.",pneumonia
+"Patient reports diarrhea, lower abdominal pain, loss of balance, stomach cramps, loss of appetite.",food_poisoning
+"Symptoms include urgency to urinate, headache, mild fever, cloudy urine, severe headache.",urinary_tract_infection
+"Patient reports confusion, itchy eyes, chest pain or pressure, nausea, dizziness.",dehydration
+"Patient reports fainting, blurred vision, sore throat, palpitations, loss of balance.",low_blood_pressure_hypotension
+"Patient reports confusion, constipation or diarrhea, dizziness, sudden vision changes, fatigue.",low_blood_pressure_hypotension
+"Patient reports dizziness, throbbing pain, fatigue, chest pain, sensitivity to sound.",migraine
+"Patient reports dry cough, dark urine, shortness of breath, anxiety, vomiting.",myocardial_infarction_heart_attack
+"Patient reports confusion, fatigue, lightheadedness, facial droop, mild cough.",low_blood_pressure_hypotension
+"Complaints: throbbing pain, frequent urination, lower abdominal pain, sensitivity to sound, mild fever.",urinary_tract_infection
+"Complaints: frequent urination, lower abdominal pain, cloudy urine, chest tightness, dizziness.",urinary_tract_infection
+"Complaints: sudden difficulty speaking or understanding, shortness of breath, sweating, coughing, loss of appetite.",pneumonia
+"Patient reports lower abdominal pain, mild fever, burning sensation when urinating, loss of appetite, pallor.",urinary_tract_infection
+"Noted runny nose, fatigue, headache, hives, sudden difficulty speaking or understanding over the last 48 hours.",influenza
+"Patient reports diarrhea, severe headache, shortness of breath, confusion, loss of balance or coordination.",hypertension_high_blood_pressure_crisis
+"Patient reports loss of taste or smell, loss of balance, fever, dry cough, chills.",covid_19
+"Patient reports chills, nausea, loss of appetite, fever, headache.",appendicitis
+"Patient reports dry cough, runny nose, loss of taste or smell, dizziness, fatigue.",influenza
+"Noted burning sensation when urinating, mild headache, sore throat, urgency to urinate, frequent urination over the last 48 hours.",urinary_tract_infection
+"Patient reports runny nose, itchy eyes, lightheadedness, lower abdominal pain, rash.",allergy
+"Symptoms include wheezing, chest tightness, difficulty speaking in full sentences, nausea, itchy eyes.",asthma_attack
+"Complaints: pallor, loss of balance or coordination, shortness of breath, chest pain or pressure, fatigue.",myocardial_infarction_heart_attack
+"Complaints: watery eyes, shortness of breath, nausea, palpitations, sensitivity to light.",myocardial_infarction_heart_attack
+"Symptoms include shortness of breath, body aches, chest tightness, sudden severe headache, anxiety.",asthma_attack
+"Noted facial droop, abdominal pain (lower right quadrant), abdominal tenderness, fever, burning sensation when urinating over the last 48 hours.",appendicitis
+"Symptoms include sore throat, mild headache, mild cough, nausea, abdominal pain (lower right quadrant).",common_cold
+"Symptoms include headache, sensitivity to light, loss of appetite, mild headache, sore throat.",influenza
+"Patient reports sore throat, dehydration, fever, nausea, cloudy urine.",food_poisoning
+"Patient reports diarrhea, shortness of breath, mild cough, congestion, runny nose.",common_cold
+"Noted severe headache, lower abdominal pain, shortness of breath, chest pain or pressure, sweating over the last 48 hours.",myocardial_infarction_heart_attack
+"Symptoms include confusion, fatigue, lower abdominal pain, itchy eyes, dry mouth.",dehydration
+"Patient reports shortness of breath, lightheadedness, blurred vision, sweating, lower abdominal pain.",vasovagal_syncope
+"Patient reports nasal congestion, sore throat, runny nose, body aches, facial droop.",influenza
+"Noted dry cough, mild cough, nausea, vomiting, visual aura over the last 48 hours.",migraine
+"Complaints: sudden numbness or weakness, mild cough, loss of appetite, fatigue, diarrhea.",food_poisoning
+"Complaints: constipation or diarrhea, nausea, fever, mild cough, loss of appetite.",appendicitis
+"Patient reports sudden difficulty speaking or understanding, shortness of breath, seizures, fatigue, sudden numbness or weakness.",stroke
+"Patient reports nasal congestion, coughing, congestion, dark urine, rash.",allergy
+"Symptoms include chest pain, difficulty speaking in full sentences, wheezing, shortness of breath, nausea.",asthma_attack
+"Symptoms include sensitivity to light, throbbing pain, nausea, dry mouth, headache.",migraine
+"Symptoms include severe headache, dizziness, coughing, vomiting, sensitivity to light.",migraine
+"Noted severe headache, confusion, loss of balance or coordination, seizures, blurred vision over the last 48 hours.",stroke
+"Complaints: dark urine, nausea, sore throat, fever, loss of appetite.",appendicitis
+"Noted cough (productive or dry), lower abdominal pain, shortness of breath, lightheadedness, vomiting over the last 48 hours.",myocardial_infarction_heart_attack
+"Noted facial droop, chest pain, cough (productive or dry), nasal congestion, fever over the last 48 hours.",pneumonia
+"Noted dry cough, burning sensation when urinating, sensitivity to light, loss of appetite, sore throat over the last 48 hours.",influenza
+"Patient reports frequent urination, sensitivity to light, visual aura, difficulty speaking in full sentences, nausea.",migraine
+"Patient reports nosebleeds, confusion, chest pain, wheezing, loss of taste or smell.",hypertension_high_blood_pressure_crisis
+"Patient reports body aches, cloudy urine, loss of taste or smell, burning sensation when urinating, mild fever.",urinary_tract_infection
+"Patient reports headache, nasal congestion, dark urine, sweating, lightheadedness.",dehydration
+"Complaints: fainting, pallor, confusion, blurred vision, chills.",vasovagal_syncope
+"Complaints: diarrhea, constipation or diarrhea, loss of appetite, stomach cramps, shortness of breath.",gastroenteritis
+"Patient reports nausea, sore throat, palpitations, dry cough, lightheadedness.",vasovagal_syncope
+"Noted sensitivity to light, itchy eyes, watery eyes, coughing, severe headache over the last 48 hours.",allergy
+"Noted sudden vision changes, seizures, sore throat, mild cough, confusion over the last 48 hours.",stroke
+"Patient reports lightheadedness, dry mouth, nausea, dizziness, palpitations.",vasovagal_syncope
+"Patient reports loss of appetite, sore throat, abdominal tenderness, fainting, abdominal pain (lower right quadrant).",appendicitis
+"Noted chills, fever, sore throat, loss of taste or smell, vomiting over the last 48 hours.",covid_19
+"Noted fatigue, dizziness, mild headache, dry cough, lightheadedness over the last 48 hours.",low_blood_pressure_hypotension
+"Patient reports sore throat, nasal congestion, runny nose, congestion, chills.",influenza
+"Complaints: dizziness, nausea, blurred vision, fatigue, loss of balance or coordination.",vasovagal_syncope
+"Complaints: chills, nausea, fever, diarrhea, fatigue.",gastroenteritis
+"Patient reports fever, nausea, headache, sneezing, dry cough.",covid_19
+"Noted cough (productive or dry), constipation or diarrhea, fever, fatigue, palpitations over the last 48 hours.",pneumonia
+"Patient reports loss of appetite, runny nose, chills, fever, muscle aches.",covid_19
+"Symptoms include muscle aches, severe headache, chills, diarrhea, sore throat.",covid_19
+"Complaints: chest pain, coughing, difficulty speaking in full sentences, body aches, anxiety.",asthma_attack
+"Patient reports loss of balance, sudden numbness or weakness, urgency to urinate, confusion, fatigue.",low_blood_pressure_hypotension
+"Complaints: severe headache, fatigue, diarrhea, vomiting, stomach cramps.",food_poisoning
+"Noted cloudy urine, loss of appetite, fever, sore throat, stomach cramps over the last 48 hours.",food_poisoning
+"Symptoms include fever, cyanosis, sweating, fatigue, cough (productive or dry).",pneumonia
+"Noted throbbing pain, dizziness, cough (productive or dry), constipation or diarrhea, sensitivity to sound over the last 48 hours.",migraine
+"Symptoms include sudden severe headache, seizures, anxiety, blurred vision, shortness of breath.",hypertension_high_blood_pressure_crisis
+"Complaints: vomiting, headache, coughing, visual aura, sensitivity to sound.",migraine
+"Noted hives, confusion, loss of balance or coordination, sudden severe headache, seizures over the last 48 hours.",stroke
+"Complaints: sudden vision changes, nausea, fever, vomiting, shortness of breath.",appendicitis
+"Symptoms include dry cough, lower abdominal pain, cloudy urine, dark urine, burning sensation when urinating.",urinary_tract_infection
+"Symptoms include cloudy urine, loss of taste or smell, body aches, loss of appetite, headache.",influenza
+"Patient reports body aches, mild headache, runny nose, loss of taste or smell, headache.",influenza
+"Complaints: sudden severe headache, difficulty speaking in full sentences, shortness of breath, burning sensation when urinating, anxiety.",asthma_attack
+"Noted blurred vision, shortness of breath, chest pain, dehydration, dry mouth over the last 48 hours.",hypertension_high_blood_pressure_crisis
+"Patient reports vomiting, blurred vision, lightheadedness, hives, shortness of breath.",myocardial_infarction_heart_attack
+"Symptoms include dehydration, fatigue, nausea, diarrhea, sneezing.",gastroenteritis
+"Complaints: runny nose, sneezing, chest tightness, nasal congestion, congestion.",common_cold
+"Symptoms include fainting, abdominal tenderness, severe headache, anxiety, confusion.",hypertension_high_blood_pressure_crisis
+"Patient reports lightheadedness, anxiety, palpitations, chest pain or pressure, abdominal tenderness.",myocardial_infarction_heart_attack
+"Patient reports loss of appetite, shortness of breath, mild headache, sneezing, congestion.",common_cold
+"Noted lightheadedness, blurred vision, sudden numbness or weakness, confusion, sensitivity to sound over the last 48 hours.",low_blood_pressure_hypotension
+"Patient reports mild fever, confusion, loss of balance, dark urine, blurred vision.",low_blood_pressure_hypotension
+"Complaints: facial droop, runny nose, loss of appetite, headache, frequent urination.",influenza
+"Patient reports runny nose, congestion, cloudy urine, seizures, mild headache.",common_cold
+"Patient reports body aches, frequent urination, burning sensation when urinating, lower abdominal pain, mild fever.",urinary_tract_infection
+"Patient reports anxiety, chest pain, abdominal tenderness, vomiting, lightheadedness.",myocardial_infarction_heart_attack
+"Patient reports mild cough, sneezing, congestion, mild headache, sore throat.",common_cold
+"Noted headache, fainting, visual aura, loss of taste or smell, fatigue over the last 48 hours.",covid_19
+"Complaints: palpitations, lightheadedness, sweating, loss of balance, blurred vision.",myocardial_infarction_heart_attack
+"Symptoms include chest pain, difficulty speaking in full sentences, cyanosis, loss of appetite, shortness of breath.",pneumonia
+"Patient reports sudden difficulty speaking or understanding, sweating, lightheadedness, congestion, pallor.",vasovagal_syncope
+"Noted nausea, stomach cramps, loss of appetite, seizures, itchy eyes over the last 48 hours.",gastroenteritis
+"Patient reports constipation or diarrhea, cloudy urine, stomach cramps, diarrhea, vomiting.",food_poisoning
+"Noted cyanosis, sudden severe headache, vomiting, stomach cramps, loss of appetite over the last 48 hours.",gastroenteritis
+"Symptoms include hives, abdominal tenderness, headache, loss of taste or smell, fever.",covid_19
+"Noted body aches, abdominal pain (lower right quadrant), severe headache, vomiting, constipation or diarrhea over the last 48 hours.",appendicitis
+"Symptoms include body aches, stomach cramps, burning sensation when urinating, dehydration, nausea.",gastroenteritis
+"Patient reports shortness of breath, cyanosis, anxiety, difficulty speaking in full sentences, diarrhea.",asthma_attack
+"Patient reports runny nose, coughing, sudden vision changes, hives, abdominal pain (lower right quadrant).",allergy
+"Patient reports chills, shortness of breath, muscle aches, fainting, fever.",covid_19
+"Noted fainting, dark urine, dizziness, blurred vision, chest pain over the last 48 hours.",low_blood_pressure_hypotension
+"Noted nausea, mild fever, burning sensation when urinating, fever, vomiting over the last 48 hours.",appendicitis
+"Complaints: abdominal tenderness, vomiting, frequent urination, lightheadedness, palpitations.",myocardial_infarction_heart_attack
+"Symptoms include lower abdominal pain, nasal congestion, urgency to urinate, fever, cloudy urine.",urinary_tract_infection
+"Patient reports frequent urination, mild fever, dry cough, cloudy urine, body aches.",urinary_tract_infection
+"Patient reports dry mouth, pallor, lightheadedness, palpitations, sore throat.",vasovagal_syncope
+"Symptoms include loss of appetite, runny nose, loss of taste or smell, headache, chills.",influenza
+"Patient reports dark urine, itchy eyes, hives, watery eyes, shortness of breath.",allergy
+"Patient reports confusion, body aches, shortness of breath, fever, loss of appetite.",influenza
+"Noted dry cough, stomach cramps, sore throat, chills, anxiety over the last 48 hours.",covid_19
+"Complaints: visual aura, confusion, sensitivity to sound, vomiting, urgency to urinate.",migraine
+"Patient reports headache, dry cough, body aches, chills, fainting.",influenza
+"Symptoms include fever, sweating, coughing, chills, chest pain or pressure.",pneumonia
+"Noted stomach cramps, coughing, anxiety, watery eyes, runny nose over the last 48 hours.",allergy
+"Noted fever, pallor, visual aura, chills, loss of appetite over the last 48 hours.",influenza
+"Symptoms include severe headache, anxiety, headache, shortness of breath, confusion.",hypertension_high_blood_pressure_crisis
+"Complaints: seizures, loss of balance or coordination, sore throat, mild headache, congestion.",common_cold
+"Noted shortness of breath, dry mouth, chest pain or pressure, palpitations, muscle aches over the last 48 hours.",myocardial_infarction_heart_attack
+"Complaints: anxiety, abdominal pain (lower right quadrant), difficulty speaking in full sentences, loss of balance or coordination, wheezing.",asthma_attack
+"Complaints: sudden severe headache, sudden difficulty speaking or understanding, confusion, sudden numbness or weakness, congestion.",stroke
+"Patient reports pallor, itchy eyes, watery eyes, palpitations, hives.",allergy
+"Symptoms include chills, dry cough, body aches, vomiting, nausea.",influenza
+"Complaints: shortness of breath, sweating, itchy eyes, chest pain, palpitations.",myocardial_infarction_heart_attack
+"Noted lower abdominal pain, blurred vision, sensitivity to light, burning sensation when urinating, frequent urination over the last 48 hours.",urinary_tract_infection
+"Symptoms include burning sensation when urinating, watery eyes, hives, facial droop, runny nose.",allergy
+"Symptoms include mild cough, loss of appetite, fever, cyanosis, burning sensation when urinating.",pneumonia
+"Complaints: rash, dry cough, shortness of breath, chest tightness, anxiety.",asthma_attack
+"Complaints: wheezing, shortness of breath, chest tightness, nasal congestion, burning sensation when urinating.",asthma_attack
+"Complaints: loss of appetite, fatigue, urgency to urinate, lightheadedness, loss of balance.",low_blood_pressure_hypotension
+"Noted chest tightness, loss of balance, fainting, vomiting, lightheadedness over the last 48 hours.",low_blood_pressure_hypotension
+"Complaints: sensitivity to light, fever, headache, shortness of breath, sneezing.",covid_19
+"Noted stomach cramps, nausea, sudden numbness or weakness, fever, blurred vision over the last 48 hours.",food_poisoning
+"Complaints: dehydration, sweating, fever, vomiting, lightheadedness.",gastroenteritis
+"Patient reports mild cough, urgency to urinate, cloudy urine, mild headache, congestion.",common_cold
+"Noted cloudy urine, anxiety, nosebleeds, chest pain or pressure, sweating over the last 48 hours.",myocardial_infarction_heart_attack
+"Complaints: muscle aches, shortness of breath, anxiety, cough (productive or dry), wheezing.",asthma_attack
+"Symptoms include sudden vision changes, sudden difficulty speaking or understanding, sudden severe headache, burning sensation when urinating, loss of balance or coordination.",stroke
+"Complaints: severe headache, sneezing, coughing, watery eyes, headache.",allergy
+"Patient reports hives, congestion, runny nose, rash, throbbing pain.",allergy
+"Noted fever, loss of appetite, mild fever, cyanosis, chest pain or pressure over the last 48 hours.",pneumonia
+"Complaints: loss of taste or smell, mild cough, congestion, muscle aches, sneezing.",common_cold
+"Symptoms include sudden numbness or weakness, fever, lower abdominal pain, chest pain, sweating.",pneumonia
+"Complaints: nausea, hives, palpitations, fatigue, lightheadedness.",myocardial_infarction_heart_attack
+"Patient reports fatigue, cough (productive or dry), coughing, loss of appetite, sensitivity to light.",pneumonia
+"Complaints: loss of appetite, diarrhea, cloudy urine, blurred vision, nausea.",food_poisoning
+"Noted dizziness, loss of appetite, fatigue, vomiting, chest pain over the last 48 hours.",food_poisoning
+"Noted pallor, dizziness, confusion, mild fever, loss of balance over the last 48 hours.",low_blood_pressure_hypotension
+"Patient reports mild fever, dry cough, muscle aches, dehydration, shortness of breath.",covid_19
+"Complaints: abdominal tenderness, body aches, hives, abdominal pain (lower right quadrant), nausea.",appendicitis
+"Complaints: chest pain, vomiting, chest pain or pressure, loss of taste or smell, anxiety.",myocardial_infarction_heart_attack
+"Patient reports rash, wheezing, nausea, vomiting, throbbing pain.",migraine
+"Complaints: shortness of breath, sore throat, wheezing, difficulty speaking in full sentences, loss of appetite.",asthma_attack
+"Noted diarrhea, abdominal tenderness, vomiting, anxiety, loss of appetite over the last 48 hours.",appendicitis
+"Patient reports shortness of breath, sweating, sore throat, fever, loss of taste or smell.",covid_19
+"Complaints: lower abdominal pain, palpitations, difficulty speaking in full sentences, mild fever, urgency to urinate.",urinary_tract_infection
+"Complaints: congestion, mild cough, constipation or diarrhea, sore throat, watery eyes.",common_cold
+"Symptoms include sensitivity to light, palpitations, watery eyes, nausea, fatigue.",myocardial_infarction_heart_attack
+"Complaints: shortness of breath, diarrhea, fatigue, dark urine, chills.",pneumonia
+"Patient reports anxiety, frequent urination, confusion, blurred vision, facial droop.",hypertension_high_blood_pressure_crisis
+"Complaints: chills, rash, sweating, itchy eyes, chest pain.",pneumonia
+"Complaints: hives, loss of taste or smell, lightheadedness, rash, runny nose.",allergy
+"Patient reports rash, fatigue, runny nose, congestion, mild headache.",common_cold
+"Patient reports urgency to urinate, frequent urination, lightheadedness, mild fever, lower abdominal pain.",urinary_tract_infection
+"Complaints: body aches, headache, difficulty speaking in full sentences, confusion, dark urine.",dehydration
+"Complaints: fatigue, chest tightness, vomiting, stomach cramps, dehydration.",food_poisoning
+"Noted facial droop, fainting, seizures, watery eyes, sudden severe headache over the last 48 hours.",stroke
+"Complaints: lower abdominal pain, urgency to urinate, burning sensation when urinating, dry mouth, loss of appetite.",urinary_tract_infection
+"Complaints: fatigue, lower abdominal pain, cloudy urine, burning sensation when urinating, loss of balance.",urinary_tract_infection
+"Patient reports rash, chest pain or pressure, anxiety, difficulty speaking in full sentences, nausea.",myocardial_infarction_heart_attack
+"Symptoms include sweating, cyanosis, sneezing, chest pain, sudden vision changes.",pneumonia
+"Noted shortness of breath, confusion, fever, loss of appetite, hives over the last 48 hours.",pneumonia
+"Noted confusion, facial droop, sudden vision changes, sudden numbness or weakness, difficulty speaking in full sentences over the last 48 hours.",stroke
+"Complaints: dark urine, loss of balance or coordination, facial droop, burning sensation when urinating, sudden difficulty speaking or understanding.",stroke
+"Patient reports shortness of breath, fatigue, severe headache, dry cough, cyanosis.",covid_19
+"Complaints: constipation or diarrhea, cyanosis, burning sensation when urinating, abdominal tenderness, loss of appetite.",appendicitis
+"Noted stomach cramps, nausea, fever, constipation or diarrhea, facial droop over the last 48 hours.",food_poisoning
+"Symptoms include vomiting, dehydration, nausea, coughing, diarrhea.",gastroenteritis
+"Patient reports confusion, chills, dry cough, chest pain, severe headache.",hypertension_high_blood_pressure_crisis
+"Patient reports fatigue, facial droop, sudden severe headache, sudden difficulty speaking or understanding, anxiety.",stroke
+"Complaints: loss of balance or coordination, cough (productive or dry), confusion, headache, seizures.",stroke
+"Patient reports nausea, chills, difficulty speaking in full sentences, chest tightness, anxiety.",asthma_attack
+"Noted lower abdominal pain, cloudy urine, rash, mild fever, cyanosis over the last 48 hours.",urinary_tract_infection
+"Patient reports dry cough, dizziness, headache, cough (productive or dry), confusion.",dehydration
+"Symptoms include vomiting, fainting, difficulty speaking in full sentences, chest tightness, anxiety.",asthma_attack
+"Symptoms include fever, difficulty speaking in full sentences, abdominal tenderness, constipation or diarrhea, loss of taste or smell.",appendicitis
+"Patient reports muscle aches, congestion, chills, fever, dry cough.",covid_19
+"Noted sudden difficulty speaking or understanding, loss of balance, lightheadedness, blurred vision, mild cough over the last 48 hours.",low_blood_pressure_hypotension
+"Patient reports coughing, shortness of breath, sweating, anxiety, congestion.",asthma_attack
+"Noted loss of balance, stomach cramps, dehydration, mild headache, vomiting over the last 48 hours.",gastroenteritis
+"Symptoms include itchy eyes, watery eyes, seizures, blurred vision, nasal congestion.",allergy
+"Complaints: blurred vision, cyanosis, fever, fainting, chest pain.",pneumonia
+"Complaints: dehydration, fever, severe headache, stomach cramps, vomiting.",gastroenteritis
+"Symptoms include mild cough, vomiting, loss of appetite, diarrhea, facial droop.",gastroenteritis
+"Complaints: fatigue, difficulty speaking in full sentences, stomach cramps, fever, wheezing.",food_poisoning
+"Complaints: urgency to urinate, throbbing pain, confusion, facial droop, sudden numbness or weakness.",stroke
+"Complaints: dehydration, nausea, fever, visual aura, watery eyes.",gastroenteritis
+"Noted watery eyes, mild headache, runny nose, lightheadedness, coughing over the last 48 hours.",allergy
+"Patient reports sweating, fatigue, fever, loss of appetite, frequent urination.",influenza
+"Noted loss of appetite, dehydration, nausea, constipation or diarrhea, abdominal pain (lower right quadrant) over the last 48 hours.",gastroenteritis
+"Patient reports confusion, sudden vision changes, pallor, fatigue, seizures.",stroke
+"Noted vomiting, diarrhea, dehydration, shortness of breath, nausea over the last 48 hours.",gastroenteritis
+"Symptoms include fatigue, dry mouth, dehydration, dark urine, fever.",gastroenteritis
+"Patient reports abdominal pain (lower right quadrant), burning sensation when urinating, vomiting, loss of appetite, nausea.",gastroenteritis
+"Noted watery eyes, nausea, loss of appetite, dark urine, abdominal pain (lower right quadrant) over the last 48 hours.",appendicitis
+"Complaints: sudden severe headache, sudden difficulty speaking or understanding, sneezing, facial droop, sudden vision changes.",stroke
+"Patient reports loss of balance or coordination, urgency to urinate, lower abdominal pain, burning sensation when urinating, runny nose.",urinary_tract_infection
+"Complaints: diarrhea, vomiting, nausea, chills, sore throat.",gastroenteritis
+"Complaints: fatigue, vomiting, stomach cramps, sudden vision changes, nosebleeds.",food_poisoning
+"Patient reports lower abdominal pain, cloudy urine, confusion, lightheadedness, dizziness.",low_blood_pressure_hypotension
+"Symptoms include cloudy urine, rash, diarrhea, stomach cramps, loss of appetite.",gastroenteritis
+"Complaints: sweating, sensitivity to light, burning sensation when urinating, vomiting, shortness of breath.",myocardial_infarction_heart_attack
+"Noted itchy eyes, sensitivity to light, chest pain, sensitivity to sound, headache over the last 48 hours.",migraine
+"Symptoms include dizziness, sore throat, diarrhea, nausea, sensitivity to sound.",migraine
+"Complaints: lightheadedness, blurred vision, sudden numbness or weakness, visual aura, sweating.",vasovagal_syncope
+"Complaints: dehydration, vomiting, chills, body aches, fever.",gastroenteritis
+"Complaints: wheezing, nosebleeds, blurred vision, pallor, nausea.",vasovagal_syncope
+"Noted loss of appetite, fever, cloudy urine, coughing, nausea over the last 48 hours.",appendicitis
+"Noted lower abdominal pain, urgency to urinate, frequent urination, abdominal tenderness, fatigue over the last 48 hours.",urinary_tract_infection
+"Symptoms include urgency to urinate, sudden numbness or weakness, sudden severe headache, seizures, vomiting.",stroke
+"Complaints: dark urine, wheezing, dry mouth, fatigue, burning sensation when urinating.",dehydration
+"Symptoms include fatigue, sudden vision changes, sore throat, chest pain, fever.",covid_19
+"Complaints: lightheadedness, pallor, runny nose, nausea, headache.",dehydration
+"Noted sudden numbness or weakness, sudden vision changes, cyanosis, severe headache, facial droop over the last 48 hours.",stroke
+"Symptoms include cough (productive or dry), fever, headache, sudden vision changes, loss of taste or smell.",covid_19
+"Complaints: nausea, anxiety, chest pain or pressure, dizziness, dry mouth.",myocardial_infarction_heart_attack
+"Complaints: dry mouth, fatigue, dark urine, body aches, seizures.",dehydration
+"Symptoms include fever, stomach cramps, cough (productive or dry), vomiting, abdominal tenderness.",gastroenteritis
+"Complaints: abdominal pain (lower right quadrant), itchy eyes, frequent urination, coughing, rash.",allergy
+"Noted fever, sneezing, abdominal tenderness, chills, cough (productive or dry) over the last 48 hours.",pneumonia
+"Noted stomach cramps, congestion, palpitations, fever, diarrhea over the last 48 hours.",food_poisoning
+"Symptoms include nosebleeds, frequent urination, muscle aches, headache, chills.",covid_19
+"Noted lower abdominal pain, confusion, nausea, dizziness, dry mouth over the last 48 hours.",dehydration
+"Symptoms include loss of balance or coordination, facial droop, sudden numbness or weakness, body aches, stomach cramps.",stroke
+"Complaints: severe headache, chest pain, seizures, confusion, loss of balance.",hypertension_high_blood_pressure_crisis
+"Noted body aches, sore throat, mild headache, mild cough, frequent urination over the last 48 hours.",common_cold
+"Patient reports mild fever, severe headache, diarrhea, frequent urination, lower abdominal pain.",urinary_tract_infection
+"Noted sudden severe headache, sudden numbness or weakness, shortness of breath, confusion, abdominal pain (lower right quadrant) over the last 48 hours.",stroke
+"Symptoms include dehydration, fever, fatigue, wheezing, lower abdominal pain.",gastroenteritis
+"Complaints: palpitations, wheezing, pallor, chest tightness, anxiety.",asthma_attack
+"Complaints: sudden severe headache, frequent urination, dry mouth, mild fever, lower abdominal pain.",urinary_tract_infection
+"Patient reports itchy eyes, diarrhea, rash, facial droop, nasal congestion.",allergy
+"Noted diarrhea, dehydration, fever, sensitivity to light, chills over the last 48 hours.",gastroenteritis
+"Symptoms include seizures, headache, fatigue, sweating, confusion.",dehydration
+"Patient reports difficulty speaking in full sentences, fatigue, loss of appetite, headache, vomiting.",food_poisoning
+"Patient reports vomiting, cloudy urine, sensitivity to sound, sudden difficulty speaking or understanding, visual aura.",migraine
+"Patient reports fatigue, shortness of breath, lightheadedness, wheezing, anxiety.",myocardial_infarction_heart_attack
+"Complaints: hives, cough (productive or dry), sneezing, sudden numbness or weakness, watery eyes.",allergy
+"Complaints: headache, fatigue, mild fever, facial droop, nausea.",dehydration
+"Patient reports frequent urination, vomiting, visual aura, dizziness, confusion.",migraine
+"Patient reports headache, sore throat, runny nose, urgency to urinate, cloudy urine.",influenza
+"Patient reports anxiety, confusion, hives, nosebleeds, shortness of breath.",hypertension_high_blood_pressure_crisis
+"Complaints: chest pain, cyanosis, shortness of breath, itchy eyes, nosebleeds.",hypertension_high_blood_pressure_crisis
+"Noted nausea, visual aura, sensitivity to sound, runny nose, throbbing pain over the last 48 hours.",migraine
+"Complaints: sensitivity to sound, visual aura, severe headache, dizziness, confusion.",migraine
+"Noted sneezing, mild headache, congestion, palpitations, abdominal pain (lower right quadrant) over the last 48 hours.",common_cold
+"Patient reports fatigue, anxiety, palpitations, dry mouth, abdominal pain (lower right quadrant).",myocardial_infarction_heart_attack
+"Complaints: chills, body aches, chest pain or pressure, dry cough, muscle aches.",covid_19
+"Complaints: dry mouth, chills, nosebleeds, sore throat, headache.",influenza
+"Noted sudden severe headache, congestion, watery eyes, mild headache, nausea over the last 48 hours.",common_cold
+"Patient reports headache, stomach cramps, sudden vision changes, dehydration, fever.",gastroenteritis
+"Symptoms include sensitivity to sound, headache, nausea, coughing, confusion.",migraine
+"Complaints: sudden numbness or weakness, lower abdominal pain, confusion, loss of taste or smell, sudden vision changes.",stroke
+"Patient reports fever, sweating, headache, chills, chest pain.",covid_19
+"Complaints: rash, muscle aches, diarrhea, chills, headache.",covid_19
+"Noted rash, diarrhea, fatigue, dehydration, stomach cramps over the last 48 hours.",food_poisoning
+"Complaints: dry cough, dehydration, fever, nausea, cyanosis.",gastroenteritis
+"Symptoms include dehydration, mild fever, muscle aches, stomach cramps, diarrhea.",gastroenteritis
+"Noted difficulty speaking in full sentences, congestion, watery eyes, throbbing pain, sneezing over the last 48 hours.",common_cold
+"Noted fatigue, dry cough, fever, facial droop, loss of appetite over the last 48 hours.",gastroenteritis
+"Noted chills, dry cough, headache, stomach cramps, loss of balance or coordination over the last 48 hours.",covid_19
+"Complaints: vomiting, nausea, stomach cramps, fatigue, sudden vision changes.",gastroenteritis
+"Noted nausea, loss of appetite, sudden vision changes, sore throat, fever over the last 48 hours.",appendicitis
+"Patient reports lower abdominal pain, mild fever, frequent urination, anxiety, cloudy urine.",urinary_tract_infection
+"Noted abdominal pain (lower right quadrant), cloudy urine, urgency to urinate, lightheadedness, lower abdominal pain over the last 48 hours.",urinary_tract_infection
+"Symptoms include blurred vision, dizziness, fainting, itchy eyes, sensitivity to light.",vasovagal_syncope
+"Noted frequent urination, visual aura, mild headache, sneezing, sore throat over the last 48 hours.",common_cold
+"Patient reports abdominal tenderness, congestion, fainting, watery eyes, runny nose.",common_cold
+"Symptoms include throbbing pain, nausea, chills, sensitivity to sound, fever.",migraine
+"Symptoms include itchy eyes, fainting, sweating, dizziness, loss of taste or smell.",vasovagal_syncope
+"Noted sudden severe headache, mild fever, watery eyes, coughing, hives over the last 48 hours.",allergy
+"Complaints: cough (productive or dry), mild headache, watery eyes, nasal congestion, congestion.",common_cold
+"Symptoms include fatigue, dry cough, dark urine, abdominal pain (lower right quadrant), runny nose.",influenza
+"Symptoms include throbbing pain, frequent urination, coughing, itchy eyes, nasal congestion.",allergy
+"Noted shortness of breath, itchy eyes, vomiting, rash, fatigue over the last 48 hours.",myocardial_infarction_heart_attack
+"Noted mild fever, cloudy urine, muscle aches, fever, frequent urination over the last 48 hours.",urinary_tract_infection
+"Complaints: sudden vision changes, cyanosis, fever, sweating, chills.",pneumonia
+"Patient reports sneezing, blurred vision, difficulty speaking in full sentences, severe headache, confusion.",hypertension_high_blood_pressure_crisis
+"Patient reports sudden vision changes, vomiting, sensitivity to light, sensitivity to sound, muscle aches.",migraine
+"Noted congestion, body aches, loss of balance, sneezing, mild headache over the last 48 hours.",common_cold
+"Patient reports fainting, palpitations, blurred vision, chest pain, lightheadedness.",vasovagal_syncope
+"Complaints: lightheadedness, confusion, chest pain or pressure, vomiting, loss of balance.",low_blood_pressure_hypotension
+"Symptoms include vomiting, chills, hives, sweating, lightheadedness.",myocardial_infarction_heart_attack
+"Patient reports vomiting, urgency to urinate, itchy eyes, palpitations, nausea.",myocardial_infarction_heart_attack
+"Patient reports fever, sweating, congestion, watery eyes, fatigue.",pneumonia
+"Patient reports lightheadedness, runny nose, nausea, confusion, shortness of breath.",myocardial_infarction_heart_attack
+"Patient reports nosebleeds, anxiety, difficulty speaking in full sentences, facial droop, wheezing.",asthma_attack
+"Complaints: coughing, chest pain or pressure, pallor, chest tightness, wheezing.",asthma_attack
+"Complaints: lower abdominal pain, headache, throbbing pain, fever, fatigue.",influenza
+"Symptoms include headache, vomiting, muscle aches, nausea, cough (productive or dry).",migraine
+"Complaints: sore throat, watery eyes, mild headache, sudden severe headache, lightheadedness.",common_cold
+"Noted dehydration, mild headache, congestion, cough (productive or dry), sore throat over the last 48 hours.",common_cold
+"Patient reports headache, dry mouth, nausea, shortness of breath, abdominal pain (lower right quadrant).",dehydration
+"Complaints: chest tightness, diarrhea, loss of taste or smell, fever, dehydration.",food_poisoning
+"Patient reports nausea, abdominal pain (lower right quadrant), mild headache, dizziness, blurred vision.",vasovagal_syncope
+"Patient reports diarrhea, fever, difficulty speaking in full sentences, loss of appetite, vomiting.",gastroenteritis
+"Symptoms include dizziness, chest pain, sensitivity to sound, stomach cramps, vomiting.",migraine
+"Noted sudden difficulty speaking or understanding, lightheadedness, loss of taste or smell, fatigue, blurred vision over the last 48 hours.",low_blood_pressure_hypotension
+"Complaints: frequent urination, cough (productive or dry), urgency to urinate, mild fever, loss of balance.",urinary_tract_infection
+"Symptoms include cloudy urine, lightheadedness, shortness of breath, confusion, blurred vision.",hypertension_high_blood_pressure_crisis
+"Patient reports chest tightness, anxiety, palpitations, fatigue, loss of taste or smell.",myocardial_infarction_heart_attack
+"Symptoms include fatigue, chest pain, severe headache, diarrhea, anxiety.",hypertension_high_blood_pressure_crisis
+"Symptoms include loss of appetite, dizziness, diarrhea, loss of balance, fatigue.",gastroenteritis
+"Noted sweating, lower abdominal pain, confusion, chest pain, blurred vision over the last 48 hours.",hypertension_high_blood_pressure_crisis
+"Complaints: wheezing, runny nose, sudden numbness or weakness, confusion, loss of balance or coordination.",stroke
+"Patient reports muscle aches, rash, itchy eyes, coughing, congestion.",allergy
+"Patient reports cloudy urine, frequent urination, sweating, cough (productive or dry), urgency to urinate.",urinary_tract_infection
+"Complaints: fever, loss of taste or smell, abdominal pain (lower right quadrant), loss of appetite, vomiting.",food_poisoning
+"Patient reports chest pain, chills, burning sensation when urinating, fainting, fatigue.",pneumonia
+"Noted severe headache, anxiety, hives, loss of balance, shortness of breath over the last 48 hours.",hypertension_high_blood_pressure_crisis
+"Symptoms include seizures, sudden severe headache, sudden numbness or weakness, facial droop, dizziness.",stroke
+"Symptoms include body aches, chills, fatigue, throbbing pain, dry cough.",influenza
+"Noted constipation or diarrhea, blurred vision, sweating, throbbing pain, fainting over the last 48 hours.",vasovagal_syncope
+"Complaints: sweating, loss of balance or coordination, fever, fatigue, vomiting.",food_poisoning
+"Symptoms include dehydration, sudden vision changes, fever, loss of appetite, congestion.",gastroenteritis
+"Complaints: loss of balance or coordination, sudden vision changes, fever, facial droop, sudden severe headache.",stroke
+"Complaints: visual aura, lightheadedness, sore throat, loss of taste or smell, chills.",covid_19
+"Noted chest pain, loss of appetite, itchy eyes, wheezing, shortness of breath over the last 48 hours.",pneumonia
+"Complaints: chills, cloudy urine, dry cough, difficulty speaking in full sentences, muscle aches.",covid_19
+"Complaints: sudden severe headache, watery eyes, sneezing, abdominal tenderness, coughing.",allergy
+"Symptoms include abdominal pain (lower right quadrant), vomiting, loss of appetite, fainting, constipation or diarrhea.",appendicitis
+"Noted sore throat, severe headache, loss of appetite, diarrhea, dehydration over the last 48 hours.",gastroenteritis
+"Noted chest pain, blurred vision, chills, confusion, shortness of breath over the last 48 hours.",hypertension_high_blood_pressure_crisis
+"Patient reports sweating, throbbing pain, visual aura, chest pain, sensitivity to sound.",migraine
+"Patient reports hives, mild headache, loss of balance, confusion, dizziness.",low_blood_pressure_hypotension
+"Noted sore throat, runny nose, cough (productive or dry), mild headache, sensitivity to sound over the last 48 hours.",common_cold
+"Patient reports watery eyes, cough (productive or dry), dry mouth, runny nose, mild headache.",common_cold
+"Patient reports body aches, dehydration, nausea, difficulty speaking in full sentences, diarrhea.",gastroenteritis
+"Complaints: sweating, visual aura, loss of balance, sensitivity to sound, sensitivity to light.",migraine
+"Noted lightheadedness, congestion, sneezing, coughing, sore throat over the last 48 hours.",common_cold
+"Noted dry cough, watery eyes, coughing, itchy eyes, rash over the last 48 hours.",allergy
+"Noted anxiety, nasal congestion, shortness of breath, chest pain, cough (productive or dry) over the last 48 hours.",pneumonia
+"Noted blurred vision, shortness of breath, sensitivity to light, chest pain, lower abdominal pain over the last 48 hours.",hypertension_high_blood_pressure_crisis
+"Patient reports lightheadedness, dark urine, dehydration, shortness of breath, fatigue.",dehydration
+"Complaints: sneezing, lightheadedness, rash, runny nose, hives.",allergy
+"Symptoms include loss of appetite, fatigue, fever, muscle aches, sneezing.",food_poisoning
+"Symptoms include anxiety, difficulty speaking in full sentences, hives, wheezing, watery eyes.",asthma_attack
+"Noted sensitivity to sound, chest pain, loss of appetite, fever, vomiting over the last 48 hours.",food_poisoning
+"Patient reports nosebleeds, dizziness, severe headache, blurred vision, visual aura.",hypertension_high_blood_pressure_crisis
+"Symptoms include fatigue, loss of appetite, dehydration, nausea, diarrhea.",food_poisoning
+"Patient reports dark urine, fatigue, mild headache, rash, headache.",dehydration
+"Complaints: fatigue, constipation or diarrhea, lightheadedness, loss of balance, dizziness.",low_blood_pressure_hypotension
+"Noted dark urine, sneezing, headache, vomiting, throbbing pain over the last 48 hours.",migraine
+"Patient reports sudden difficulty speaking or understanding, fatigue, loss of appetite, body aches, chest pain.",influenza
+"Noted coughing, abdominal pain (lower right quadrant), sensitivity to light, constipation or diarrhea, nausea over the last 48 hours.",appendicitis
+"Symptoms include seizures, sensitivity to sound, loss of appetite, fever, abdominal pain (lower right quadrant).",appendicitis
+"Patient reports sudden vision changes, severe headache, confusion, nosebleeds, sweating.",hypertension_high_blood_pressure_crisis
+"Symptoms include coughing, sensitivity to sound, sudden numbness or weakness, anxiety, shortness of breath.",asthma_attack
+"Symptoms include fatigue, blurred vision, confusion, shortness of breath, sensitivity to light.",hypertension_high_blood_pressure_crisis
+"Symptoms include dehydration, fatigue, loss of appetite, cough (productive or dry), rash.",pneumonia
+"Complaints: sore throat, shortness of breath, dizziness, fever, chest pain.",covid_19
+"Complaints: fatigue, shortness of breath, chills, burning sensation when urinating, sweating.",pneumonia
+"Symptoms include mild cough, headache, fatigue, loss of taste or smell, cough (productive or dry).",covid_19
+"Patient reports stomach cramps, loss of appetite, chest pain or pressure, lower abdominal pain, fatigue.",food_poisoning
+"Symptoms include loss of taste or smell, palpitations, fatigue, chest pain or pressure, abdominal tenderness.",myocardial_infarction_heart_attack
+"Symptoms include loss of appetite, cyanosis, dry cough, cough (productive or dry), shortness of breath.",pneumonia
+"Complaints: watery eyes, coughing, sensitivity to light, hives, sneezing.",allergy
+"Complaints: confusion, anxiety, nausea, stomach cramps, dark urine.",dehydration
+"Complaints: sudden severe headache, visual aura, fever, headache, dizziness.",migraine
+"Patient reports throbbing pain, muscle aches, loss of balance or coordination, sudden difficulty speaking or understanding, confusion.",stroke
+"Complaints: throbbing pain, sensitivity to sound, frequent urination, dizziness, constipation or diarrhea.",migraine
+"Patient reports sudden difficulty speaking or understanding, fainting, palpitations, chest pain, pallor.",vasovagal_syncope
+"Patient reports vomiting, stomach cramps, chills, fatigue, dehydration.",food_poisoning
+"Noted nausea, chest pain or pressure, pallor, sweating, runny nose over the last 48 hours.",vasovagal_syncope
+"Complaints: anxiety, nosebleeds, mild cough, severe headache, cloudy urine.",hypertension_high_blood_pressure_crisis
+"Complaints: chills, diarrhea, confusion, facial droop, sudden difficulty speaking or understanding.",stroke
+"Noted cyanosis, body aches, dark urine, cough (productive or dry), shortness of breath over the last 48 hours.",pneumonia
+"Complaints: dry mouth, wheezing, dizziness, anxiety, fatigue.",dehydration
+"Symptoms include cloudy urine, throbbing pain, sensitivity to light, visual aura, confusion.",migraine
+"Patient reports rash, confusion, dizziness, cough (productive or dry), headache.",dehydration
+"Complaints: headache, sensitivity to sound, dizziness, cough (productive or dry), abdominal pain (lower right quadrant).",migraine
+"Patient reports sudden numbness or weakness, confusion, lightheadedness, blurred vision, lower abdominal pain.",low_blood_pressure_hypotension
+"Symptoms include loss of appetite, fatigue, chills, blurred vision, nosebleeds.",influenza
+"Patient reports nausea, dark urine, itchy eyes, dry mouth, fatigue.",dehydration
+"Complaints: diarrhea, nausea, sensitivity to light, dehydration, blurred vision.",food_poisoning
+"Symptoms include fever, rash, dark urine, constipation or diarrhea, nausea.",appendicitis
+"Noted loss of appetite, cough (productive or dry), dizziness, loss of taste or smell, fever over the last 48 hours.",pneumonia
+"Symptoms include fatigue, pallor, loss of appetite, cough (productive or dry), cyanosis.",pneumonia
+"Symptoms include sneezing, wheezing, coughing, sudden severe headache, shortness of breath.",asthma_attack
+"Noted headache, vomiting, visual aura, seizures, dehydration over the last 48 hours.",migraine
+"Noted muscle aches, anxiety, coughing, shortness of breath, chest tightness over the last 48 hours.",asthma_attack
+"Symptoms include dehydration, palpitations, sweating, facial droop, nausea.",myocardial_infarction_heart_attack
+"Complaints: sudden difficulty speaking or understanding, loss of balance or coordination, facial droop, fatigue, sneezing.",stroke
+"Patient reports sweating, lower abdominal pain, dizziness, cyanosis, cough (productive or dry).",pneumonia
+"Noted dry mouth, watery eyes, sensitivity to sound, throbbing pain, headache over the last 48 hours.",migraine
+"Patient reports runny nose, dry cough, sudden severe headache, fever, sneezing.",influenza
+"Noted anxiety, chest tightness, difficulty speaking in full sentences, nausea, muscle aches over the last 48 hours.",asthma_attack
+"Patient reports fainting, congestion, fatigue, sweating, palpitations.",vasovagal_syncope
+"Noted loss of appetite, body aches, chest pain, fatigue, burning sensation when urinating over the last 48 hours.",pneumonia
+"Patient reports chills, runny nose, throbbing pain, fatigue, nasal congestion.",influenza
+"Patient reports fatigue, itchy eyes, hives, vomiting, nasal congestion.",allergy
+"Patient reports fatigue, blurred vision, wheezing, constipation or diarrhea, dizziness.",low_blood_pressure_hypotension
+"Complaints: lightheadedness, lower abdominal pain, frequent urination, cloudy urine, fever.",urinary_tract_infection
+"Noted body aches, sneezing, runny nose, seizures, watery eyes over the last 48 hours.",allergy
+"Noted rash, watery eyes, abdominal tenderness, body aches, nasal congestion over the last 48 hours.",allergy
+"Patient reports nasal congestion, sweating, nausea, urgency to urinate, palpitations.",vasovagal_syncope
+"Noted sudden numbness or weakness, sudden vision changes, confusion, sore throat, runny nose over the last 48 hours.",stroke
+"Complaints: diarrhea, nausea, loss of appetite, dry mouth, congestion.",food_poisoning
+"Complaints: dark urine, sneezing, confusion, sensitivity to light, nausea.",dehydration
+"Noted runny nose, muscle aches, abdominal pain (lower right quadrant), body aches, fatigue over the last 48 hours.",influenza
+"Complaints: dizziness, dry mouth, headache, body aches, visual aura.",dehydration
+"Patient reports dry mouth, throbbing pain, lightheadedness, fatigue, dizziness.",low_blood_pressure_hypotension
+"Complaints: nausea, confusion, loss of balance, lightheadedness, shortness of breath.",low_blood_pressure_hypotension
+"Complaints: anxiety, constipation or diarrhea, lightheadedness, blurred vision, fatigue.",myocardial_infarction_heart_attack
+"Complaints: mild fever, dizziness, sweating, fatigue, pallor.",vasovagal_syncope
+"Complaints: coughing, loss of balance or coordination, sudden numbness or weakness, sudden severe headache, mild headache.",stroke
+"Symptoms include fatigue, dehydration, vomiting, mild cough, mild fever.",food_poisoning
+"Noted headache, cloudy urine, fatigue, loss of appetite, body aches over the last 48 hours.",influenza
+"Complaints: palpitations, lightheadedness, sweating, dizziness, chest tightness.",vasovagal_syncope
+"Patient reports shortness of breath, difficulty speaking in full sentences, chest pain, wheezing, anxiety.",hypertension_high_blood_pressure_crisis
+"Noted fatigue, nausea, dehydration, cloudy urine, headache over the last 48 hours.",gastroenteritis
+"Patient reports confusion, coughing, chest pain, shortness of breath, loss of balance or coordination.",hypertension_high_blood_pressure_crisis
+"Complaints: hives, stomach cramps, fatigue, seizures, vomiting.",gastroenteritis
+"Patient reports stomach cramps, vomiting, abdominal tenderness, nausea, constipation or diarrhea.",appendicitis
+"Patient reports runny nose, hives, coughing, diarrhea, sensitivity to sound.",allergy
+"Complaints: lightheadedness, coughing, confusion, chest pain, severe headache.",hypertension_high_blood_pressure_crisis
+"Patient reports cyanosis, dry mouth, shortness of breath, fever, sudden vision changes.",pneumonia
+"Noted constipation or diarrhea, abdominal tenderness, urgency to urinate, loss of appetite, nausea over the last 48 hours.",appendicitis
+"Patient reports confusion, fatigue, nausea, visual aura, blurred vision.",low_blood_pressure_hypotension
+"Complaints: sore throat, mild cough, mild headache, cloudy urine, cyanosis.",common_cold
+"Patient reports watery eyes, cyanosis, vomiting, shortness of breath, loss of appetite.",pneumonia
+"Patient reports sudden severe headache, sneezing, sweating, confusion, sudden numbness or weakness.",stroke
+"Patient reports blurred vision, palpitations, coughing, sore throat, lightheadedness.",vasovagal_syncope
+"Complaints: nasal congestion, dizziness, vomiting, blurred vision, loss of balance.",low_blood_pressure_hypotension
+"Noted sweating, palpitations, pallor, fainting, dark urine over the last 48 hours.",vasovagal_syncope
+"Symptoms include severe headache, confusion, anxiety, sudden vision changes, sensitivity to light.",hypertension_high_blood_pressure_crisis
+"Noted body aches, severe headache, sensitivity to sound, blurred vision, anxiety over the last 48 hours.",hypertension_high_blood_pressure_crisis
+"Patient reports difficulty speaking in full sentences, frequent urination, coughing, congestion, chest tightness.",asthma_attack
+"Complaints: sore throat, mild headache, pallor, congestion, sudden severe headache.",common_cold
+"Noted coughing, itchy eyes, stomach cramps, cough (productive or dry), sneezing over the last 48 hours.",allergy
+"Complaints: urgency to urinate, lower abdominal pain, sudden severe headache, frequent urination, cyanosis.",urinary_tract_infection
+"Patient reports itchy eyes, constipation or diarrhea, watery eyes, runny nose, coughing.",allergy
+"Patient reports dark urine, fatigue, dry mouth, dizziness, itchy eyes.",dehydration
+"Symptoms include fatigue, confusion, anxiety, diarrhea, fainting.",low_blood_pressure_hypotension
+"Symptoms include lightheadedness, dry mouth, muscle aches, palpitations, pallor.",vasovagal_syncope
+"Noted chest pain, severe headache, sensitivity to light, anxiety, loss of balance or coordination over the last 48 hours.",hypertension_high_blood_pressure_crisis
+"Complaints: cough (productive or dry), lightheadedness, diarrhea, blurred vision, sweating.",vasovagal_syncope
+"Symptoms include cyanosis, fatigue, hives, body aches, fever.",pneumonia
+"Noted difficulty speaking in full sentences, vomiting, cyanosis, loss of appetite, fever over the last 48 hours.",food_poisoning
+"Symptoms include chest pain or pressure, headache, mild fever, fever, muscle aches.",covid_19
+"Complaints: watery eyes, cloudy urine, abdominal tenderness, frequent urination, burning sensation when urinating.",urinary_tract_infection
+"Symptoms include palpitations, blurred vision, cloudy urine, urgency to urinate, mild fever.",urinary_tract_infection
+"Noted loss of appetite, palpitations, constipation or diarrhea, loss of balance, fever over the last 48 hours.",appendicitis
+"Complaints: burning sensation when urinating, mild fever, hives, cloudy urine, loss of balance.",urinary_tract_infection
+"Complaints: anxiety, blurred vision, abdominal tenderness, vomiting, shortness of breath.",hypertension_high_blood_pressure_crisis
+"Patient reports coughing, cough (productive or dry), sore throat, wheezing, shortness of breath.",asthma_attack
+"Noted loss of balance, fatigue, cyanosis, blurred vision, lightheadedness over the last 48 hours.",low_blood_pressure_hypotension
+"Patient reports cyanosis, shortness of breath, nasal congestion, chills, chest pain.",pneumonia
+"Symptoms include runny nose, lightheadedness, pallor, sweating, rash.",vasovagal_syncope
+"Symptoms include dark urine, pallor, dry mouth, difficulty speaking in full sentences, dizziness.",dehydration
+"Complaints: fatigue, cough (productive or dry), dizziness, fainting, chest tightness.",low_blood_pressure_hypotension
+"Symptoms include vomiting, body aches, nausea, fatigue, abdominal tenderness.",appendicitis
+"Complaints: lightheadedness, cough (productive or dry), fatigue, loss of balance, cloudy urine.",low_blood_pressure_hypotension
+"Noted seizures, cloudy urine, burning sensation when urinating, mild fever, urgency to urinate over the last 48 hours.",urinary_tract_infection
+"Noted dizziness, throbbing pain, confusion, nausea, sensitivity to light over the last 48 hours.",migraine
+"Patient reports vomiting, abdominal pain (lower right quadrant), palpitations, lower abdominal pain, fever.",appendicitis
+"Complaints: confusion, cyanosis, palpitations, chest pain or pressure, lightheadedness.",myocardial_infarction_heart_attack
+"Symptoms include facial droop, diarrhea, nausea, chest pain or pressure, sweating.",myocardial_infarction_heart_attack
+"Patient reports dry cough, sudden vision changes, headache, chills, cloudy urine.",influenza
+"Noted dry cough, vomiting, fatigue, muscle aches, sudden difficulty speaking or understanding over the last 48 hours.",covid_19
+"Complaints: dry mouth, mild headache, dizziness, muscle aches, dark urine.",dehydration
+"Patient reports abdominal pain (lower right quadrant), urgency to urinate, lightheadedness, constipation or diarrhea, nausea.",appendicitis
+"Symptoms include loss of appetite, sensitivity to sound, difficulty speaking in full sentences, anxiety, wheezing.",asthma_attack
+"Noted loss of appetite, vomiting, nausea, nosebleeds, fatigue over the last 48 hours.",food_poisoning
+"Noted stomach cramps, fever, cough (productive or dry), hives, vomiting over the last 48 hours.",food_poisoning
+"Symptoms include stomach cramps, lightheadedness, cough (productive or dry), palpitations, fatigue.",myocardial_infarction_heart_attack
+"Patient reports fever, visual aura, dry cough, stomach cramps, nausea.",food_poisoning
+"Noted dizziness, lightheadedness, dehydration, dark urine, anxiety over the last 48 hours.",dehydration
+"Symptoms include fever, dehydration, chills, diarrhea, vomiting.",gastroenteritis
+"Patient reports vomiting, dizziness, nausea, visual aura, headache.",migraine
+"Symptoms include difficulty speaking in full sentences, cough (productive or dry), loss of appetite, sweating, fever.",pneumonia
+"Symptoms include sensitivity to sound, loss of balance, fatigue, lightheadedness, mild cough.",low_blood_pressure_hypotension
+"Symptoms include shortness of breath, anxiety, sudden numbness or weakness, dehydration, nosebleeds.",hypertension_high_blood_pressure_crisis
+"Symptoms include nosebleeds, sudden numbness or weakness, nausea, stomach cramps, dehydration.",food_poisoning
+"Complaints: runny nose, mild headache, abdominal pain (lower right quadrant), sore throat, headache.",influenza
+"Noted fatigue, difficulty speaking in full sentences, chest pain or pressure, coughing, shortness of breath over the last 48 hours.",asthma_attack
+"Noted frequent urination, headache, dry cough, chills, pallor over the last 48 hours.",covid_19
+"Symptoms include severe headache, sweating, pallor, chest tightness, nausea.",vasovagal_syncope
+"Patient reports chills, fatigue, diarrhea, constipation or diarrhea, muscle aches.",covid_19
+"Symptoms include nosebleeds, sweating, difficulty speaking in full sentences, pallor, fainting.",vasovagal_syncope
+"Complaints: throbbing pain, nosebleeds, cyanosis, headache, nausea.",migraine
+"Patient reports fainting, lightheadedness, constipation or diarrhea, blurred vision, loss of balance.",low_blood_pressure_hypotension
+"Patient reports congestion, constipation or diarrhea, sore throat, fever, fatigue.",influenza
+"Complaints: coughing, sudden numbness or weakness, abdominal pain (lower right quadrant), sudden vision changes, sudden difficulty speaking or understanding.",stroke
+"Noted sore throat, mild headache, loss of taste or smell, constipation or diarrhea, fever over the last 48 hours.",covid_19
+"Complaints: dizziness, confusion, nausea, fatigue, sudden severe headache.",dehydration
+"Noted sudden difficulty speaking or understanding, watery eyes, chest tightness, congestion, sneezing over the last 48 hours.",common_cold
+"Symptoms include sudden severe headache, sudden numbness or weakness, mild fever, frequent urination, burning sensation when urinating.",urinary_tract_infection
+"Complaints: dry mouth, loss of taste or smell, loss of balance or coordination, confusion, facial droop.",stroke
+"Complaints: dizziness, nausea, headache, congestion, sensitivity to sound.",migraine
+"Noted blurred vision, fatigue, chest pain, confusion, dizziness over the last 48 hours.",low_blood_pressure_hypotension
+"Patient reports dizziness, hives, throbbing pain, sudden severe headache, visual aura.",migraine
+"Symptoms include dry mouth, dry cough, fever, lightheadedness, loss of appetite.",influenza
+"Symptoms include wheezing, stomach cramps, loss of appetite, cloudy urine, nausea.",gastroenteritis
+"Complaints: palpitations, mild fever, sudden vision changes, lower abdominal pain, frequent urination.",urinary_tract_infection
+"Symptoms include sweating, vomiting, fatigue, sneezing, sensitivity to sound.",myocardial_infarction_heart_attack
+"Symptoms include nausea, sensitivity to light, sensitivity to sound, throbbing pain, chills.",migraine
+"Symptoms include sneezing, abdominal tenderness, dizziness, sweating, pallor.",vasovagal_syncope
+"Noted cough (productive or dry), loss of taste or smell, cyanosis, fever, dry mouth over the last 48 hours.",pneumonia
+"Noted cloudy urine, burning sensation when urinating, coughing, palpitations, urgency to urinate over the last 48 hours.",urinary_tract_infection
+"Noted severe headache, sudden vision changes, sore throat, anxiety, blurred vision over the last 48 hours.",hypertension_high_blood_pressure_crisis
+"Complaints: fever, urgency to urinate, frequent urination, loss of appetite, burning sensation when urinating.",urinary_tract_infection
+"Symptoms include shortness of breath, severe headache, wheezing, lower abdominal pain, blurred vision.",hypertension_high_blood_pressure_crisis
+"Symptoms include sudden numbness or weakness, fatigue, anxiety, congestion, shortness of breath.",myocardial_infarction_heart_attack
+"Patient reports loss of appetite, sneezing, fever, body aches, runny nose.",influenza
+"Complaints: dry mouth, hives, fatigue, lightheadedness, shortness of breath.",dehydration
+"Complaints: chills, loss of appetite, sneezing, fatigue, cough (productive or dry).",pneumonia
+"Complaints: sudden severe headache, nosebleeds, lightheadedness, confusion, headache.",dehydration
+"Patient reports blurred vision, palpitations, dizziness, fatigue, anxiety.",low_blood_pressure_hypotension
+"Complaints: constipation or diarrhea, abdominal pain (lower right quadrant), mild cough, loss of appetite, confusion.",appendicitis
+"Patient reports frequent urination, mild fever, burning sensation when urinating, wheezing, lower abdominal pain.",urinary_tract_infection
+"Symptoms include sweating, seizures, fatigue, watery eyes, chills.",pneumonia
+"Noted seizures, sudden severe headache, throbbing pain, facial droop, sudden difficulty speaking or understanding over the last 48 hours.",stroke
+"Noted sudden severe headache, constipation or diarrhea, sudden vision changes, confusion, muscle aches over the last 48 hours.",stroke
+"Noted chest pain, loss of appetite, dehydration, constipation or diarrhea, nausea over the last 48 hours.",gastroenteritis
+"Symptoms include shortness of breath, nausea, muscle aches, confusion, sore throat.",covid_19
+"Noted stomach cramps, fatigue, cyanosis, dehydration, palpitations over the last 48 hours.",food_poisoning
+"Symptoms include anxiety, nosebleeds, abdominal tenderness, throbbing pain, severe headache.",hypertension_high_blood_pressure_crisis
+"Noted chest pain or pressure, constipation or diarrhea, vomiting, palpitations, sore throat over the last 48 hours.",myocardial_infarction_heart_attack
+"Patient reports dehydration, urgency to urinate, itchy eyes, fever, loss of appetite.",gastroenteritis
+"Noted confusion, loss of balance, lightheadedness, wheezing, vomiting over the last 48 hours.",low_blood_pressure_hypotension
+"Patient reports dehydration, sudden severe headache, watery eyes, mild cough, mild headache.",common_cold
+"Symptoms include abdominal tenderness, abdominal pain (lower right quadrant), mild cough, lightheadedness, constipation or diarrhea.",appendicitis
+"Complaints: loss of appetite, headache, stomach cramps, sore throat, hives.",influenza
+"Noted abdominal tenderness, sneezing, coughing, itchy eyes, difficulty speaking in full sentences over the last 48 hours.",allergy
+"Patient reports sudden vision changes, difficulty speaking in full sentences, confusion, chest tightness, coughing.",asthma_attack
+"Symptoms include loss of appetite, fatigue, vomiting, lightheadedness, severe headache.",food_poisoning
+"Symptoms include fatigue, sudden numbness or weakness, frequent urination, loss of balance or coordination, sudden vision changes.",stroke
+"Patient reports fatigue, loss of balance, loss of balance or coordination, burning sensation when urinating, fainting.",low_blood_pressure_hypotension
+"Complaints: blurred vision, dizziness, mild cough, confusion, lower abdominal pain.",low_blood_pressure_hypotension
+"Symptoms include nausea, chest pain or pressure, loss of balance or coordination, burning sensation when urinating, shortness of breath.",myocardial_infarction_heart_attack
+"Complaints: sneezing, watery eyes, loss of appetite, runny nose, lower abdominal pain.",common_cold
+"Patient reports facial droop, blurred vision, severe headache, sudden severe headache, shortness of breath.",hypertension_high_blood_pressure_crisis
+"Patient reports dehydration, nasal congestion, itchy eyes, rash, sensitivity to light.",allergy
+"Noted vomiting, chills, sore throat, mild headache, mild cough over the last 48 hours.",common_cold
+"Noted dizziness, runny nose, sensitivity to light, confusion, visual aura over the last 48 hours.",migraine
+"Noted fever, loss of appetite, sudden difficulty speaking or understanding, muscle aches, loss of taste or smell over the last 48 hours.",covid_19
+"Patient reports fatigue, sweating, loss of appetite, stomach cramps, sudden numbness or weakness.",food_poisoning
+"Patient reports fainting, sweating, dizziness, lightheadedness, sensitivity to sound.",vasovagal_syncope
+"Symptoms include palpitations, nasal congestion, rash, pallor, runny nose.",allergy
+"Complaints: chest pain, lower abdominal pain, runny nose, anxiety, blurred vision.",hypertension_high_blood_pressure_crisis
+"Complaints: lightheadedness, loss of balance, severe headache, fainting, lower abdominal pain.",low_blood_pressure_hypotension
+"Symptoms include lower abdominal pain, urgency to urinate, cloudy urine, cough (productive or dry), sudden difficulty speaking or understanding.",urinary_tract_infection
+"Complaints: runny nose, loss of appetite, fever, difficulty speaking in full sentences, sore throat.",influenza
+"Complaints: severe headache, shortness of breath, dry cough, dry mouth, anxiety.",hypertension_high_blood_pressure_crisis
+"Patient reports anxiety, sudden numbness or weakness, mild headache, confusion, severe headache.",hypertension_high_blood_pressure_crisis
+"Complaints: fatigue, hives, fever, diarrhea, sensitivity to sound.",gastroenteritis
+"Symptoms include shortness of breath, coughing, nosebleeds, cloudy urine, anxiety.",asthma_attack
+"Complaints: sudden numbness or weakness, confusion, fainting, lightheadedness, loss of balance.",low_blood_pressure_hypotension
+"Noted dark urine, abdominal tenderness, dizziness, chest pain or pressure, dry mouth over the last 48 hours.",dehydration
+"Complaints: mild cough, watery eyes, coughing, sensitivity to light, mild headache.",common_cold
+"Patient reports anxiety, vomiting, loss of balance, shortness of breath, chest pain.",hypertension_high_blood_pressure_crisis
+"Symptoms include watery eyes, blurred vision, nausea, hives, pallor.",vasovagal_syncope
+"Patient reports chest pain or pressure, dry cough, fatigue, nosebleeds, sore throat.",influenza
+"Symptoms include chills, fever, loss of appetite, shortness of breath, lower abdominal pain.",pneumonia
+"Complaints: cough (productive or dry), sneezing, palpitations, fatigue, sweating.",myocardial_infarction_heart_attack
+"Complaints: nausea, sneezing, vomiting, mild fever, fever.",food_poisoning
+"Symptoms include sweating, stomach cramps, blurred vision, pallor, frequent urination.",vasovagal_syncope
+"Symptoms include fainting, confusion, sensitivity to sound, visual aura, throbbing pain.",migraine
+"Noted sudden difficulty speaking or understanding, dehydration, sudden numbness or weakness, sudden vision changes, burning sensation when urinating over the last 48 hours.",stroke
+"Patient reports dizziness, vomiting, fainting, visual aura, throbbing pain.",migraine
+"Complaints: cyanosis, fever, chest pain, confusion, constipation or diarrhea.",pneumonia
+"Patient reports headache, sore throat, lower abdominal pain, chest pain, body aches.",influenza
+"Symptoms include wheezing, sore throat, urgency to urinate, coughing, anxiety.",asthma_attack
+"Complaints: sudden numbness or weakness, sore throat, rash, hives, watery eyes.",allergy
+"Noted sneezing, mild headache, hives, seizures, watery eyes over the last 48 hours.",common_cold
+"Complaints: confusion, facial droop, hives, sudden severe headache, mild cough.",stroke
+"Patient reports constipation or diarrhea, throbbing pain, nasal congestion, loss of appetite, abdominal tenderness.",appendicitis
+"Patient reports loss of appetite, cough (productive or dry), lower abdominal pain, constipation or diarrhea, abdominal tenderness.",appendicitis
+"Noted loss of taste or smell, sensitivity to sound, loss of appetite, fatigue, stomach cramps over the last 48 hours.",food_poisoning
+"Patient reports sore throat, sudden numbness or weakness, sudden vision changes, abdominal pain (lower right quadrant), sudden severe headache.",stroke
+"Patient reports severe headache, fainting, pallor, dizziness, sneezing.",vasovagal_syncope
+"Patient reports nausea, chest pain or pressure, throbbing pain, severe headache, palpitations.",myocardial_infarction_heart_attack
+"Patient reports constipation or diarrhea, sweating, dizziness, vomiting, palpitations.",myocardial_infarction_heart_attack
+"Noted cyanosis, chest pain, nosebleeds, shortness of breath, severe headache over the last 48 hours.",hypertension_high_blood_pressure_crisis
+"Noted shortness of breath, burning sensation when urinating, nausea, dry mouth, lightheadedness over the last 48 hours.",myocardial_infarction_heart_attack
+"Symptoms include dark urine, anxiety, chest pain, lightheadedness, dizziness.",dehydration
+"Noted urgency to urinate, vomiting, congestion, fever, fatigue over the last 48 hours.",food_poisoning
+"Noted dizziness, confusion, abdominal pain (lower right quadrant), fainting, vomiting over the last 48 hours.",low_blood_pressure_hypotension
+"Symptoms include nausea, dizziness, dry mouth, shortness of breath, coughing.",dehydration
+"Patient reports sneezing, runny nose, cyanosis, congestion, loss of taste or smell.",common_cold
+"Complaints: diarrhea, nausea, visual aura, chills, dehydration.",gastroenteritis
+"Complaints: nausea, vomiting, fatigue, mild headache, chest pain or pressure.",food_poisoning
+"Symptoms include cyanosis, abdominal pain (lower right quadrant), shortness of breath, chest pain, anxiety.",hypertension_high_blood_pressure_crisis
+"Patient reports burning sensation when urinating, severe headache, confusion, nosebleeds, vomiting.",hypertension_high_blood_pressure_crisis
+"Patient reports lightheadedness, loss of balance, fainting, rash, body aches.",low_blood_pressure_hypotension
+"Complaints: chills, frequent urination, chest pain, diarrhea, sweating.",pneumonia
+"Patient reports muscle aches, blurred vision, shortness of breath, body aches, severe headache.",hypertension_high_blood_pressure_crisis
+"Symptoms include fainting, dizziness, confusion, shortness of breath, severe headache.",hypertension_high_blood_pressure_crisis
+"Symptoms include severe headache, lightheadedness, fainting, chills, blurred vision.",low_blood_pressure_hypotension
+"Patient reports chest tightness, vomiting, chest pain or pressure, nosebleeds, palpitations.",myocardial_infarction_heart_attack
+"Noted abdominal pain (lower right quadrant), headache, burning sensation when urinating, abdominal tenderness, fever over the last 48 hours.",appendicitis
+"Patient reports mild fever, loss of balance, frequent urination, sneezing, urgency to urinate.",urinary_tract_infection
+"Complaints: dizziness, throbbing pain, fainting, lightheadedness, dehydration.",low_blood_pressure_hypotension
+"Complaints: confusion, dry mouth, dizziness, mild fever, loss of balance.",dehydration
+"Complaints: diarrhea, sudden difficulty speaking or understanding, stomach cramps, blurred vision, vomiting.",food_poisoning
+"Complaints: watery eyes, shortness of breath, mild cough, seizures, sore throat.",common_cold
+"Noted dark urine, burning sensation when urinating, confusion, cough (productive or dry), fatigue over the last 48 hours.",dehydration
+"Patient reports anxiety, facial droop, difficulty speaking in full sentences, confusion, shortness of breath.",hypertension_high_blood_pressure_crisis
+"Noted visual aura, sensitivity to light, throbbing pain, loss of appetite, mild fever over the last 48 hours.",migraine
+"Noted mild headache, confusion, dizziness, fatigue, headache over the last 48 hours.",dehydration
+"Noted coughing, nausea, difficulty speaking in full sentences, dizziness, wheezing over the last 48 hours.",asthma_attack
+"Complaints: mild cough, watery eyes, body aches, sore throat, sweating.",common_cold
+"Noted sensitivity to sound, throbbing pain, fatigue, dizziness, rash over the last 48 hours.",migraine
+"Patient reports nosebleeds, confusion, vomiting, abdominal tenderness, abdominal pain (lower right quadrant).",appendicitis
+"Complaints: loss of balance, lower abdominal pain, loss of appetite, cough (productive or dry), chest pain.",pneumonia
+"Noted burning sensation when urinating, dehydration, mild fever, frequent urination, urgency to urinate over the last 48 hours.",urinary_tract_infection
+"Noted chest tightness, sneezing, coughing, watery eyes, hives over the last 48 hours.",allergy
+"Patient reports lower abdominal pain, loss of appetite, fatigue, dry mouth, nausea.",gastroenteritis
+"Patient reports fever, body aches, muscle aches, pallor, loss of appetite.",influenza
+"Complaints: chest pain or pressure, lightheadedness, sudden numbness or weakness, blurred vision, palpitations.",vasovagal_syncope
+"Patient reports nausea, chills, urgency to urinate, sweating, fainting.",vasovagal_syncope
+"Symptoms include sore throat, sudden numbness or weakness, loss of appetite, sudden vision changes, headache.",influenza
+"Symptoms include chest tightness, sweating, shortness of breath, anxiety, wheezing.",asthma_attack
+"Patient reports rash, cough (productive or dry), nasal congestion, hives, sneezing.",allergy
+"Patient reports shortness of breath, lightheadedness, blurred vision, fever, confusion.",low_blood_pressure_hypotension
+"Complaints: pallor, facial droop, cyanosis, sudden difficulty speaking or understanding, sudden severe headache.",stroke
+"Symptoms include watery eyes, lightheadedness, loss of balance, dry cough, fainting.",low_blood_pressure_hypotension
+"Patient reports abdominal pain (lower right quadrant), vomiting, constipation or diarrhea, chest tightness, frequent urination.",appendicitis
+"Patient reports sore throat, runny nose, mild headache, sweating, sudden severe headache.",common_cold
+"Complaints: dry mouth, loss of appetite, mild fever, fatigue, lightheadedness.",dehydration
+"Symptoms include anxiety, chest tightness, fatigue, dehydration, coughing.",asthma_attack
+"Symptoms include coughing, palpitations, fainting, lightheadedness, vomiting.",vasovagal_syncope
+"Patient reports loss of balance or coordination, fever, muscle aches, sudden numbness or weakness, sudden difficulty speaking or understanding.",stroke
+"Noted burning sensation when urinating, stomach cramps, dry mouth, headache, nausea over the last 48 hours.",dehydration
+"Patient reports fatigue, lightheadedness, chest pain, cough (productive or dry), fainting.",low_blood_pressure_hypotension
+"Symptoms include fever, abdominal pain (lower right quadrant), loss of appetite, sudden difficulty speaking or understanding, frequent urination.",appendicitis
+"Symptoms include sudden vision changes, anxiety, frequent urination, cloudy urine, burning sensation when urinating.",urinary_tract_infection
+"Patient reports blurred vision, loss of balance, fainting, chest pain, lightheadedness.",vasovagal_syncope
+"Patient reports dry mouth, lightheadedness, runny nose, nausea, chest pain.",dehydration
+"Patient reports nausea, abdominal pain (lower right quadrant), headache, dry mouth, dry cough.",dehydration
+"Patient reports sensitivity to sound, coughing, rash, fainting, itchy eyes.",allergy
+"Noted cloudy urine, shortness of breath, sudden vision changes, difficulty speaking in full sentences, wheezing over the last 48 hours.",asthma_attack
+"Noted difficulty speaking in full sentences, shortness of breath, throbbing pain, coughing, chest tightness over the last 48 hours.",asthma_attack
+"Symptoms include shortness of breath, sudden numbness or weakness, loss of appetite, sudden severe headache, sudden difficulty speaking or understanding.",stroke
+"Noted fatigue, fever, watery eyes, cough (productive or dry), chest pain or pressure over the last 48 hours.",pneumonia
+"Symptoms include nausea, headache, sensitivity to light, dizziness, watery eyes.",migraine
+"Symptoms include visual aura, sensitivity to light, shortness of breath, vomiting, rash.",migraine
+"Complaints: frequent urination, burning sensation when urinating, sweating, cloudy urine, sore throat.",urinary_tract_infection
+"Patient reports confusion, dry cough, mild fever, dizziness, lightheadedness.",low_blood_pressure_hypotension
+"Symptoms include chest pain, shortness of breath, loss of taste or smell, loss of appetite, dry cough.",covid_19
+"Patient reports itchy eyes, coughing, frequent urination, rash, runny nose.",allergy
+"Complaints: sudden vision changes, confusion, difficulty speaking in full sentences, lower abdominal pain, seizures.",stroke
+"Noted sneezing, watery eyes, nasal congestion, palpitations, blurred vision over the last 48 hours.",allergy
+"Complaints: sweating, cyanosis, confusion, blurred vision, lightheadedness.",low_blood_pressure_hypotension
+"Complaints: chills, fever, cyanosis, dry cough, sweating.",covid_19
+"Complaints: sudden numbness or weakness, stomach cramps, fatigue, muscle aches, vomiting.",gastroenteritis
+"Patient reports fever, diarrhea, sudden severe headache, dehydration, difficulty speaking in full sentences.",food_poisoning
+"Noted confusion, chest tightness, watery eyes, sore throat, sneezing over the last 48 hours.",common_cold
+"Patient reports mild cough, pallor, sneezing, burning sensation when urinating, congestion.",common_cold
+"Symptoms include lightheadedness, dark urine, sore throat, chest pain, headache.",dehydration
+"Noted dry mouth, sudden difficulty speaking or understanding, headache, dizziness, confusion over the last 48 hours.",dehydration
+"Complaints: dry cough, loss of appetite, shortness of breath, cyanosis, sore throat.",pneumonia
+"Complaints: rash, hives, runny nose, dry cough, abdominal pain (lower right quadrant).",allergy
+"Noted mild headache, congestion, sneezing, sore throat, fatigue over the last 48 hours.",common_cold
+"Noted fainting, loss of appetite, vomiting, abdominal tenderness, fever over the last 48 hours.",appendicitis
+"Noted fatigue, lightheadedness, anxiety, blurred vision, mild fever over the last 48 hours.",myocardial_infarction_heart_attack
+"Noted sensitivity to sound, pallor, nausea, vomiting, sudden numbness or weakness over the last 48 hours.",migraine
+"Complaints: nasal congestion, shortness of breath, lightheadedness, palpitations, fatigue.",myocardial_infarction_heart_attack
+"Noted chest pain, lightheadedness, loss of balance or coordination, loss of balance, confusion over the last 48 hours.",low_blood_pressure_hypotension
+"Patient reports mild cough, throbbing pain, sore throat, urgency to urinate, mild headache.",common_cold
+"Symptoms include loss of balance or coordination, facial droop, lightheadedness, sudden difficulty speaking or understanding, cough (productive or dry).",stroke
+"Symptoms include watery eyes, dry cough, constipation or diarrhea, congestion, runny nose.",common_cold
+"Complaints: sore throat, headache, shortness of breath, mild cough, hives.",covid_19
+"Patient reports chills, headache, sneezing, vomiting, fever.",covid_19
+"Symptoms include sudden vision changes, rash, cough (productive or dry), sweating, chills.",pneumonia
+"Complaints: sensitivity to light, congestion, nausea, loss of appetite, abdominal pain (lower right quadrant).",appendicitis
+"Patient reports dry cough, sore throat, cough (productive or dry), chills, shortness of breath.",covid_19
+"Noted nosebleeds, visual aura, pallor, headache, sensitivity to sound over the last 48 hours.",migraine
+"Symptoms include dry cough, throbbing pain, lightheadedness, fatigue, fever.",influenza
+"Complaints: dark urine, shortness of breath, loss of taste or smell, fever, fatigue.",covid_19
+"Symptoms include abdominal pain (lower right quadrant), nausea, loss of appetite, dizziness, sweating.",appendicitis
+"Noted sudden numbness or weakness, headache, loss of balance or coordination, sudden vision changes, fever over the last 48 hours.",stroke
+"Patient reports loss of taste or smell, sweating, dizziness, lightheadedness, sudden severe headache.",vasovagal_syncope
+"Noted cough (productive or dry), cyanosis, chills, loss of appetite, frequent urination over the last 48 hours.",pneumonia
+"Patient reports shortness of breath, nausea, dizziness, headache, dry cough.",migraine
+"Noted congestion, watery eyes, mild cough, confusion, sudden difficulty speaking or understanding over the last 48 hours.",common_cold
+"Noted dizziness, nausea, pallor, sneezing, lower abdominal pain over the last 48 hours.",vasovagal_syncope
+"Complaints: fever, nausea, lightheadedness, pallor, facial droop.",vasovagal_syncope
+"Patient reports stomach cramps, fatigue, runny nose, severe headache, nausea.",food_poisoning
+"Symptoms include runny nose, hives, nasal congestion, congestion, throbbing pain.",allergy
+"Symptoms include headache, fatigue, fainting, severe headache, dry mouth.",dehydration
+"Noted throbbing pain, urgency to urinate, lower abdominal pain, visual aura, cloudy urine over the last 48 hours.",urinary_tract_infection
+"Complaints: fever, sore throat, headache, burning sensation when urinating, abdominal pain (lower right quadrant).",covid_19
+"Patient reports stomach cramps, anxiety, vomiting, difficulty speaking in full sentences, nausea.",gastroenteritis
+"Complaints: visual aura, loss of appetite, dry cough, vomiting, chills.",influenza
+"Patient reports palpitations, muscle aches, dizziness, lightheadedness, fatigue.",low_blood_pressure_hypotension
+"Complaints: shortness of breath, anxiety, headache, stomach cramps, chest tightness.",asthma_attack
+"Symptoms include lightheadedness, seizures, dizziness, pallor, severe headache.",vasovagal_syncope
+"Patient reports hives, mild headache, nausea, dry mouth, fatigue.",dehydration
+"Complaints: itchy eyes, loss of appetite, chest pain, abdominal tenderness, constipation or diarrhea.",appendicitis
+"Noted difficulty speaking in full sentences, sensitivity to sound, shortness of breath, vomiting, chest pain or pressure over the last 48 hours.",myocardial_infarction_heart_attack
+"Symptoms include headache, dehydration, sensitivity to light, nausea, dark urine.",migraine
+"Complaints: shortness of breath, fatigue, sudden vision changes, sore throat, cyanosis.",covid_19
+"Noted fainting, fatigue, urgency to urinate, lightheadedness, blurred vision over the last 48 hours.",low_blood_pressure_hypotension
+"Noted vomiting, lightheadedness, nausea, mild headache, visual aura over the last 48 hours.",myocardial_infarction_heart_attack
+"Noted fever, nausea, constipation or diarrhea, mild headache, runny nose over the last 48 hours.",appendicitis
+"Symptoms include facial droop, cough (productive or dry), sudden numbness or weakness, visual aura, confusion.",stroke
+"Symptoms include frequent urination, nasal congestion, sneezing, urgency to urinate, lower abdominal pain.",urinary_tract_infection
+"Patient reports blurred vision, watery eyes, nausea, fainting, anxiety.",vasovagal_syncope
+"Patient reports nausea, vomiting, nosebleeds, shortness of breath, fever.",gastroenteritis
+"Patient reports nausea, body aches, sudden vision changes, sudden severe headache, seizures.",stroke
+"Symptoms include confusion, seizures, fever, sore throat, sudden severe headache.",stroke
+"Symptoms include headache, nausea, dizziness, runny nose, nosebleeds.",migraine
+"Patient reports vomiting, abdominal tenderness, mild fever, constipation or diarrhea, facial droop.",appendicitis
+"Patient reports sore throat, muscle aches, headache, chills, dark urine.",covid_19
+"Complaints: sweating, dizziness, headache, vomiting, throbbing pain.",migraine
+"Noted cough (productive or dry), hives, urgency to urinate, cloudy urine, frequent urination over the last 48 hours.",urinary_tract_infection
+"Complaints: cough (productive or dry), urgency to urinate, runny nose, lower abdominal pain, cloudy urine.",urinary_tract_infection
+"Noted stomach cramps, dehydration, nausea, constipation or diarrhea, vomiting over the last 48 hours.",appendicitis
+"Patient reports sneezing, rash, stomach cramps, dehydration, fever.",food_poisoning
+"Complaints: nausea, mild fever, constipation or diarrhea, loss of balance or coordination, abdominal pain (lower right quadrant).",appendicitis
+"Symptoms include vomiting, stomach cramps, fatigue, loss of appetite, mild headache.",food_poisoning
+"Noted loss of balance, nausea, dehydration, loss of appetite, vomiting over the last 48 hours.",gastroenteritis
+"Noted fever, vomiting, nasal congestion, abdominal pain (lower right quadrant), hives over the last 48 hours.",appendicitis
+"Symptoms include blurred vision, abdominal tenderness, dizziness, sweating, sudden vision changes.",vasovagal_syncope
+"Patient reports loss of appetite, lightheadedness, vomiting, abdominal tenderness, chills.",appendicitis
+"Noted abdominal pain (lower right quadrant), sneezing, sudden severe headache, runny nose, congestion over the last 48 hours.",common_cold
+"Complaints: fatigue, abdominal pain (lower right quadrant), loss of balance, confusion, dehydration.",low_blood_pressure_hypotension
+"Symptoms include body aches, blurred vision, cloudy urine, frequent urination, mild fever.",urinary_tract_infection
+"Symptoms include throbbing pain, sensitivity to light, abdominal pain (lower right quadrant), headache, rash.",migraine
+"Noted cyanosis, vomiting, wheezing, throbbing pain, sensitivity to sound over the last 48 hours.",migraine
+"Noted watery eyes, headache, runny nose, sneezing, urgency to urinate over the last 48 hours.",allergy
+"Symptoms include rash, sweating, fatigue, loss of appetite, headache.",influenza
+"Complaints: dry cough, wheezing, difficulty speaking in full sentences, shortness of breath, nosebleeds.",asthma_attack
+"Patient reports coughing, wheezing, loss of balance or coordination, shortness of breath, dry mouth.",asthma_attack
+"Symptoms include sweating, fainting, throbbing pain, sudden numbness or weakness, palpitations.",vasovagal_syncope
+"Complaints: dark urine, sudden severe headache, anxiety, severe headache, confusion.",hypertension_high_blood_pressure_crisis
+"Patient reports fatigue, dry mouth, nosebleeds, difficulty speaking in full sentences, dark urine.",dehydration
+"Complaints: dizziness, sore throat, loss of taste or smell, chest pain, shortness of breath.",covid_19
+"Patient reports congestion, rash, sweating, blurred vision, fainting.",vasovagal_syncope
+"Complaints: fever, facial droop, body aches, dark urine, fatigue.",influenza
+"Complaints: vomiting, dizziness, nausea, cloudy urine, confusion.",migraine
+"Complaints: cloudy urine, headache, muscle aches, cyanosis, sore throat.",covid_19
+"Patient reports body aches, fatigue, headache, chills, loss of balance or coordination.",covid_19
+"Symptoms include loss of balance or coordination, sudden vision changes, fever, body aches, confusion.",stroke
+"Complaints: sore throat, loss of appetite, congestion, watery eyes, sudden vision changes.",common_cold
+"Complaints: lightheadedness, sudden numbness or weakness, facial droop, cloudy urine, sudden difficulty speaking or understanding.",stroke
+"Complaints: diarrhea, vomiting, sore throat, blurred vision, loss of appetite.",gastroenteritis
+"Complaints: visual aura, constipation or diarrhea, watery eyes, abdominal pain (lower right quadrant), vomiting.",appendicitis
+"Patient reports fatigue, dry mouth, dizziness, lightheadedness, shortness of breath.",dehydration
+"Noted dry mouth, difficulty speaking in full sentences, vomiting, nausea, shortness of breath over the last 48 hours.",myocardial_infarction_heart_attack
+"Symptoms include mild headache, dry cough, mild cough, seizures, sneezing.",common_cold
+"Patient reports sudden numbness or weakness, urgency to urinate, lower abdominal pain, cloudy urine, itchy eyes.",urinary_tract_infection
+"Symptoms include frequent urination, urgency to urinate, mild fever, cyanosis, burning sensation when urinating.",urinary_tract_infection
+"Noted headache, dizziness, throbbing pain, sensitivity to light, sudden numbness or weakness over the last 48 hours.",migraine
+"Patient reports dizziness, nausea, sensitivity to sound, sudden difficulty speaking or understanding, lightheadedness.",dehydration
+"Patient reports vomiting, stomach cramps, seizures, fever, lower abdominal pain.",gastroenteritis
+"Patient reports dry mouth, dark urine, confusion, sensitivity to light, frequent urination.",dehydration
+"Patient reports abdominal tenderness, sudden severe headache, nausea, fever, vomiting.",appendicitis
+"Symptoms include nausea, constipation or diarrhea, mild cough, loss of appetite, abdominal tenderness.",appendicitis
+"Complaints: anxiety, confusion, cough (productive or dry), nosebleeds, chest pain.",hypertension_high_blood_pressure_crisis
+"Patient reports seizures, stomach cramps, loss of balance or coordination, itchy eyes, confusion.",stroke
+"Noted dizziness, fatigue, headache, mild fever, dry mouth over the last 48 hours.",dehydration
+"Complaints: runny nose, lightheadedness, dizziness, rash, coughing.",allergy
+"Complaints: nausea, stomach cramps, loss of balance or coordination, sensitivity to light, dehydration.",gastroenteritis
+"Noted dizziness, loss of balance or coordination, runny nose, lightheadedness, headache over the last 48 hours.",dehydration
+"Symptoms include headache, fever, cyanosis, anxiety, dry cough.",influenza
+"Patient reports anxiety, sudden numbness or weakness, sudden severe headache, severe headache, confusion.",hypertension_high_blood_pressure_crisis
+"Patient reports loss of balance or coordination, watery eyes, runny nose, stomach cramps, mild cough.",common_cold
+"Symptoms include watery eyes, chest pain or pressure, loss of taste or smell, anxiety, vomiting.",myocardial_infarction_heart_attack
+"Complaints: headache, sore throat, runny nose, mild fever, cough (productive or dry).",influenza
+"Patient reports chills, dry cough, cloudy urine, burning sensation when urinating, fatigue.",influenza
+"Symptoms include sudden difficulty speaking or understanding, coughing, facial droop, loss of balance or coordination, sudden vision changes.",stroke
+"Complaints: dry cough, throbbing pain, sore throat, chills, seizures.",covid_19
+"Symptoms include shortness of breath, mild fever, loss of appetite, coughing, cough (productive or dry).",pneumonia
+"Patient reports sudden difficulty speaking or understanding, sore throat, fatigue, runny nose, loss of appetite.",influenza
+"Symptoms include nosebleeds, dry mouth, loss of appetite, chest pain, cyanosis.",pneumonia
+"Complaints: loss of balance, fatigue, chest tightness, cyanosis, chills.",pneumonia
+"Symptoms include sneezing, runny nose, dehydration, mild cough, itchy eyes.",common_cold
+"Noted body aches, chills, itchy eyes, coughing, hives over the last 48 hours.",allergy
+"Patient reports hives, sneezing, dehydration, itchy eyes, constipation or diarrhea.",allergy
+"Complaints: dark urine, dry mouth, headache, fever, dry cough.",influenza
+"Symptoms include vomiting, fainting, nausea, fever, pallor.",appendicitis
+"Symptoms include chest tightness, fainting, pallor, lightheadedness, constipation or diarrhea.",vasovagal_syncope
+"Patient reports chest tightness, sore throat, fever, nausea, diarrhea.",food_poisoning
+"Complaints: difficulty speaking in full sentences, fever, dry cough, cyanosis, cough (productive or dry).",pneumonia
+"Noted fatigue, diarrhea, itchy eyes, mild cough, fever over the last 48 hours.",food_poisoning
+"Complaints: mild fever, fatigue, sweating, watery eyes, shortness of breath.",myocardial_infarction_heart_attack
+"Noted sensitivity to light, vomiting, nausea, constipation or diarrhea, sudden difficulty speaking or understanding over the last 48 hours.",appendicitis
+"Complaints: shortness of breath, diarrhea, urgency to urinate, stomach cramps, fever.",gastroenteritis
+"Noted loss of appetite, loss of taste or smell, dry cough, headache, mild headache over the last 48 hours.",influenza
+"Patient reports pallor, chest tightness, fainting, cough (productive or dry), sweating.",vasovagal_syncope
+"Complaints: diarrhea, vomiting, confusion, sudden difficulty speaking or understanding, fatigue.",food_poisoning
+"Noted runny nose, seizures, lightheadedness, sore throat, mild cough over the last 48 hours.",common_cold
+"Noted watery eyes, congestion, facial droop, mild headache, sore throat over the last 48 hours.",common_cold
+"Noted loss of appetite, cloudy urine, sweating, sneezing, fatigue over the last 48 hours.",pneumonia
+"Patient reports hives, vomiting, fatigue, dizziness, sensitivity to light.",migraine
+"Noted hives, sneezing, sudden difficulty speaking or understanding, watery eyes, mild cough over the last 48 hours.",allergy
+"Patient reports rash, sneezing, hives, severe headache, wheezing.",allergy
+"Patient reports fatigue, vomiting, urgency to urinate, chills, sore throat.",influenza
+"Patient reports nosebleeds, chest pain or pressure, lightheadedness, pallor, fatigue.",myocardial_infarction_heart_attack
+"Complaints: difficulty speaking in full sentences, wheezing, frequent urination, confusion, coughing.",asthma_attack
+"Complaints: loss of taste or smell, sore throat, sudden difficulty speaking or understanding, sweating, headache.",covid_19
+"Noted dizziness, watery eyes, rash, fainting, sweating over the last 48 hours.",vasovagal_syncope
+"Symptoms include dry mouth, dark urine, nasal congestion, seizures, fatigue.",dehydration
+"Symptoms include nosebleeds, muscle aches, nausea, severe headache, shortness of breath.",hypertension_high_blood_pressure_crisis
+"Symptoms include sore throat, chest pain or pressure, runny nose, mild cough, watery eyes.",common_cold
+"Noted sore throat, runny nose, severe headache, mild cough, chest tightness over the last 48 hours.",common_cold
+"Complaints: nasal congestion, runny nose, rash, dry cough, sudden numbness or weakness.",allergy
+"Symptoms include seizures, fever, nausea, sensitivity to light, stomach cramps.",food_poisoning
+"Symptoms include blurred vision, sudden vision changes, fatigue, confusion, diarrhea.",low_blood_pressure_hypotension
+"Noted burning sensation when urinating, chest pain or pressure, urgency to urinate, stomach cramps, cloudy urine over the last 48 hours.",urinary_tract_infection
+"Complaints: nausea, lightheadedness, sudden vision changes, visual aura, dizziness.",dehydration
+"Complaints: chills, shortness of breath, anxiety, mild fever, loss of taste or smell.",covid_19
+"Patient reports loss of appetite, loss of taste or smell, body aches, headache, burning sensation when urinating.",influenza
+"Symptoms include vomiting, sensitivity to sound, lower abdominal pain, congestion, dizziness.",migraine
+"Symptoms include dry mouth, lower abdominal pain, nausea, rash, lightheadedness.",dehydration
+"Noted coughing, mild cough, seizures, wheezing, anxiety over the last 48 hours.",asthma_attack
+"Symptoms include coughing, dizziness, chest pain or pressure, fatigue, dry mouth.",dehydration
+"Noted sweating, pallor, anxiety, nausea, constipation or diarrhea over the last 48 hours.",vasovagal_syncope
+"Patient reports seizures, urgency to urinate, cloudy urine, runny nose, frequent urination.",urinary_tract_infection
+"Symptoms include visual aura, sudden vision changes, shortness of breath, palpitations, nausea.",myocardial_infarction_heart_attack
+"Complaints: sudden numbness or weakness, mild headache, burning sensation when urinating, loss of balance or coordination, sudden difficulty speaking or understanding.",stroke
+"Symptoms include abdominal pain (lower right quadrant), fainting, loss of balance, fatigue, urgency to urinate.",low_blood_pressure_hypotension
+"Complaints: frequent urination, urgency to urinate, lightheadedness, cloudy urine, difficulty speaking in full sentences.",urinary_tract_infection
+"Patient reports headache, fever, muscle aches, nosebleeds, sore throat.",covid_19
+"Complaints: sore throat, stomach cramps, sudden vision changes, sneezing, runny nose.",common_cold
+"Patient reports mild fever, constipation or diarrhea, chest tightness, shortness of breath, anxiety.",asthma_attack
+"Noted sudden numbness or weakness, blurred vision, lightheadedness, pallor, confusion over the last 48 hours.",vasovagal_syncope
+"Noted chest pain, diarrhea, shortness of breath, cyanosis, wheezing over the last 48 hours.",pneumonia
+"Symptoms include anxiety, confusion, blurred vision, coughing, shortness of breath.",hypertension_high_blood_pressure_crisis
+"Complaints: diarrhea, vomiting, fatigue, dehydration, lightheadedness.",gastroenteritis
+"Symptoms include dry mouth, shortness of breath, anxiety, wheezing, coughing.",asthma_attack
+"Complaints: sore throat, stomach cramps, diarrhea, burning sensation when urinating, vomiting.",food_poisoning
+"Patient reports headache, body aches, dry cough, fever, confusion.",covid_19

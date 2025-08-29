@@ -1,0 +1,59 @@
+{
+  "config": {
+    "encoder": "cambridgeltl/SapBERT-from-PubMedBERT-fulltext",
+    "fine_tune_encoder": true,
+    "max_seq_len": 64,
+    "embed_dim": 768,
+    "mlp_hidden_dim": 256,
+    "epochs": 16,
+    "batch_size": 64,
+    "learning_rate": 3e-05,
+    "weight_decay": 0.0001,
+    "warmup_ratio": 0.06,
+    "classes": [
+      "urinary_tract_infection",
+      "myocardial_infarction_heart_attack",
+      "asthma_attack",
+      "covid_19",
+      "allergy",
+      "vasovagal_syncope",
+      "food_poisoning",
+      "stroke",
+      "low_blood_pressure_hypotension",
+      "hypertension_high_blood_pressure_crisis",
+      "gastroenteritis",
+      "migraine",
+      "common_cold",
+      "influenza",
+      "appendicitis",
+      "pneumonia",
+      "dehydration"
+    ]
+  },
+  "metrics": {
+    "accuracy": 0.7843137254901961,
+    "macro_f1": 0.7479956297317514
+  },
+  "preview": [
+    {
+      "symptoms": "Patient reports chest pain or pressure, dry cough, fatigue, nosebleeds, sore throat.",
+      "pred": "myocardial_infarction_heart_attack"
+    },
+    {
+      "symptoms": "Patient reports hives, mild headache, loss of balance, confusion, dizziness.",
+      "pred": "low_blood_pressure_hypotension"
+    },
+    {
+      "symptoms": "Noted itchy eyes, sensitivity to light, chest pain, sensitivity to sound, headache over the last 48 hours.",
+      "pred": "migraine"
+    },
+    {
+      "symptoms": "Noted coughing, nausea, difficulty speaking in full sentences, dizziness, wheezing over the last 48 hours.",
+      "pred": "asthma_attack"
+    },
+    {
+      "symptoms": "Patient reports diarrhea, shortness of breath, mild cough, congestion, runny nose.",
+      "pred": "common_cold"
+    }
+  ]
+}

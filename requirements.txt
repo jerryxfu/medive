@@ -1,0 +1,5 @@
+torch~=2.8.0+cu126
+transformers~=4.55.4
+scikit-learn~=1.7.1
+tqdm~=4.67.1
+rich~=14.1.0
