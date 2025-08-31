@@ -49,14 +49,16 @@ MLP_DROPOUT = 0.1
 
 # Training config
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
-EPOCHS = 16
+EPOCHS = 18
 BATCH_SIZE = 64
-LEARNING_RATE = 3e-5  # joint fine-tuning often needs a smaller LR
+LEARNING_RATE = 3e-5  # common lr, if not fine-tuning encoder
+ENCODER_LEARNING_RATE = 3e-5
+HEAD_LEARNING_RATE = 1e-4
 WEIGHT_DECAY = 1e-4  # L2 regularization
 WARMUP_RATIO = 0.06  # proportion of training for linear LR warmup
 GRAD_ACCUM_STEPS = 1  # gradient accumulation steps
 MAX_GRAD_NORM = 1.0  # gradient clipping
-LABEL_SMOOTHING = 0.05  # 0.0 to disable
+LABEL_SMOOTHING = 0.10  # 0.0 to disable
 
 # Logging/preview
 NUM_PREDICTION_SAMPLES = 5  # number of test samples to show in preview
@@ -161,6 +163,8 @@ def main() -> None:
         device=DEVICE,
         batch_size=BATCH_SIZE,
         lr=LEARNING_RATE,
+        encoder_lr=ENCODER_LEARNING_RATE,
+        head_lr=HEAD_LEARNING_RATE,
         weight_decay=WEIGHT_DECAY,
         epochs=EPOCHS,
         warmup_ratio=WARMUP_RATIO,
@@ -223,6 +227,8 @@ def main() -> None:
             "epochs": EPOCHS,
             "batch_size": BATCH_SIZE,
             "learning_rate": LEARNING_RATE,
+            "encoder_learning_rate": ENCODER_LEARNING_RATE,
+            "head_learning_rate": HEAD_LEARNING_RATE,
             "weight_decay": WEIGHT_DECAY,
             "warmup_ratio": WARMUP_RATIO,
             "label_smoothing": LABEL_SMOOTHING,
