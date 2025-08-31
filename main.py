@@ -2,9 +2,9 @@ from __future__ import annotations
 
 import json
 import os
+import sys
 import warnings
 from typing import Dict, List, Any, Tuple
-import sys
 
 import torch
 from rich.console import Console
@@ -39,7 +39,7 @@ DEFAULT_CLASS_NAMES = [
 
 # Embedding config
 HF_MODEL_NAME = "cambridgeltl/SapBERT-from-PubMedBERT-fulltext"
-MAX_SEQ_LEN = 64
+MAX_SEQUENCE_LENGTH = 128
 FINE_TUNE_ENCODER = True  # if True, encoder params are updated during training
 FREEZE_LAYER_NORM = True  # keep layer norms trainable even when freezing encoder
 
@@ -56,6 +56,7 @@ WEIGHT_DECAY = 1e-4  # L2 regularization
 WARMUP_RATIO = 0.06  # proportion of training for linear LR warmup
 GRAD_ACCUM_STEPS = 1  # gradient accumulation steps
 MAX_GRAD_NORM = 1.0  # gradient clipping
+LABEL_SMOOTHING = 0.05  # 0.0 to disable
 
 # Logging/preview
 NUM_PREDICTION_SAMPLES = 5  # number of test samples to show in preview
@@ -109,49 +110,49 @@ def main() -> None:
 
     use_csv = os.path.exists(DATASET_PATH)
     if use_csv:  # THERE IS CSV
-        with console.status(f"[bold cyan]\[data][/bold cyan] Loading dataset from CSV: {os.path.relpath(DATASET_PATH)}"):
+        with console.status(f"[bold cyan]\\[data][/bold cyan] Loading dataset from CSV: {os.path.relpath(DATASET_PATH)}"):
             examples = load_examples_from_path(DATASET_PATH)
-        console.log(f"[bold cyan]\[data][/bold cyan] Loaded {len(examples)} rows from CSV")
+        console.log(f"[bold cyan]\\[data][/bold cyan] Loaded {len(examples)} rows from CSV")
         class_names = derive_classes_from_examples(examples)
         if not class_names:
-            console.print("[bold red]\[data][/bold red] No labels found in CSV. Ensure the 'label' column has non-empty values.")
+            console.print("[bold red]\\[data][/bold red] No labels found in CSV. Ensure the 'label' column has non-empty values.")
             sys.exit(1)
 
     else:  # NO CSV, USE SYNTHETIC
-        console.log("[bold red]\[data][/bold red] No CSV found; generating synthetic dataset")
+        console.log("[bold red]\\[data][/bold red] No CSV found; generating synthetic dataset")
         examples = generate_synthetic_dataset(n_samples=N_SAMPLES, class_names=DEFAULT_CLASS_NAMES, seed=SEED)
-        console.log(f"[bold cyan]\[data][/bold cyan] Generated {len(examples)} examples")
+        console.log(f"[bold cyan]\\[data][/bold cyan] Generated {len(examples)} examples")
         class_names = DEFAULT_CLASS_NAMES
 
     dataset = SymptomsDataset.from_examples(examples)
     train_ds, val_ds, test_ds = dataset.train_val_test_split(val_ratio=VAL_RATIO, test_ratio=TEST_RATIO, seed=SEED)
-    console.log(f"[bold cyan]\[data][/bold cyan] Split -> train={len(train_ds)} val={len(val_ds)} test={len(test_ds)}")
+    console.log(f"[bold cyan]\\[data][/bold cyan] Split -> train={len(train_ds)} val={len(val_ds)} test={len(test_ds)}")
 
     label2id, id2label = build_label_mappings(class_names)
 
     console.rule("Config")
 
     # Encoder
-    with console.status(f"[bold blue]\[embedding][/bold blue] Loading encoder: {HF_MODEL_NAME}"):
+    with console.status(f"[bold blue]\\[embedding][/bold blue] Loading encoder: {HF_MODEL_NAME}"):
         encoder = TextEmbeddingEncoder(
             hf_model_name=HF_MODEL_NAME,
-            max_seq_len=MAX_SEQ_LEN,
+            max_seq_len=MAX_SEQUENCE_LENGTH,
             fine_tune=FINE_TUNE_ENCODER,
             freeze_layer_norm=FREEZE_LAYER_NORM,
             device=DEVICE,
             seed=SEED,
         )
-    console.log(f"[bold blue]\[embedding][/bold blue] Encoder loaded {HF_MODEL_NAME}. Output dim: {encoder.output_dim}")
+    console.log(f"[bold blue]\\[embedding][/bold blue] Encoder loaded {HF_MODEL_NAME}. Output dim: {encoder.output_dim}")
 
     # Model
-    with console.status("[bold magenta]\[model][/bold magenta] Building MLP classifier..."):
+    with console.status("[bold magenta]\\[model][/bold magenta] Building MLP classifier..."):
         model = MLPClassifier(input_dim=encoder.output_dim, hidden_dim=MLP_HIDDEN_DIM, num_classes=len(class_names), dropout=MLP_DROPOUT)
-    console.log("[bold magenta]\[model][/bold magenta] Model built MLP classifier.")
+    console.log("[bold magenta]\\[model][/bold magenta] Model built MLP classifier.")
 
     console.rule("Training")
 
     # Trainer
-    console.log(f"[bold yellow]\[train][/bold yellow] Starting training on device={DEVICE}")
+    console.log(f"[bold yellow]\\[train][/bold yellow] Starting training on device={DEVICE}")
     trainer = TorchTrainer(
         encoder=encoder,
         classifier=model,
@@ -167,27 +168,40 @@ def main() -> None:
         max_grad_norm=MAX_GRAD_NORM,
         log_every=LOG_EVERY,
         seed=SEED,
+        label_smoothing=LABEL_SMOOTHING,
     )
 
     trainer.fit(train_ds, val_ds)
 
+    # Save best weights for inference
+    try:
+        enc_path = os.path.join(OUTPUT_DIR, "encoder_state.pt")
+        clf_path = os.path.join(OUTPUT_DIR, "classifier_state.pt")
+        torch.save(encoder.model.state_dict(), enc_path)
+        torch.save(model.state_dict(), clf_path)
+        console.log(f"[bold green]\\[save][/bold green] Saved encoder -> {enc_path}")
+        console.log(f"[bold green]\\[save][/bold green] Saved classifier -> {clf_path}")
+    except Exception as e:
+        console.log(f"[bold red]\\[save][/bold red] Failed to save model weights: {e}")
+
     # Evaluation
-    console.log("[bold yellow]\[eval][/bold yellow] Evaluating on test set...")
+    console.log("[bold yellow]\\[eval][/bold yellow] Evaluating on test set...")
     test_texts, test_labels = test_ds.texts, [label2id[y] for y in test_ds.labels]
     test_logits = trainer.predict_logits(test_texts)
     test_preds = [int(torch.tensor(logit).argmax().item()) for logit in test_logits]
     metrics = evaluate_predictions(test_labels, test_preds, num_classes=len(class_names))
 
-    # Print metrics table
+    # region Print metrics table
     metrics_table = Table(show_header=True, header_style="bold")
     metrics_table.add_column("Metric")
     metrics_table.add_column("Value", justify="right")
     metrics_table.add_row("accuracy", f"{metrics.get('accuracy', 0.0):.4f}")
     metrics_table.add_row("macro_f1", f"{metrics.get('macro_f1', 0.0):.4f}")
+    # endregion
     console.print(metrics_table)
 
-    # Inference preview
-    console.log("[bold yellow]\[preview][/bold yellow] Generating inference preview...")
+    # region Inference preview
+    console.log("[bold yellow]\\[preview][/bold yellow] Generating inference preview...")
     preview = preview_samples(test_ds.texts, test_preds, id2label, k=NUM_PREDICTION_SAMPLES)
     table = Table(show_header=True, header_style="bold")
     table.add_column("#", justify="right", width=3)
@@ -195,20 +209,23 @@ def main() -> None:
     table.add_column("Pred")
     for i, row in enumerate(preview, start=1):
         table.add_row(str(i), row["symptoms"], row["pred"])
+    # endregion
     console.print(table)
 
     summary = {
         "config": {
             "encoder": HF_MODEL_NAME,
             "fine_tune_encoder": FINE_TUNE_ENCODER,
-            "max_seq_len": MAX_SEQ_LEN,
+            "max_seq_len": MAX_SEQUENCE_LENGTH,
             "embed_dim": encoder.output_dim,
             "mlp_hidden_dim": MLP_HIDDEN_DIM,
+            "mlp_dropout": MLP_DROPOUT,
             "epochs": EPOCHS,
             "batch_size": BATCH_SIZE,
             "learning_rate": LEARNING_RATE,
             "weight_decay": WEIGHT_DECAY,
             "warmup_ratio": WARMUP_RATIO,
+            "label_smoothing": LABEL_SMOOTHING,
             "classes": class_names,
         },
         "metrics": metrics,
@@ -218,7 +235,7 @@ def main() -> None:
     out_path = os.path.join(OUTPUT_DIR, "run_summary.json")
     with open(out_path, "w", encoding="utf-8") as f:
         json.dump(summary, f, indent=2)
-    console.log(f"[bold green]\[done][/bold green] Summary saved to {out_path}")
+    console.log(f"[bold green]\\[done][/bold green] Summary saved to {out_path}")
 
 
 if __name__ == "__main__":

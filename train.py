@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import math
 from dataclasses import dataclass
 from time import perf_counter
 from typing import Dict, List, Tuple
@@ -8,6 +9,7 @@ import torch
 import torch.nn as nn
 from rich.console import Console
 from sklearn.metrics import accuracy_score, f1_score
+from torch.amp import autocast
 from torch.utils.data import DataLoader, Dataset
 from tqdm.rich import tqdm
 from transformers import get_linear_schedule_with_warmup
@@ -77,6 +79,9 @@ class TorchTrainer:
         max_grad_norm: float = 1.0,
         log_every: int = 50,
         seed: int = 42,
+        label_smoothing: float = 0.0,
+        encoder_lr: float | None = None,
+        head_lr: float | None = None,
     ) -> None:
         self.encoder = encoder
         self.classifier = classifier
@@ -101,11 +106,48 @@ class TorchTrainer:
         self.encoder.model.to(self.device)
         self.classifier.to(self.device)
 
-        # Combine parameters (encoder may be frozen selectively)
-        params = [p for p in list(self.encoder.model.parameters()) + list(self.classifier.parameters()) if p.requires_grad]
-        self.optimizer = torch.optim.AdamW(params, lr=self.lr, weight_decay=self.weight_decay)
+        # AMP setup
+        self.use_amp = (self.device.type == "cuda")
+        from torch.amp import GradScaler  # local import for clarity
+        self.scaler = GradScaler(enabled=self.use_amp)
 
-        self.criterion = nn.CrossEntropyLoss()
+        # split encoder and head learning rates if provided
+        encoder_lr = float(encoder_lr) if encoder_lr is not None else float(self.lr)
+        head_lr = float(head_lr) if head_lr is not None else float(self.lr)
+
+        # select parameters to exclude from weight decay
+        no_decay_keys = ("bias", "LayerNorm.weight", "layer_norm.weight")
+
+        def split_params(named_params):
+            decay, no_decay = [], []
+            for n, p in named_params:
+                if not p.requires_grad:
+                    continue
+                if any(k in n for k in no_decay_keys):
+                    no_decay.append(p)
+                else:
+                    decay.append(p)
+            return decay, no_decay
+
+        encoder_decay, encoder_no_decay = split_params(self.encoder.model.named_parameters())
+        head_decay, head_no_decay = split_params(self.classifier.named_parameters())
+
+        param_groups = []
+        if encoder_decay:  # encoder with weight decay
+            param_groups.append({"params": encoder_decay, "lr": encoder_lr, "weight_decay": self.weight_decay})
+        if encoder_no_decay:  # encoder without weight decay
+            param_groups.append({"params": encoder_no_decay, "lr": encoder_lr, "weight_decay": 0.0})
+        if head_decay:  # head with weight decay
+            param_groups.append({"params": head_decay, "lr": head_lr, "weight_decay": self.weight_decay})
+        if head_no_decay:  # head without weight decay
+            param_groups.append({"params": head_no_decay, "lr": head_lr, "weight_decay": 0.0})
+        if not param_groups:  # all params frozen
+            param_groups.append({"params": [], "lr": self.lr, "weight_decay": self.weight_decay})
+
+        self.optimizer = torch.optim.AdamW(param_groups)
+
+        # Label smoothing to improve generalization and reduce overconfidence
+        self.criterion = nn.CrossEntropyLoss(label_smoothing=float(label_smoothing))
 
         self._best_state = None
 
@@ -124,7 +166,8 @@ class TorchTrainer:
         train_loader = self._make_loader(train_ds.texts, train_labels, shuffle=True)
         val_loader = self._make_loader(val_ds.texts, val_labels, shuffle=False)
 
-        total_steps = max(1, (len(train_loader) // self.grad_accum_steps) * self.epochs)
+        steps_per_epoch = max(1, math.ceil(len(train_loader) / self.grad_accum_steps))
+        total_steps = steps_per_epoch * self.epochs
         warmup_steps = int(self.warmup_ratio * total_steps)
         scheduler = get_linear_schedule_with_warmup(self.optimizer, num_warmup_steps=warmup_steps, num_training_steps=total_steps)
 
@@ -136,39 +179,49 @@ class TorchTrainer:
             self.encoder.model.train(True)
             self.classifier.train(True)
             running_loss = 0.0
-            pbar = tqdm(train_loader, desc=f"Epoch {epoch}/{self.epochs} [train]", leave=False, dynamic_ncols=False, smoothing=0.1)
+            pbar = tqdm(train_loader, desc=f"Epoch {epoch}/{self.epochs} \\[train]", leave=False, dynamic_ncols=True, smoothing=0.1)
             for step, batch in enumerate(pbar, start=1):
                 # Move batch to device
                 batch.tokens = {k: v.to(self.device) for k, v in batch.tokens.items()}
                 batch.labels = batch.labels.to(self.device)
 
-                # Forward
+                # Forward with AMP
                 with torch.set_grad_enabled(True):
-                    emb = self.encoder.forward(batch.tokens)
-                    logits = self.classifier(emb)
-                    loss = self.criterion(logits, batch.labels) / self.grad_accum_steps
+                    with autocast(device_type="cuda", enabled=self.use_amp):
+                        emb = self.encoder.forward(batch.tokens)
+                        logits = self.classifier(emb)
+                        loss = self.criterion(logits, batch.labels) / self.grad_accum_steps
 
-                # Backward
-                loss.backward()
+                # Backward (scaled if AMP enabled)
+                self.scaler.scale(loss).backward()
                 running_loss += float(loss.item())
 
                 if step % self.grad_accum_steps == 0:
+                    # Unscale before clipping
+                    self.scaler.unscale_(self.optimizer)
                     torch.nn.utils.clip_grad_norm_(self.classifier.parameters(), self.max_grad_norm)
                     torch.nn.utils.clip_grad_norm_([p for p in self.encoder.model.parameters() if p.requires_grad], self.max_grad_norm)
-                    self.optimizer.step()
+
+                    # Optimizer step via scaler, then scheduler
+                    self.scaler.step(self.optimizer)
+                    self.scaler.update()
                     scheduler.step()
                     self.optimizer.zero_grad(set_to_none=True)
                     global_step += 1
 
-                    # Update progress bar with smoothed loss
-                    pbar.set_postfix({"loss": f"{running_loss / max(1, step):.4f}", "lr": f"{scheduler.get_last_lr()[0]:.2e}"})
+                    # Update progress bar with smoothed loss and scheduler step math
+                    pbar.set_postfix({
+                        "loss": f"{running_loss / max(1, step):.4f}",
+                        "lr": f"{self.optimizer.param_groups[0]['lr']:.2e}",
+                        "step": f"{global_step}/{total_steps}",
+                    })
             pbar.close()
 
             # Validation
             val_acc, val_f1 = self._evaluate_loader(val_loader)
             epoch_sec = perf_counter() - epoch_start
             console.log(
-                f"[bold cyan]\[val][/bold cyan] Epoch {epoch}: accuracy={val_acc:.4f} macro_f1={val_f1:.4f} "
+                f"[bold cyan]\\[val][/bold cyan] Epoch {epoch}: accuracy={val_acc:.4f} macro_f1={val_f1:.4f} "
                 f"| time={_format_duration(epoch_sec)}"
             )
             if val_f1 > best_val:
@@ -184,7 +237,7 @@ class TorchTrainer:
             self.classifier.load_state_dict(self._best_state["classifier"])  # type: ignore[arg-type]
 
         total_sec = perf_counter() - total_start
-        console.log(f"[bold green]\[train][/bold green] Training complete! time={_format_duration(total_sec)}")
+        console.log(f"[bold green]\\[train][/bold green] Training complete! time={_format_duration(total_sec)}")
 
     @torch.no_grad()
     def _evaluate_loader(self, loader: DataLoader) -> Tuple[float, float]:
@@ -196,8 +249,10 @@ class TorchTrainer:
         for batch in pbar:
             batch.tokens = {k: v.to(self.device) for k, v in batch.tokens.items()}
             batch.labels = batch.labels.to(self.device)
-            emb = self.encoder.forward(batch.tokens)
-            logits = self.classifier(emb)
+            from torch.amp import autocast
+            with autocast(device_type="cuda", enabled=self.use_amp):
+                emb = self.encoder.forward(batch.tokens)
+                logits = self.classifier(emb)
             preds = torch.argmax(logits, dim=-1)
             all_preds.extend(preds.detach().cpu().tolist())
             all_labels.extend(batch.labels.detach().cpu().tolist())
@@ -217,8 +272,10 @@ class TorchTrainer:
             batch_texts = texts[i:i + self.batch_size]
             tokens = self.encoder.tokenize(batch_texts)
             tokens = {k: v.to(self.device) for k, v in tokens.items()}
-            emb = self.encoder.forward(tokens)
-            logits = self.classifier(emb)
+            from torch.amp import autocast
+            with autocast(device_type="cuda", enabled=self.use_amp):
+                emb = self.encoder.forward(tokens)
+                logits = self.classifier(emb)
             logits_out.extend(logits.detach().cpu().tolist())
         pbar.close()
         return logits_out

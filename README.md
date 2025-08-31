@@ -51,7 +51,7 @@ Built-in class ids include (non-exhaustive):
 Use the CLI to generate a demo CSV
 
 ```
-python dataset.py --out data\demo.csv --n 400 --seed 42
+python dataset.py --out data\demo.csv --n 600 --seed 42
 ```
 
 Custom subset of classes:

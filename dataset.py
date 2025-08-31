@@ -7,6 +7,7 @@ import warnings
 from dataclasses import dataclass
 from typing import List, Dict, Tuple
 
+from sklearn.model_selection import train_test_split
 from tqdm.rich import tqdm
 
 # Suppress tqdm.rich experimental warning
@@ -32,28 +33,58 @@ class SymptomsDataset:
     def __len__(self) -> int:
         return len(self.texts)
 
-    def train_val_test_split(self, val_ratio: float = 0.15, test_ratio: float = 0.15, seed: int = 42) -> Tuple[
+    def train_val_test_split(self, val_ratio: float = 0.15, test_ratio: float = 0.15, seed: int = 42, stratify: bool = True) -> Tuple[
         "SymptomsDataset", "SymptomsDataset", "SymptomsDataset"]:
         assert 0 < val_ratio < 1 and 0 < test_ratio < 1 and (val_ratio + test_ratio) < 1
         n = len(self)
-        idxs = list(range(n))
-        random.Random(seed).shuffle(idxs)
-        n_val = int(n * val_ratio)
-        n_test = int(n * test_ratio)
-        val_idx = idxs[:n_val]
-        test_idx = idxs[n_val:n_val + n_test]
-        train_idx = idxs[n_val + n_test:]
 
         def subset(idxs: List[int]) -> "SymptomsDataset":
             return SymptomsDataset([self.texts[i] for i in idxs], [self.labels[i] for i in idxs])
 
-        return subset(train_idx), subset(val_idx), subset(test_idx)
+        if not stratify:  # use stratified split when possible, its better
+            idxs = list(range(n))
+            random.Random(seed).shuffle(idxs)
+            n_val = int(n * val_ratio)
+            n_test = int(n * test_ratio)
+            val_idx = idxs[:n_val]
+            test_idx = idxs[n_val:n_val + n_test]
+            train_idx = idxs[n_val + n_test:]
+            return subset(train_idx), subset(val_idx), subset(test_idx)
+
+        # Stratified split using sklearn, with safe fallback
+        X = list(range(n))
+        y = list(self.labels)
+        try:
+            temp_ratio = val_ratio + test_ratio
+            X_train, X_temp, y_train, y_temp = train_test_split(
+                X, y, test_size=temp_ratio, random_state=seed, stratify=y
+            )
+            # Split temp into val and test preserving proportions
+            val_share_of_temp = val_ratio / temp_ratio
+            X_val, X_test, y_val, y_test = train_test_split(
+                X_temp, y_temp, test_size=(1.0 - val_share_of_temp), random_state=seed, stratify=y_temp
+            )
+            return subset(X_train), subset(X_val), subset(X_test)
+        except ValueError as e:
+            warnings.warn(
+                f"Stratified split failed ({e}). Using random split. "
+                f"Consider increasing samples for the underrepresented classes.",
+                RuntimeWarning,
+            )
+            idxs = list(range(n))
+            random.Random(seed).shuffle(idxs)
+            n_val = int(n * val_ratio)
+            n_test = int(n * test_ratio)
+            val_idx = idxs[:n_val]
+            test_idx = idxs[n_val:n_val + n_test]
+            train_idx = idxs[n_val + n_test:]
+            return subset(train_idx), subset(val_idx), subset(test_idx)
 
 
 # Canonical symptom lexicon
 LEXICON: Dict[str, List[str]] = {
     "influenza": [
-        "fever",
+        "high fever",
         "chills",
         "body aches",
         "fatigue",
@@ -62,6 +93,8 @@ LEXICON: Dict[str, List[str]] = {
         "headache",
         "runny nose",
         "loss of appetite",
+        "muscle aches",
+        "weakness",
     ],
     "common_cold": [
         "runny nose",
@@ -71,6 +104,8 @@ LEXICON: Dict[str, List[str]] = {
         "congestion",
         "mild headache",
         "watery eyes",
+        "post-nasal drip",
+        "fatigue",
     ],
     "migraine": [
         "headache",
@@ -81,6 +116,7 @@ LEXICON: Dict[str, List[str]] = {
         "sensitivity to sound",
         "visual aura",
         "dizziness",
+        "blurred vision",
     ],
     "food_poisoning": [
         "nausea",
@@ -91,6 +127,7 @@ LEXICON: Dict[str, List[str]] = {
         "fatigue",
         "dehydration",
         "loss of appetite",
+        "abdominal bloating",
     ],
     "allergy": [
         "sneezing",
@@ -101,6 +138,8 @@ LEXICON: Dict[str, List[str]] = {
         "hives",
         "watery eyes",
         "coughing",
+        "swelling",
+        "red eyes",
     ],
     "myocardial_infarction_heart_attack": [
         "chest pain or pressure",
@@ -112,6 +151,9 @@ LEXICON: Dict[str, List[str]] = {
         "palpitations",
         "sweating",
         "anxiety",
+        "pain radiating to arm",
+        "pain radiating to jaw",
+        "pain radiating to back",
     ],
     "dehydration": [
         "dizziness",
@@ -122,6 +164,8 @@ LEXICON: Dict[str, List[str]] = {
         "dry mouth",
         "dark urine",
         "confusion",
+        "thirst",
+        "sunken eyes",
     ],
     "low_blood_pressure_hypotension": [
         "dizziness",
@@ -131,6 +175,7 @@ LEXICON: Dict[str, List[str]] = {
         "confusion",
         "fainting",
         "loss of balance",
+        "weak pulse",
     ],
     "stroke": [
         "sudden difficulty speaking or understanding",
@@ -141,6 +186,7 @@ LEXICON: Dict[str, List[str]] = {
         "sudden severe headache",
         "seizures",
         "facial droop",
+        "slurred speech",
     ],
     "pneumonia": [
         "cough (productive or dry)",
@@ -152,6 +198,7 @@ LEXICON: Dict[str, List[str]] = {
         "sweating",
         "cyanosis",
         "loss of appetite",
+        "rapid breathing",
     ],
     "vasovagal_syncope": [
         "dizziness",
@@ -162,6 +209,7 @@ LEXICON: Dict[str, List[str]] = {
         "palpitations",
         "pallor",
         "sweating",
+        "sudden weakness",
     ],
     "urinary_tract_infection": [
         "burning sensation when urinating",
@@ -170,6 +218,7 @@ LEXICON: Dict[str, List[str]] = {
         "lower abdominal pain",
         "cloudy urine",
         "mild fever",
+        "back pain",
     ],
     "gastroenteritis": [
         "nausea",
@@ -180,6 +229,7 @@ LEXICON: Dict[str, List[str]] = {
         "fatigue",
         "loss of appetite",
         "dehydration",
+        "abdominal bloating",
     ],
     "covid_19": [
         "fever",
@@ -191,6 +241,7 @@ LEXICON: Dict[str, List[str]] = {
         "headache",
         "muscle aches",
         "chills",
+        "nasal congestion",
     ],
     "asthma_attack": [
         "shortness of breath",
@@ -199,6 +250,7 @@ LEXICON: Dict[str, List[str]] = {
         "coughing",
         "difficulty speaking in full sentences",
         "anxiety",
+        "rapid breathing",
     ],
     "appendicitis": [
         "abdominal pain (lower right quadrant)",
@@ -208,6 +260,7 @@ LEXICON: Dict[str, List[str]] = {
         "fever",
         "abdominal tenderness",
         "constipation or diarrhea",
+        "rebound tenderness",
     ],
     "hypertension_high_blood_pressure_crisis": [
         "severe headache",
@@ -217,6 +270,24 @@ LEXICON: Dict[str, List[str]] = {
         "nosebleeds",
         "confusion",
         "anxiety",
+        "dizziness",
+    ],
+    "bronchitis": [
+        "persistent cough",
+        "mucus production",
+        "fatigue",
+        "shortness of breath",
+        "mild fever",
+        "chest discomfort",
+    ],
+    "sinus_infection_sinusitis": [
+        "facial pain or pressure",
+        "nasal congestion",
+        "runny nose",
+        "headache",
+        "post-nasal drip",
+        "fever",
+        "fatigue",
     ],
 }
 
@@ -242,10 +313,18 @@ def generate_synthetic_dataset(n_samples: int, class_names: List[str], seed: int
         items = core + noise
         rng.shuffle(items)
         templates = [
-            "Patient reports {}.",
-            "Symptoms include {}.",
-            "Noted {} over the last 48 hours.",
-            "Complaints: {}.",
+            "Patient reports {}",
+            "Symptoms include {}",
+            "Noted {} over the last 48 hours",
+            "Complaints: {}",
+            "{} reported by the patient",
+            "Recent onset of {}",
+            "History of {}",
+            "Experiencing {}",
+            "Presents with {}",
+            "Observed: {}",
+            "{} present",
+            "{}",
         ]
         t = rng.choice(templates)
         return t.format(", ".join(items))
