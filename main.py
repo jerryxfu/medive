@@ -49,7 +49,7 @@ MLP_DROPOUT = 0.1
 
 # Training config
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
-EPOCHS = 18
+EPOCHS = 24
 BATCH_SIZE = 64
 LEARNING_RATE = 3e-5  # common lr, if not fine-tuning encoder
 ENCODER_LEARNING_RATE = 3e-5
