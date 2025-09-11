@@ -28,7 +28,7 @@ OUTPUT_DIR = os.path.join(os.getcwd(), "artifacts")
 LOG_EVERY = 50
 
 # Data config
-DATASET_PATH = os.path.join(os.getcwd(), "data", "positives-10k.csv")
+DATASET_PATH = os.path.join(os.getcwd(), "data", "positives-12k.csv")
 VAL_RATIO = 0.15
 TEST_RATIO = 0.15
 

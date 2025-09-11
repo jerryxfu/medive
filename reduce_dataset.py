@@ -48,6 +48,7 @@ def main():
 
     # Get class distribution
     class_counts = df[args.class_column].value_counts()
+    num_classes = len(class_counts)
     print(f"\nOriginal class distribution:")
     for class_name, count in class_counts.items():
         print(f"  {class_name}: {count}")
@@ -59,42 +60,79 @@ def main():
             print(f"Error: keep-percent must be between 0 and 100")
             return
 
-        print(f"\nKeeping {args.keep_percent}% of each class")
+        print(f"\nKeeping {args.keep_percent}% of each class (minimum 1 sample per class)")
         reduced_dfs = []
 
         for class_name in class_counts.index:
             class_df = df[df[args.class_column] == class_name]
-            n_keep = max(1, int(len(class_df) * keep_percent))
+            calculated_keep = int(len(class_df) * keep_percent)
+            # Force at least 1 sample per class, even if percentage would give 0
+            n_keep = max(1, calculated_keep)
+
             sampled_df = class_df.sample(n=n_keep, random_state=42)
             reduced_dfs.append(sampled_df)
 
         reduced_df = pd.concat(reduced_dfs, ignore_index=True).sample(frac=1, random_state=42)
 
     elif args.target_size:
-        # Calculate percentage needed to achieve target size
+        # Validate target size can accommodate all classes
         target = args.target_size
+        if target < num_classes:
+            print(f"Error: Target size {target} is smaller than number of classes ({num_classes})")
+            print(f"⚠️ Minimum target size must be {num_classes} to ensure at least 1 sample per class")
+            return
+
         if target >= original_size:
             print(f"Target size {target} is >= original size {original_size}, copying all rows")
             reduced_df = df.copy()
         else:
-            target_percent = target / original_size
-            print(f"Target size: {target} rows, keeping {target_percent * 100:.1f}% of each class")
+            print(f"Target size: {target} rows (guaranteeing at least 1 sample per class)")
 
             reduced_dfs = []
-            total_kept = 0
+            remaining_target = target - num_classes  # Reserve 1 slot per class
 
+            # First, ensure each class gets at least 1 sample
             for class_name in class_counts.index:
                 class_df = df[df[args.class_column] == class_name]
-                n_keep = max(1, int(len(class_df) * target_percent))
-                sampled_df = class_df.sample(n=n_keep, random_state=42)
+                sampled_df = class_df.sample(n=1, random_state=42)
                 reduced_dfs.append(sampled_df)
-                total_kept += len(sampled_df)
+
+            # Then distribute remaining slots proportionally
+            if remaining_target > 0:
+                for class_name in class_counts.index:
+                    class_df = df[df[args.class_column] == class_name]
+                    # Skip the already sampled row
+                    remaining_class_df = class_df.drop(reduced_dfs[list(class_counts.index).index(class_name)].index)
+
+                    if len(remaining_class_df) > 0:
+                        # Calculate additional samples for this class
+                        class_proportion = class_counts[class_name] / original_size
+                        additional_samples = int(remaining_target * class_proportion)
+                        additional_samples = min(additional_samples, len(remaining_class_df))
+
+                        if additional_samples > 0:
+                            additional_df = remaining_class_df.sample(n=additional_samples, random_state=42)
+                            reduced_dfs[list(class_counts.index).index(class_name)] = pd.concat([
+                                reduced_dfs[list(class_counts.index).index(class_name)],
+                                additional_df
+                            ])
 
             reduced_df = pd.concat(reduced_dfs, ignore_index=True).sample(frac=1, random_state=42)
 
-            # If we're over target, trim randomly
+            # Final trim if we're slightly over target (due to rounding)
             if len(reduced_df) > target:
-                reduced_df = reduced_df.sample(n=target, random_state=42)
+                # Randomly remove excess, but ensure we keep at least 1 per class
+                excess = len(reduced_df) - target
+                for _ in range(excess):
+                    # Find classes with more than 1 sample
+                    current_counts = reduced_df[args.class_column].value_counts()
+                    removable_classes = current_counts[current_counts > 1].index
+                    if len(removable_classes) > 0:
+                        # Remove one sample from a random class that has more than 1
+                        remove_class = pd.Series(removable_classes).sample(1, random_state=42).iloc[0]
+                        class_indices = reduced_df[reduced_df[args.class_column] == remove_class].index
+                        remove_idx = pd.Series(class_indices).sample(1, random_state=42).iloc[0]
+                        reduced_df = reduced_df.drop(remove_idx).reset_index(drop=True)
 
     new_size = len(reduced_df)
     reduction_percent = (1 - new_size / original_size) * 100
@@ -108,6 +146,13 @@ def main():
         original_count = class_counts[class_name]
         kept_percent = (count / original_count) * 100
         print(f"  {class_name}: {count} ({kept_percent:.1f}% of original)")
+
+    # Verify no class was completely removed
+    missing_classes = set(class_counts.index) - set(new_class_counts.index)
+    if missing_classes:
+        print(f"\n⚠️ WARNING: The following classes were completely removed: {missing_classes}")
+    else:
+        print(f"\n✅ All {num_classes} classes preserved in reduced dataset")
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
 
