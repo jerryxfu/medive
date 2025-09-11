@@ -3,7 +3,7 @@ from __future__ import annotations
 import math
 from dataclasses import dataclass
 from time import perf_counter
-from typing import Dict, List, Tuple
+from typing import Dict, List, Tuple, Optional
 
 import torch
 import torch.nn as nn
@@ -14,7 +14,9 @@ from torch.utils.data import DataLoader, Dataset
 from tqdm.rich import tqdm
 from transformers import get_linear_schedule_with_warmup
 
-from embedding import TextEmbeddingEncoder
+from .concepts import PAD_ID, NO_CUI_ID
+from .embedding import TextEmbeddingEncoder
+from utils import format_duration
 
 console = Console()
 try:  # Access to a protected member _log_render of a class
@@ -23,37 +25,52 @@ except Exception:
     pass
 
 
-def _format_duration(seconds: float) -> str:
-    # Format as HH:MM:SS.s (two decimals)
-    m, s = divmod(seconds, 60.0)
-    h, m = divmod(int(m), 60)
-    return f"{h:02d}:{m:02d}:{s:05.2f}"
-
-
-class _TextLabelDataset(Dataset):
-    def __init__(self, texts: List[str], labels: List[int]):
-        assert len(texts) == len(labels)
-        self.texts = texts
-        self.labels = labels
+class TextLabelDataset(Dataset):
+    # hold symptom texts and integer condition IDs
+    def __init__(self, symptoms: List[str], condition_ids: List[int], concept_ids: List[List[int]]):
+        assert len(symptoms) == len(condition_ids) == len(concept_ids)
+        self.symptoms = symptoms
+        self.condition_ids = condition_ids
+        self.concepts = concept_ids
 
     def __len__(self) -> int:
-        return len(self.texts)
+        return len(self.symptoms)
 
-    def __getitem__(self, idx: int) -> Tuple[str, int]:
-        return self.texts[idx], int(self.labels[idx])
+    def __getitem__(self, idx: int) -> Tuple[str, int, List[int]]:
+        return self.symptoms[idx], int(self.condition_ids[idx]), list(self.concepts[idx])
 
 
 @dataclass
 class _Batch:
     tokens: Dict[str, torch.Tensor]
     labels: torch.Tensor
+    concept_ids: torch.Tensor  # [B,Lc]
+    concept_mask: torch.Tensor  # [B,Lc]
 
 
-def _collate_fn(examples: List[Tuple[str, int]], encoder: TextEmbeddingEncoder) -> _Batch:
-    texts = [t for t, _ in examples]
-    labels = torch.tensor([y for _, y in examples], dtype=torch.long)
-    tokens = encoder.tokenize(texts)
-    return _Batch(tokens=tokens, labels=labels)
+def pad_concepts(seqs: List[List[int]], pad_id: int = PAD_ID, max_len: int | None = None) -> Tuple[torch.Tensor, torch.Tensor]:
+    if not seqs:
+        return torch.zeros(0, 0, dtype=torch.long), torch.zeros(0, 0, dtype=torch.long)
+    if max_len is None:
+        max_len = max(len(s) for s in seqs)
+    out = torch.full((len(seqs), max_len), pad_id, dtype=torch.long)
+    mask = torch.zeros((len(seqs), max_len), dtype=torch.long)
+    for i, s in enumerate(seqs):
+        if not s:
+            s = [NO_CUI_ID]
+        trunc = s[:max_len]
+        out[i, :len(trunc)] = torch.tensor(trunc, dtype=torch.long)
+        mask[i, :len(trunc)] = 1
+    return out, mask
+
+
+def collate_fn(examples, encoder: TextEmbeddingEncoder) -> _Batch:
+    symptom_texts = [t for t, _, _ in examples]
+    condition_ids = torch.tensor([y for _, y, _ in examples], dtype=torch.long)
+    tokens = encoder.tokenize(symptom_texts)
+    seqs = [c for _, _, c in examples]
+    concept_ids, concept_mask = pad_concepts(seqs)
+    return _Batch(tokens=tokens, labels=condition_ids, concept_ids=concept_ids, concept_mask=concept_mask)
 
 
 def evaluate_predictions(y_true: List[int], y_pred: List[int], num_classes: int) -> Dict[str, float]:
@@ -77,7 +94,6 @@ class TorchTrainer:
         warmup_ratio: float = 0.06,
         grad_accum_steps: int = 1,
         max_grad_norm: float = 1.0,
-        log_every: int = 50,
         seed: int = 42,
         label_smoothing: float = 0.0,
         encoder_lr: float | None = None,
@@ -95,7 +111,6 @@ class TorchTrainer:
         self.warmup_ratio = warmup_ratio
         self.grad_accum_steps = max(1, grad_accum_steps)
         self.max_grad_norm = max_grad_norm
-        self.log_every = log_every
 
         torch.manual_seed(seed)
         if torch.cuda.is_available():
@@ -151,20 +166,20 @@ class TorchTrainer:
 
         self._best_state = None
 
-    def _make_loader(self, texts: List[str], labels: List[int], shuffle: bool) -> DataLoader:
-        dataset = _TextLabelDataset(texts, labels)
+    def make_loader(self, symptoms: List[str], condition_ids: List[int], concept_ids: List[List[int]], shuffle: bool) -> DataLoader:
+        dataset = TextLabelDataset(symptoms, condition_ids, concept_ids)
 
-        # Need closure over encoder for tokenization in collate
         def collate(examples):
-            return _collate_fn(examples, self.encoder)
+            return collate_fn(examples, self.encoder)
 
         return DataLoader(dataset, batch_size=self.batch_size, shuffle=shuffle, collate_fn=collate)
 
     def fit(self, train_ds, val_ds) -> None:
-        train_labels = [self.label2id[y] for y in train_ds.labels]
-        val_labels = [self.label2id[y] for y in val_ds.labels]
-        train_loader = self._make_loader(train_ds.texts, train_labels, shuffle=True)
-        val_loader = self._make_loader(val_ds.texts, val_labels, shuffle=False)
+        train_condition_ids = [self.label2id[y] for y in train_ds.conditions]
+        val_condition_ids = [self.label2id[y] for y in val_ds.conditions]
+        assert train_ds._concept_ids is not None and val_ds._concept_ids is not None, "Concept IDs must be attached before training."
+        train_loader = self.make_loader(train_ds.symptoms, train_condition_ids, train_ds._concept_ids, shuffle=True)
+        val_loader = self.make_loader(val_ds.symptoms, val_condition_ids, val_ds._concept_ids, shuffle=False)
 
         steps_per_epoch = max(1, math.ceil(len(train_loader) / self.grad_accum_steps))
         total_steps = steps_per_epoch * self.epochs
@@ -184,12 +199,14 @@ class TorchTrainer:
                 # Move batch to device
                 batch.tokens = {k: v.to(self.device) for k, v in batch.tokens.items()}
                 batch.labels = batch.labels.to(self.device)
+                batch.concept_ids = batch.concept_ids.to(self.device)
+                batch.concept_mask = batch.concept_mask.to(self.device)
 
                 # Forward with AMP
                 with torch.set_grad_enabled(True):
                     with autocast(device_type="cuda", enabled=self.use_amp):
                         emb = self.encoder.forward(batch.tokens)
-                        logits = self.classifier(emb)
+                        logits = self.classifier(emb, batch.concept_ids, batch.concept_mask)
                         loss = self.criterion(logits, batch.labels) / self.grad_accum_steps
 
                 # Backward (scaled if AMP enabled)
@@ -197,7 +214,7 @@ class TorchTrainer:
                 running_loss += float(loss.item())
 
                 if step % self.grad_accum_steps == 0:
-                    # Unscale before clipping
+                    # Unscale gradients from AMP and clip
                     self.scaler.unscale_(self.optimizer)
                     torch.nn.utils.clip_grad_norm_(self.classifier.parameters(), self.max_grad_norm)
                     torch.nn.utils.clip_grad_norm_([p for p in self.encoder.model.parameters() if p.requires_grad], self.max_grad_norm)
@@ -209,8 +226,7 @@ class TorchTrainer:
                     self.optimizer.zero_grad(set_to_none=True)
                     global_step += 1
 
-                    # Update progress bar with smoothed loss and scheduler step math
-                    pbar.set_postfix({
+                    pbar.set_postfix({  # Progress bar update
                         "loss": f"{running_loss / max(1, step):.4f}",
                         "lr": f"{self.optimizer.param_groups[0]['lr']:.2e}",
                         "step": f"{global_step}/{total_steps}",
@@ -221,8 +237,7 @@ class TorchTrainer:
             val_acc, val_f1 = self._evaluate_loader(val_loader)
             epoch_sec = perf_counter() - epoch_start
             console.log(
-                f"[bold cyan]\\[val][/bold cyan] Epoch {epoch}: accuracy={val_acc:.4f} macro_f1={val_f1:.4f} "
-                f"| time={_format_duration(epoch_sec)}"
+                f"[bold cyan]\\[val][/bold cyan] Epoch {epoch}: accuracy={val_acc:.4f} macro_f1={val_f1:.4f} | time={format_duration(epoch_sec)}"
             )
             if val_f1 > best_val:
                 best_val = val_f1
@@ -233,11 +248,11 @@ class TorchTrainer:
 
         # Restore best
         if self._best_state is not None:
-            self.encoder.model.load_state_dict(self._best_state["encoder"])  # type: ignore[arg-type]
-            self.classifier.load_state_dict(self._best_state["classifier"])  # type: ignore[arg-type]
+            self.encoder.model.load_state_dict(self._best_state["encoder"])
+            self.classifier.load_state_dict(self._best_state["classifier"])
 
         total_sec = perf_counter() - total_start
-        console.log(f"[bold green]\\[train][/bold green] Training complete! time={_format_duration(total_sec)}")
+        console.log(f"[bold green]\\[train][/bold green] Training complete! time={format_duration(total_sec)}")
 
     @torch.no_grad()
     def _evaluate_loader(self, loader: DataLoader) -> Tuple[float, float]:
@@ -249,10 +264,13 @@ class TorchTrainer:
         for batch in pbar:
             batch.tokens = {k: v.to(self.device) for k, v in batch.tokens.items()}
             batch.labels = batch.labels.to(self.device)
-            from torch.amp import autocast
+            batch.concept_ids = batch.concept_ids.to(self.device)
+            batch.concept_mask = batch.concept_mask.to(self.device)
+
+            # Eval forward with AMP
             with autocast(device_type="cuda", enabled=self.use_amp):
-                emb = self.encoder.forward(batch.tokens)
-                logits = self.classifier(emb)
+                embeddings = self.encoder.forward(batch.tokens)
+                logits = self.classifier(embeddings, batch.concept_ids, batch.concept_mask)
             preds = torch.argmax(logits, dim=-1)
             all_preds.extend(preds.detach().cpu().tolist())
             all_labels.extend(batch.labels.detach().cpu().tolist())
@@ -261,21 +279,25 @@ class TorchTrainer:
         return metrics["accuracy"], metrics["macro_f1"]
 
     @torch.no_grad()
-    def predict_logits(self, texts: List[str]) -> List[List[float]]:
+    def predict_logits(self, symptoms: List[str], test_concepts: List[List[int]], batch_size: Optional[int] = None) -> List[List[float]]:
         self.encoder.model.eval()
         self.classifier.eval()
+        if batch_size is None:
+            batch_size = self.batch_size
         logits_out: List[List[float]] = []
-        # Iterate over batches with a progress bar
-        total_batches = (len(texts) + self.batch_size - 1) // self.batch_size
-        pbar = tqdm(range(0, len(texts), self.batch_size), total=total_batches, desc="[predict]", leave=False, dynamic_ncols=True)
+        total_batches = (len(symptoms) + batch_size - 1) // batch_size
+        pbar = tqdm(range(0, len(symptoms), batch_size), total=total_batches, desc="[predict]", leave=False, dynamic_ncols=True)
         for i in pbar:
-            batch_texts = texts[i:i + self.batch_size]
-            tokens = self.encoder.tokenize(batch_texts)
+            batch_symptoms = symptoms[i:i + batch_size]
+            tokens = self.encoder.tokenize(batch_symptoms)
             tokens = {k: v.to(self.device) for k, v in tokens.items()}
-            from torch.amp import autocast
+            seqs = test_concepts[i:i + batch_size]
+            c_ids, c_mask = pad_concepts(seqs)
+            concept_ids_tensor = c_ids.to(self.device)
+            concept_mask_tensor = c_mask.to(self.device)
             with autocast(device_type="cuda", enabled=self.use_amp):
                 emb = self.encoder.forward(tokens)
-                logits = self.classifier(emb)
+                logits = self.classifier(emb, concept_ids_tensor, concept_mask_tensor)
             logits_out.extend(logits.detach().cpu().tolist())
         pbar.close()
         return logits_out

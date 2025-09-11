@@ -2,19 +2,17 @@ from __future__ import annotations
 
 import json
 import os
-import sys
 import warnings
-from typing import Dict, List, Any, Tuple
+from typing import Dict, List, Tuple
 
 import torch
 from rich.console import Console
 from rich.table import Table
 from rich.traceback import install as rich_traceback_install
 
-# Suppress tqdm.rich experimental warning
-warnings.filterwarnings("ignore", message="rich is experimental/alpha")
+from utils import next_run_id, print_dataset_stats
 
-# Nicer errors
+warnings.filterwarnings("ignore", message="rich is experimental/alpha")  # suppress experimental warning
 rich_traceback_install(show_locals=False)
 console = Console()
 try:  # Access to a protected member _log_render of a class
@@ -22,85 +20,101 @@ try:  # Access to a protected member _log_render of a class
 except Exception:
     pass
 
-# -------------------------
+# --------------------
 # Configuration
-# -------------------------
+# --------------------
 SEED = 42
 OUTPUT_DIR = os.path.join(os.getcwd(), "artifacts")
+LOG_EVERY = 50
 
 # Data config
-DATASET_PATH = os.path.join(os.getcwd(), "data", "demo.csv")  # CSV with header: text,label
-N_SAMPLES = 600  # synthetic samples if no CSV
+DATASET_PATH = os.path.join(os.getcwd(), "data", "positives-10k.csv")
 VAL_RATIO = 0.15
 TEST_RATIO = 0.15
-DEFAULT_CLASS_NAMES = [
-    "influenza", "common_cold", "migraine", "food_poisoning", "allergy"
-]
 
 # Embedding config
 HF_MODEL_NAME = "cambridgeltl/SapBERT-from-PubMedBERT-fulltext"
 MAX_SEQUENCE_LENGTH = 128
-FINE_TUNE_ENCODER = True  # if True, encoder params are updated during training
-FREEZE_LAYER_NORM = True  # keep layer norms trainable even when freezing encoder
+FINE_TUNE_ENCODER = True
+FREEZE_LAYER_NORM = True
 
-# Model config (MLP classifier)
-MLP_HIDDEN_DIM = 256
-MLP_DROPOUT = 0.1
+# Concept (CUI) config
+CUI_EMB_DIM = 128  # dimension of CUI embeddings
+MAX_CUIS_PER_DOC = 32  # max CUIs to extract per document
+MIN_CUI_SCORE = 0.85  # minimum confidence score to keep CUI (not used for exact matcher)
+CUI_VOCAB_MAX_SIZE = 8000  # max size of CUI vocabulary (most frequent)
+
+# Model config
+MLP_HIDDEN_DIM = 256  # hidden layer dimension in MLP head
+MLP_DROPOUT = 0.1  # dropout in MLP head
 
 # Training config
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
-EPOCHS = 24
+EPOCHS = 8
 BATCH_SIZE = 64
-LEARNING_RATE = 3e-5  # common lr, if not fine-tuning encoder
+LEARNING_RATE = 3e-5
 ENCODER_LEARNING_RATE = 3e-5
 HEAD_LEARNING_RATE = 1e-4
 WEIGHT_DECAY = 1e-4  # L2 regularization
 WARMUP_RATIO = 0.06  # proportion of training for linear LR warmup
 GRAD_ACCUM_STEPS = 1  # gradient accumulation steps
 MAX_GRAD_NORM = 1.0  # gradient clipping
-LABEL_SMOOTHING = 0.10  # 0.0 to disable
+LABEL_SMOOTHING = 0.0  # 0.0 to disable
 
-# Logging/preview
-NUM_PREDICTION_SAMPLES = 5  # number of test samples to show in preview
-LOG_EVERY = 50  # log training stats every N steps
-
-# ---------------
+# --------------------
 # Orchestration
-# ---------------
-from dataset import (
-    generate_synthetic_dataset,
+# --------------------
+from modules.dataset import (
     SymptomsDataset,
     load_examples_from_path,
     Example,
 )
-from embedding import TextEmbeddingEncoder
-from models import MLPClassifier
-from train import TorchTrainer, evaluate_predictions
+from modules.embedding import TextEmbeddingEncoder
+from modules.models import HybridTextCUIClassifier
+from modules.train import TorchTrainer, evaluate_predictions
+from modules.concepts import (
+    UmlsConceptExtractor,
+    ConceptExtractionConfig,
+    build_cui_vocab,
+    map_concepts_to_ids,
+)
 
 
-def ensure_output_dir(path: str) -> None:
-    os.makedirs(path, exist_ok=True)
+# label -> id and id -> label dictionaries for training
+def _label_mappings(class_names: List[str]) -> Tuple[Dict[str, int], Dict[int, str]]:
+    with console.status(f"[bold blue]\\[label_mappings][/bold blue] Building label mappings..."):
+        label2id = {cls: index for (index, cls) in enumerate(class_names)}
+        id2label = {index: cls for (cls, index) in label2id.items()}
+        return label2id, id2label
 
 
-def build_label_mappings(class_names: List[str]) -> Tuple[Dict[str, int], Dict[int, str]]:
-    label2id = {c: i for i, c in enumerate(class_names)}
-    id2label = {i: c for c, i in label2id.items()}
-    return label2id, id2label
+# Derive class names from examples in order of first appearance
+def _derive_classes_from_examples(examples: List[Example]) -> List[str]:
+    with console.status(f"[bold blue]\\[classes][/bold blue] Deriving classes from examples..."):
+        seen: List[str] = []
+        seen_set = set()
+        for example in examples:
+            y = example.condition
+            if y and y not in seen_set:
+                seen.append(y)
+                seen_set.add(y)
+        # list(dict.fromkeys(example.condition for example in examples if example.condition)) # Python 3.7+ preserves order
+        return seen
 
 
-def preview_samples(texts: List[str], preds: List[int], id2label: Dict[int, str], k: int = 5) -> List[Dict[str, Any]]:
-    return [{"symptoms": t, "pred": id2label[int(p)]} for t, p in list(zip(texts, preds))[:k]]
+# Extract concepts for all texts in dataset, build vocab, map to ids, attach to dataset
+def _attach_concepts_to_dataset(dataset: SymptomsDataset, vocab_path: str) -> Tuple[Dict[str, int], List[List[int]]]:
+    extractor = UmlsConceptExtractor(
+        ConceptExtractionConfig(max_concepts_per_doc=MAX_CUIS_PER_DOC, min_score=MIN_CUI_SCORE)
+    )
+    concept_lists = extractor.batch_extract(dataset.symptoms)
+    vocab = build_cui_vocab(concept_lists, max_size=CUI_VOCAB_MAX_SIZE)
+    cui_ids = map_concepts_to_ids(concept_lists, vocab)
+    dataset.attach_concepts(cui_ids)
+    with open(vocab_path, "w", encoding="utf-8") as f:
+        json.dump(vocab, f, indent=2)
 
-
-def derive_classes_from_examples(examples: List[Example]) -> List[str]:
-    seen: List[str] = []
-    seen_set = set()
-    for ex in examples:
-        y = ex.label
-        if y and y not in seen_set:
-            seen.append(y)
-            seen_set.add(y)
-    return seen
+    return vocab, cui_ids
 
 
 def main() -> None:
@@ -108,31 +122,34 @@ def main() -> None:
     if torch.cuda.is_available():
         torch.cuda.manual_seed_all(SEED)
 
-    ensure_output_dir(OUTPUT_DIR)
+    os.makedirs(OUTPUT_DIR, exist_ok=True)
+    run_id = next_run_id(OUTPUT_DIR)
 
-    use_csv = os.path.exists(DATASET_PATH)
-    if use_csv:  # THERE IS CSV
-        with console.status(f"[bold cyan]\\[data][/bold cyan] Loading dataset from CSV: {os.path.relpath(DATASET_PATH)}"):
-            examples = load_examples_from_path(DATASET_PATH)
-        console.log(f"[bold cyan]\\[data][/bold cyan] Loaded {len(examples)} rows from CSV")
-        class_names = derive_classes_from_examples(examples)
-        if not class_names:
-            console.print("[bold red]\\[data][/bold red] No labels found in CSV. Ensure the 'label' column has non-empty values.")
-            sys.exit(1)
-
-    else:  # NO CSV, USE SYNTHETIC
-        console.log("[bold red]\\[data][/bold red] No CSV found; generating synthetic dataset")
-        examples = generate_synthetic_dataset(n_samples=N_SAMPLES, class_names=DEFAULT_CLASS_NAMES, seed=SEED)
-        console.log(f"[bold cyan]\\[data][/bold cyan] Generated {len(examples)} examples")
-        class_names = DEFAULT_CLASS_NAMES
+    # Load CSV
+    examples = load_examples_from_path(DATASET_PATH)
+    class_names = _derive_classes_from_examples(examples)
+    if not class_names:
+        raise RuntimeError("No conditions found in CSV. Ensure the 'condition' column has non-empty values.")
+    console.log({"dataset_path": DATASET_PATH, "num_examples": len(examples), "classes": class_names})
 
     dataset = SymptomsDataset.from_examples(examples)
     train_ds, val_ds, test_ds = dataset.train_val_test_split(val_ratio=VAL_RATIO, test_ratio=TEST_RATIO, seed=SEED)
-    console.log(f"[bold cyan]\\[data][/bold cyan] Split -> train={len(train_ds)} val={len(val_ds)} test={len(test_ds)}")
 
-    label2id, id2label = build_label_mappings(class_names)
+    label2id, id2label = _label_mappings(class_names)
 
-    console.rule("Config")
+    # Concept extraction on union for consistent vocab
+    union_symptoms = train_ds.symptoms + val_ds.symptoms + test_ds.symptoms
+    union_conditions = train_ds.conditions + val_ds.conditions + test_ds.conditions
+    union = SymptomsDataset(union_symptoms, union_conditions)
+    vocab_path = os.path.join(OUTPUT_DIR, f"cui_vocab_{run_id}.json")
+    vocab, union_cui_ids = _attach_concepts_to_dataset(union, vocab_path)
+    train_ds.attach_concepts(union_cui_ids[: len(train_ds)])
+    val_ds.attach_concepts(union_cui_ids[len(train_ds): len(train_ds) + len(val_ds)])
+    test_ds.attach_concepts(union_cui_ids[len(train_ds) + len(val_ds):])
+
+    print_dataset_stats("Train", train_ds)
+    print_dataset_stats("Val", val_ds)
+    print_dataset_stats("Test", test_ds)
 
     # Encoder
     with console.status(f"[bold blue]\\[embedding][/bold blue] Loading encoder: {HF_MODEL_NAME}"):
@@ -144,17 +161,18 @@ def main() -> None:
             device=DEVICE,
             seed=SEED,
         )
-    console.log(f"[bold blue]\\[embedding][/bold blue] Encoder loaded {HF_MODEL_NAME}. Output dim: {encoder.output_dim}")
+        console.log(f"Using encoder: {HF_MODEL_NAME} of dimension {encoder.output_dim} on device {DEVICE}")
 
-    # Model
-    with console.status("[bold magenta]\\[model][/bold magenta] Building MLP classifier..."):
-        model = MLPClassifier(input_dim=encoder.output_dim, hidden_dim=MLP_HIDDEN_DIM, num_classes=len(class_names), dropout=MLP_DROPOUT)
-    console.log("[bold magenta]\\[model][/bold magenta] Model built MLP classifier.")
-
-    console.rule("Training")
+    model = HybridTextCUIClassifier(
+        text_dim=encoder.output_dim,
+        cui_vocab_size=len(vocab),
+        cui_emb_dim=CUI_EMB_DIM,
+        hidden_dim=MLP_HIDDEN_DIM,
+        num_classes=len(class_names),
+        dropout=MLP_DROPOUT,
+    )
 
     # Trainer
-    console.log(f"[bold yellow]\\[train][/bold yellow] Starting training on device={DEVICE}")
     trainer = TorchTrainer(
         encoder=encoder,
         classifier=model,
@@ -170,50 +188,38 @@ def main() -> None:
         warmup_ratio=WARMUP_RATIO,
         grad_accum_steps=GRAD_ACCUM_STEPS,
         max_grad_norm=MAX_GRAD_NORM,
-        log_every=LOG_EVERY,
         seed=SEED,
         label_smoothing=LABEL_SMOOTHING,
     )
 
     trainer.fit(train_ds, val_ds)
 
-    # Save best weights for inference
-    try:
-        enc_path = os.path.join(OUTPUT_DIR, "encoder_state.pt")
-        clf_path = os.path.join(OUTPUT_DIR, "classifier_state.pt")
-        torch.save(encoder.model.state_dict(), enc_path)
-        torch.save(model.state_dict(), clf_path)
-        console.log(f"[bold green]\\[save][/bold green] Saved encoder -> {enc_path}")
-        console.log(f"[bold green]\\[save][/bold green] Saved classifier -> {clf_path}")
-    except Exception as e:
-        console.log(f"[bold red]\\[save][/bold red] Failed to save model weights: {e}")
+    # Save weights
+    encoder_path = os.path.join(OUTPUT_DIR, f"encoder_state_{run_id}.pt")
+    classifier_path = os.path.join(OUTPUT_DIR, f"classifier_state_{run_id}.pt")
+    torch.save(encoder.model.state_dict(), encoder_path)
+    torch.save(model.state_dict(), classifier_path)
 
     # Evaluation
-    console.log("[bold yellow]\\[eval][/bold yellow] Evaluating on test set...")
-    test_texts, test_labels = test_ds.texts, [label2id[y] for y in test_ds.labels]
-    test_logits = trainer.predict_logits(test_texts)
+    test_symptoms, test_conditions = test_ds.symptoms, [label2id[y] for y in test_ds.conditions]
+    test_logits = trainer.predict_logits(test_symptoms, test_concepts=test_ds._concept_ids)
     test_preds = [int(torch.tensor(logit).argmax().item()) for logit in test_logits]
-    metrics = evaluate_predictions(test_labels, test_preds, num_classes=len(class_names))
+    metrics = evaluate_predictions(test_conditions, test_preds, num_classes=len(class_names))
 
-    # region Print metrics table
     metrics_table = Table(show_header=True, header_style="bold")
     metrics_table.add_column("Metric")
     metrics_table.add_column("Value", justify="right")
     metrics_table.add_row("accuracy", f"{metrics.get('accuracy', 0.0):.4f}")
     metrics_table.add_row("macro_f1", f"{metrics.get('macro_f1', 0.0):.4f}")
-    # endregion
     console.print(metrics_table)
 
-    # region Inference preview
-    console.log("[bold yellow]\\[preview][/bold yellow] Generating inference preview...")
-    preview = preview_samples(test_ds.texts, test_preds, id2label, k=NUM_PREDICTION_SAMPLES)
+    preview = [{"symptoms": t, "pred": id2label[int(p)]} for t, p in list(zip(test_ds.symptoms, test_preds))[:5]]
     table = Table(show_header=True, header_style="bold")
     table.add_column("#", justify="right", width=3)
     table.add_column("Symptoms", overflow="fold")
     table.add_column("Pred")
     for i, row in enumerate(preview, start=1):
         table.add_row(str(i), row["symptoms"], row["pred"])
-    # endregion
     console.print(table)
 
     summary = {
@@ -233,15 +239,19 @@ def main() -> None:
             "warmup_ratio": WARMUP_RATIO,
             "label_smoothing": LABEL_SMOOTHING,
             "classes": class_names,
+            "cui_emb_dim": CUI_EMB_DIM,
+            "max_cuis_per_doc": MAX_CUIS_PER_DOC,
+            "min_cui_score": MIN_CUI_SCORE,
+            "cui_vocab_size": len(vocab),
+            "run_id": run_id,
         },
         "metrics": metrics,
-        "preview": preview,
     }
 
-    out_path = os.path.join(OUTPUT_DIR, "run_summary.json")
+    out_path = os.path.join(OUTPUT_DIR, f"run_summary_{run_id}.json")
     with open(out_path, "w", encoding="utf-8") as f:
         json.dump(summary, f, indent=2)
-    console.log(f"[bold green]\\[done][/bold green] Summary saved to {out_path}")
+    console.log(f"Summary saved to {out_path}")
 
 
 if __name__ == "__main__":

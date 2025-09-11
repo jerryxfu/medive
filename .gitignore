@@ -1,4 +1,9 @@
 artifacts/
+data/*
+!data/positives-12k.csv
+!data/
+output/
+MRCONSO.RRF
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
