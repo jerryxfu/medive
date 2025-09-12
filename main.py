@@ -28,7 +28,7 @@ OUTPUT_DIR = os.path.join(os.getcwd(), "artifacts")
 LOG_EVERY = 50
 
 # Data config
-DATASET_PATH = os.path.join(os.getcwd(), "data", "positives-12k.csv")
+DATASET_PATH = os.path.join(os.getcwd(), "data", "positives-f800-15k.csv")
 VAL_RATIO = 0.15
 TEST_RATIO = 0.15
 
@@ -50,7 +50,7 @@ MLP_DROPOUT = 0.1  # dropout in MLP head
 
 # Training config
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
-EPOCHS = 8
+EPOCHS = 6
 BATCH_SIZE = 64
 LEARNING_RATE = 3e-5
 ENCODER_LEARNING_RATE = 3e-5
@@ -103,17 +103,38 @@ def _derive_classes_from_examples(examples: List[Example]) -> List[str]:
 
 
 # Extract concepts for all texts in dataset, build vocab, map to ids, attach to dataset
-def _attach_concepts_to_dataset(dataset: SymptomsDataset, vocab_path: str) -> Tuple[Dict[str, int], List[List[int]]]:
+def _attach_concepts_to_dataset(dataset: SymptomsDataset, vocab_path: str, run_id: str) -> Tuple[Dict[str, int], List[List[int]]]:
+    gazetteer_path = os.path.join(OUTPUT_DIR, f"gazetteer_{run_id}.json")
+
     extractor = UmlsConceptExtractor(
         ConceptExtractionConfig(max_concepts_per_doc=MAX_CUIS_PER_DOC, min_score=MIN_CUI_SCORE)
     )
+
+    # Run extraction first (this populates extractor._used_spans)
     concept_lists = extractor.batch_extract(dataset.symptoms)
+
+    # Build vocab and map
     vocab = build_cui_vocab(concept_lists, max_size=CUI_VOCAB_MAX_SIZE)
     cui_ids = map_concepts_to_ids(concept_lists, vocab)
     dataset.attach_concepts(cui_ids)
+
+    # Subset gazetteer containing only matched spans
+    subset = extractor.get_used_gazetteer_subset()
+    if subset:
+        payload = subset
+        console.log(f"Gazetteer subset spans: {len(subset)} (saving subset)")
+    else:
+        # Fallback (should not normally happen unless no matches)
+        payload = extractor._gazetteer
+        console.log(f"No spans tracked; saving full gazetteer with {len(payload)} entries")
+
+    # Save compact to reduce size
+    with console.status(f"[bold blue]\\[gazetteer][/bold blue] Writing gazetteer subset to {gazetteer_path}..."):
+        with open(gazetteer_path, "w", encoding="utf-8") as f:
+            json.dump(payload, f, ensure_ascii=False, separators=(',', ':'))
+
     with open(vocab_path, "w", encoding="utf-8") as f:
         json.dump(vocab, f, indent=2)
-
     return vocab, cui_ids
 
 
@@ -142,7 +163,7 @@ def main() -> None:
     union_conditions = train_ds.conditions + val_ds.conditions + test_ds.conditions
     union = SymptomsDataset(union_symptoms, union_conditions)
     vocab_path = os.path.join(OUTPUT_DIR, f"cui_vocab_{run_id}.json")
-    vocab, union_cui_ids = _attach_concepts_to_dataset(union, vocab_path)
+    vocab, union_cui_ids = _attach_concepts_to_dataset(union, vocab_path, run_id)
     train_ds.attach_concepts(union_cui_ids[: len(train_ds)])
     val_ds.attach_concepts(union_cui_ids[len(train_ds): len(train_ds) + len(val_ds)])
     test_ds.attach_concepts(union_cui_ids[len(train_ds) + len(val_ds):])
@@ -243,6 +264,7 @@ def main() -> None:
             "max_cuis_per_doc": MAX_CUIS_PER_DOC,
             "min_cui_score": MIN_CUI_SCORE,
             "cui_vocab_size": len(vocab),
+            "gazetteer_subset_path": os.path.join(OUTPUT_DIR, f"gazetteer_{run_id}.json"),
             "run_id": run_id,
         },
         "metrics": metrics,

@@ -29,6 +29,7 @@ class ConceptExtractionConfig:
     include_all_eng_terms: bool = False  # if False, use only preferred English terms (ISPREF=Y)
     max_ngram: int = 6  # longest n-gram to consider during matching
     include_ambiguous_mappings: bool = True  # keep all CUIs for a term instead of first-seen only
+    prebuilt_gazetteer_path: str | None = None  # path to prebuilt gazetteer JSON file
 
 
 class UmlsConceptExtractor:
@@ -36,6 +37,7 @@ class UmlsConceptExtractor:
         self.cfg = cfg or ConceptExtractionConfig()
         self._gazetteer: Dict[str, List[str]] = {}
         self._cache: Dict[str, List[str]] = {}
+        self._used_spans: set[str] = set()  # spans actually matched in processed texts
         self._load_gazetteer()
         if self.cfg.cache_path and os.path.exists(self.cfg.cache_path):
             with open(self.cfg.cache_path, "r", encoding="utf-8") as f:
@@ -46,6 +48,15 @@ class UmlsConceptExtractor:
                     self._cache[row["text"]] = row.get("cuis", [])
 
     def _load_gazetteer(self) -> None:
+        # Try to load prebuilt gazetteer first
+        if self.cfg.prebuilt_gazetteer_path and os.path.exists(self.cfg.prebuilt_gazetteer_path):
+            with open(self.cfg.prebuilt_gazetteer_path, "r", encoding="utf-8") as f:
+                self._gazetteer = json.load(f)
+            if not self._gazetteer:
+                raise RuntimeError("Prebuilt gazetteer is empty")
+            return
+
+        # Fall back to building from MRCONSO.RRF
         path = self.cfg.mrconso_path
         if not os.path.exists(path):
             raise FileNotFoundError(f"MRCONSO.RRF not found at {path}")
@@ -85,6 +96,17 @@ class UmlsConceptExtractor:
             raise RuntimeError("No English terms loaded from MRCONSO; check file or filters.")
         self._gazetteer = term2cuis
 
+    def save_gazetteer(self, path: str) -> None:
+        """Save the processed gazetteer to a JSON file for reuse."""
+        with open(path, "w", encoding="utf-8") as f:
+            json.dump(self._gazetteer, f, indent=2, ensure_ascii=False)
+
+    def get_used_gazetteer_subset(self) -> Dict[str, List[str]]:
+        """Return a dict of only spans that were matched at least once."""
+        if not self._used_spans:
+            return {}
+        return {k: self._gazetteer[k] for k in self._used_spans if k in self._gazetteer}
+
     def _extract_doc(self, text: str) -> List[str]:
         if text in self._cache:
             return list(self._cache[text])
@@ -105,6 +127,7 @@ class UmlsConceptExtractor:
                     weight = float(n)
                     for cui in cuis:
                         found[cui] = found.get(cui, 0.0) + weight
+                    self._used_spans.add(span)
                     break  # skip overlaps starting at same i
 
         # Rank CUIs by weighted count desc, then CUI id for tie-breaker

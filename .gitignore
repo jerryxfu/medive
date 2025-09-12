@@ -1,7 +1,7 @@
 artifacts/
-data/*
-!data/positives-12k.csv
-!data/
+data/
+#!data/positives-12k.csv
+#!data/
 output/
 MRCONSO.RRF
 

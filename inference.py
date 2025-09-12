@@ -15,12 +15,13 @@ from modules.models import HybridTextCUIClassifier
 from modules.concepts import UmlsConceptExtractor, ConceptExtractionConfig, map_concepts_to_ids, PAD_ID, NO_CUI_ID
 
 console = Console()
+run_id = "001"
 
 ARTIFACTS_DIR = os.path.join(os.getcwd(), "artifacts")
-RUN_SUMMARY = os.path.join(ARTIFACTS_DIR, "run_summary.json")
-ENCODER_WEIGHTS = os.path.join(ARTIFACTS_DIR, "encoder_state.pt")
-CLASSIFIER_WEIGHTS = os.path.join(ARTIFACTS_DIR, "classifier_state.pt")
-CUI_VOCAB_PATH = os.path.join(ARTIFACTS_DIR, "cui_vocab.json")
+RUN_SUMMARY = os.path.join(ARTIFACTS_DIR, f"run_summary_{run_id}.json")
+ENCODER_WEIGHTS = os.path.join(ARTIFACTS_DIR, f"encoder_state_{run_id}.pt")
+CLASSIFIER_WEIGHTS = os.path.join(ARTIFACTS_DIR, f"classifier_state_{run_id}.pt")
+CUI_VOCAB_PATH = os.path.join(ARTIFACTS_DIR, f"cui_vocab_{run_id}.json")
 
 
 def load_run_config(path: str) -> Dict:
@@ -52,37 +53,45 @@ def build_models(cfg: Dict, device: str, cui_vocab: Dict[str, int]) -> Tuple[Tex
     mlp_dropout: float = float(cfg.get("mlp_dropout", 0.1))
     cui_emb_dim: int = int(cfg.get("cui_emb_dim", 128))
 
-    encoder = TextEmbeddingEncoder(
-        hf_model_name=hf_model_name,
-        max_seq_len=max_seq_len,
-        fine_tune=False,  # inference only
-        freeze_layer_norm=True,
-        device=device,
-        seed=42,
-    )
-    classifier = HybridTextCUIClassifier(
-        text_dim=encoder.output_dim,
-        cui_vocab_size=len(cui_vocab),
-        cui_emb_dim=cui_emb_dim,
-        hidden_dim=mlp_hidden_dim,
-        num_classes=len(classes),
-        dropout=mlp_dropout,
-    )
-    encoder.model.eval()
-    classifier.eval()
+    with console.status(f"Initializing text encoder ({hf_model_name})"):
+        encoder = TextEmbeddingEncoder(
+            hf_model_name=hf_model_name,
+            max_seq_len=max_seq_len,
+            fine_tune=False,  # inference only
+            freeze_layer_norm=True,
+            device=device,
+            seed=42,
+        )
+
+    with console.status("Initializing hybrid classifier"):
+        classifier = HybridTextCUIClassifier(
+            text_dim=encoder.output_dim,
+            cui_vocab_size=len(cui_vocab),
+            cui_emb_dim=cui_emb_dim,
+            hidden_dim=mlp_hidden_dim,
+            num_classes=len(classes),
+            dropout=mlp_dropout,
+        )
+        encoder.model.eval()
+        classifier.eval()
 
     if not (os.path.exists(ENCODER_WEIGHTS) and os.path.exists(CLASSIFIER_WEIGHTS)):
         raise FileNotFoundError(
             "Model weights not found in artifacts/. Train first to create encoder_state.pt and classifier_state.pt"
         )
 
-    enc_state = torch.load(ENCODER_WEIGHTS, map_location=device)
-    clf_state = torch.load(CLASSIFIER_WEIGHTS, map_location=device)
-    encoder.model.load_state_dict(enc_state)
-    classifier.load_state_dict(clf_state)
+    with console.status("Loading encoder weights"):
+        enc_state = torch.load(ENCODER_WEIGHTS, map_location=device)
+        encoder.model.load_state_dict(enc_state)
 
-    encoder.model.to(device)
-    classifier.to(device)
+    with console.status("Loading classifier weights"):
+        clf_state = torch.load(CLASSIFIER_WEIGHTS, map_location=device)
+        classifier.load_state_dict(clf_state)
+
+    with console.status(f"Moving models to {device}"):
+        encoder.model.to(device)
+        classifier.to(device)
+
     return encoder, classifier, classes
 
 
@@ -100,8 +109,15 @@ def _pad_concepts(seqs: List[List[int]], pad_id: int = PAD_ID) -> Tuple[torch.Te
     return out, mask
 
 
-def extract_and_map_cuis(texts: List[str], min_score: float, max_per_doc: int, vocab: Dict[str, int]) -> List[List[int]]:
-    extractor = UmlsConceptExtractor(ConceptExtractionConfig(min_score=min_score, max_concepts_per_doc=max_per_doc))
+def extract_and_map_cuis(
+    texts: List[str],
+    min_score: float,
+    max_per_doc: int,
+    vocab: Dict[str, int],
+    extractor: UmlsConceptExtractor | None = None,
+) -> List[List[int]]:
+    if extractor is None:
+        extractor = UmlsConceptExtractor(ConceptExtractionConfig(min_score=min_score, max_concepts_per_doc=max_per_doc))
     concept_lists = extractor.batch_extract(texts)
     return map_concepts_to_ids(concept_lists, vocab)
 
@@ -134,7 +150,7 @@ def predict_with_confidence(
     return preds, probs_all
 
 
-def show_results(text: str, classes: List[str], pred_idx: int, probs: List[float], topk: int = 3) -> None:
+def show_results(text: str, classes: List[str], pred_idx: int, probs: List[float], topk: int = 10) -> None:
     pairs = sorted([(i, p) for i, p in enumerate(probs)], key=lambda x: x[1], reverse=True)[:topk]
     header = f"Prediction: {classes[pred_idx]} (confidence {probs[pred_idx] * 100:.1f}%)"
     console.rule(header)
@@ -151,7 +167,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Interactive symptom -> diagnosis prediction (hybrid)")
     parser.add_argument("--text", type=str, default=None, help="Single text to classify (skip interactive mode)")
     parser.add_argument("--device", type=str, default=("cuda" if torch.cuda.is_available() else "cpu"), choices=["cpu", "cuda"], help="Device")
-    parser.add_argument("--topk", type=int, default=3, help="Show top-k classes")
+    parser.add_argument("--topk", type=int, default=10, help="Show top-k classes")
     args = parser.parse_args()
 
     cfg = load_run_config(RUN_SUMMARY)
@@ -160,15 +176,26 @@ def main() -> None:
 
     min_score = float(cfg.get("min_cui_score", 0.85))
     max_cuis = int(cfg.get("max_cuis_per_doc", 32))
+    subset_gazetteer_path = cfg.get("gazetteer_subset_path")
+
+    # Build or load extractor once
+    with console.status("Loading UMLS gazetteer (subset if available)"):
+        extractor_cfg = ConceptExtractionConfig(
+            max_concepts_per_doc=max_cuis,
+            min_score=min_score,
+            prebuilt_gazetteer_path=subset_gazetteer_path if subset_gazetteer_path and os.path.exists(subset_gazetteer_path) else None,
+        )
+        extractor = UmlsConceptExtractor(extractor_cfg)
+        if subset_gazetteer_path and not os.path.exists(subset_gazetteer_path):
+            console.log("[yellow]Subset gazetteer path in config not found; fell back to full MRCONSO parse.[/yellow]")
 
     if args.text:
-        cui_ids = extract_and_map_cuis([args.text], min_score, max_cuis, cui_vocab)
+        cui_ids = extract_and_map_cuis([args.text], min_score, max_cuis, cui_vocab, extractor=extractor)
         preds, probs = predict_with_confidence(encoder, classifier, [args.text], cui_ids, device=args.device)
         show_results(args.text, classes, preds[0], probs[0], topk=args.topk)
         return
 
     console.print("Type symptoms and press Enter. Type 'q/quit/exit' to exit.")
-    text = ""
     while True:
         try:
             text = input("> ").strip()
@@ -179,8 +206,11 @@ def main() -> None:
             continue
         if text.lower() in {"q", "quit", "exit"}:
             break
-        cui_ids = extract_and_map_cuis([text], min_score, max_cuis, cui_vocab)
-        preds, probs = predict_with_confidence(encoder, classifier, [text], cui_ids, device=args.device)
+
+        with console.status(f"Extracting CUIs for '{text}'"):
+            cui_ids = extract_and_map_cuis([text], min_score, max_cuis, cui_vocab, extractor=extractor)
+        with console.status(f"Predicting diagnosis for '{text}'"):
+            preds, probs = predict_with_confidence(encoder, classifier, [text], cui_ids, device=args.device)
         show_results(text, classes, preds[0], probs[0], topk=args.topk)
 
 
