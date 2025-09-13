@@ -96,35 +96,35 @@ def load_models(config: Dict, vocab: Dict[str, int], artifacts_dir: str, run_id:
 
 def extract_concepts_for_evaluation(symptoms: List[str], vocab: Dict[str, int], config: Dict) -> List[List[int]]:
     """Extract and map concepts for the test data using the generated gazetteer subset."""
-    console.status("[bold blue]\\[concepts][/bold blue] Extracting concepts for evaluation...")
+    with console.status("[bold blue]\\[concepts][/bold blue] Extracting concepts for evaluation..."):
 
-    # Use the gazetteer subset if available (same as inference.py)
-    gazetteer_subset_path = config.get('gazetteer_subset_path')
+        # Use the gazetteer subset if available (same as inference.py)
+        gazetteer_subset_path = config.get('gazetteer_subset_path')
 
-    extractor_config = ConceptExtractionConfig(
-        max_concepts_per_doc=config['max_cuis_per_doc'],
-        min_score=config['min_cui_score'],
-        prebuilt_gazetteer_path=gazetteer_subset_path if gazetteer_subset_path and os.path.exists(gazetteer_subset_path) else None,
-    )
+        extractor_config = ConceptExtractionConfig(
+            max_concepts_per_doc=config['max_cuis_per_doc'],
+            min_score=config['min_cui_score'],
+            prebuilt_gazetteer_path=gazetteer_subset_path if gazetteer_subset_path and os.path.exists(gazetteer_subset_path) else None,
+        )
 
-    extractor = UmlsConceptExtractor(extractor_config)
+        extractor = UmlsConceptExtractor(extractor_config)
 
-    if gazetteer_subset_path and not os.path.exists(gazetteer_subset_path):
-        console.log("[yellow]Gazetteer subset not found; falling back to full MRCONSO parse.[/yellow]")
-    elif gazetteer_subset_path and os.path.exists(gazetteer_subset_path):
-        console.log(f"[green]Using gazetteer subset from: {gazetteer_subset_path}[/green]")
-    else:
-        console.log("[yellow]No gazetteer subset path configured; using full MRCONSO parse.[/yellow]")
+        if gazetteer_subset_path and not os.path.exists(gazetteer_subset_path):
+            console.log("[yellow]Gazetteer subset not found; falling back to full MRCONSO parse.[/yellow]")
+        elif gazetteer_subset_path and os.path.exists(gazetteer_subset_path):
+            console.log(f"[green]Using gazetteer subset from: {gazetteer_subset_path}[/green]")
+        else:
+            console.log("[yellow]No gazetteer subset path configured; using full MRCONSO parse.[/yellow]")
 
-    # Extract concepts
-    concept_lists = extractor.batch_extract(symptoms)
+        # Extract concepts
+        concept_lists = extractor.batch_extract(symptoms)
 
-    # Map to IDs using existing vocabulary
-    cui_ids = map_concepts_to_ids(concept_lists, vocab)
+        # Map to IDs using existing vocabulary
+        cui_ids = map_concepts_to_ids(concept_lists, vocab)
 
-    console.log(f"[blue]Extracted concepts for {len(symptoms)} symptoms[/blue]")
+        console.log(f"[blue]Extracted concepts for {len(symptoms)} symptoms[/blue]")
 
-    return cui_ids
+        return cui_ids
 
 
 def run_evaluation(
@@ -192,12 +192,11 @@ def run_evaluation(
     test_logits = trainer.predict_logits(test_symptoms, test_concepts=test_ds._concept_ids)
 
     # Extract embeddings
-    console.status("[bold blue]\\[embeddings][/bold blue] Extracting embeddings...")
+    console.log("[bold blue]\\[embeddings][/bold blue] Extracting embeddings...")
     test_embeddings = trainer.extract_embeddings(test_symptoms)
     console.log(f"[bold blue]\\[embeddings][/bold blue] Extracted embeddings shape: {test_embeddings.shape}")
 
     # Run comprehensive evaluation
-    console.status("[bold green]\\[evaluation][/bold green] Running evaluation...")
     analysis_results = compute_metrics(
         test_symptoms=test_symptoms,
         test_conditions=test_conditions,
