@@ -1,9 +1,13 @@
-torch
-transformers
-scikit-learn
+torch~=2.8.0
+# install the right version of torch for your system from https://pytorch.org/get-started/locally/
+transformers~=4.55.4
+scikit-learn~=1.7.1
 tqdm
 rich
 requests
 beautifulsoup4
-lxml
 pandas
+numpy
+matplotlib
+seaborn
+umap-learn

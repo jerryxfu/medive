@@ -11,6 +11,7 @@ from rich.table import Table
 from rich.traceback import install as rich_traceback_install
 
 from utils import next_run_id, print_dataset_stats
+from modules.evaluator import evaluate_model, compute_metrics
 
 warnings.filterwarnings("ignore", message="rich is experimental/alpha")  # suppress experimental warning
 rich_traceback_install(show_locals=False)
@@ -71,7 +72,7 @@ from modules.dataset import (
 )
 from modules.embedding import TextEmbeddingEncoder
 from modules.models import HybridTextCUIClassifier
-from modules.train import TorchTrainer, evaluate_predictions
+from modules.train import TorchTrainer
 from modules.concepts import (
     UmlsConceptExtractor,
     ConceptExtractionConfig,
@@ -225,7 +226,9 @@ def main() -> None:
     test_symptoms, test_conditions = test_ds.symptoms, [label2id[y] for y in test_ds.conditions]
     test_logits = trainer.predict_logits(test_symptoms, test_concepts=test_ds._concept_ids)
     test_preds = [int(torch.tensor(logit).argmax().item()) for logit in test_logits]
-    metrics = evaluate_predictions(test_conditions, test_preds, num_classes=len(class_names))
+
+    # Basic metrics for backwards compatibility
+    metrics = evaluate_model(test_conditions, test_preds, num_classes=len(class_names))
 
     metrics_table = Table(show_header=True, header_style="bold")
     metrics_table.add_column("Metric")
@@ -242,6 +245,22 @@ def main() -> None:
     for i, row in enumerate(preview, start=1):
         table.add_row(str(i), row["symptoms"], row["pred"])
     console.print(table)
+
+    # Extract embeddings for visualization
+    console.log(f"[bold blue]\\[embeddings][/bold blue] Extracting test embeddings...")
+    test_embeddings = trainer.extract_embeddings(test_symptoms)
+
+    # Comprehensive analysis with confusion matrix and embedding plots
+    console.log(f"[bold blue]\\[analysis][/bold blue] Running comprehensive analysis...")
+    analysis_results = compute_metrics(
+        test_symptoms=test_symptoms,
+        test_conditions=test_conditions,
+        test_logits=test_logits,
+        test_embeddings=test_embeddings,
+        class_names=class_names,
+        output_dir=OUTPUT_DIR,
+        run_id=run_id
+    )
 
     summary = {
         "config": {

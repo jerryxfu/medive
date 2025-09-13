@@ -5,6 +5,7 @@ from dataclasses import dataclass
 from time import perf_counter
 from typing import Dict, List, Tuple, Optional
 
+import numpy as np
 import torch
 import torch.nn as nn
 from rich.console import Console
@@ -301,3 +302,22 @@ class TorchTrainer:
             logits_out.extend(logits.detach().cpu().tolist())
         pbar.close()
         return logits_out
+
+    @torch.no_grad()
+    def extract_embeddings(self, symptoms: List[str], batch_size: Optional[int] = None) -> np.ndarray:
+        """Extract text embeddings for analysis and visualization."""
+        self.encoder.model.eval()
+        if batch_size is None:
+            batch_size = self.batch_size
+        embeddings_out = []
+        total_batches = (len(symptoms) + batch_size - 1) // batch_size
+        pbar = tqdm(range(0, len(symptoms), batch_size), total=total_batches, desc="[extract_embeddings]", leave=False, dynamic_ncols=True)
+        for i in pbar:
+            batch_symptoms = symptoms[i:i + batch_size]
+            tokens = self.encoder.tokenize(batch_symptoms)
+            tokens = {k: v.to(self.device) for k, v in tokens.items()}
+            with autocast(device_type="cuda", enabled=self.use_amp):
+                emb = self.encoder.forward(tokens)
+            embeddings_out.append(emb.detach().cpu().numpy())
+        pbar.close()
+        return np.vstack(embeddings_out)
