@@ -6,17 +6,18 @@ import re
 from dataclasses import dataclass
 from typing import List, Dict, Iterable
 
-# -----------------
-# Normalization
-# -----------------
-_norm_re = re.compile(r"[^a-z0-9]+")
+import unicodedata
+
+normalize_keep_chars = "-/"
 
 
 def normalize(s: str) -> str:
-    s = s.lower().strip()
-    s = _norm_re.sub(" ", s).strip()
-    s = re.sub(r"\s+", " ", s)
-    return s
+    s = unicodedata.normalize("NFKD", s)
+    s = "".join(c for c in s if not unicodedata.combining(c))
+    # replace punctuation except keep_chars with space
+    s = re.sub(rf"[^\w\s{re.escape(normalize_keep_chars)}]", " ", s)
+    s = re.sub(r"\s+", " ", s).strip()
+    return s.lower()
 
 
 @dataclass
@@ -48,7 +49,8 @@ class UmlsConceptExtractor:
                     self._cache[row["text"]] = row.get("cuis", [])
 
     def _load_gazetteer(self) -> None:
-        # Try to load prebuilt gazetteer first
+        """Load or build the CUI gazetteer from a prebuilt JSON or MRCONSO.RRF."""
+        # Load prebuilt gazetteer if provided
         if self.cfg.prebuilt_gazetteer_path and os.path.exists(self.cfg.prebuilt_gazetteer_path):
             with open(self.cfg.prebuilt_gazetteer_path, "r", encoding="utf-8") as f:
                 self._gazetteer = json.load(f)
@@ -56,32 +58,45 @@ class UmlsConceptExtractor:
                 raise RuntimeError("Prebuilt gazetteer is empty")
             return
 
-        # Fall back to building from MRCONSO.RRF
+        # Fallback: build from MRCONSO.RRF
         path = self.cfg.mrconso_path
         if not os.path.exists(path):
             raise FileNotFoundError(f"MRCONSO.RRF not found at {path}")
 
-        # MRCONSO fields (pipe-delimited). STR is at index 14 in UMLS 2024AB; be robust to variable columns.
-        # We keep only English entries (LAT='ENG'). If include_all_eng_terms=False, keep ISPREF='Y'.
         term2cuis: Dict[str, List[str]] = {}
+        valid_sabs = {"SNOMEDCT_US", "ICD10CM"}  # clinically reliable sources
+        max_ngram = self.cfg.max_ngram
+
         with open(path, "r", encoding="utf-8", errors="ignore") as f:
             for line in f:
                 parts = line.rstrip("\n").split("|")
                 if len(parts) < 15:
                     continue
+
                 CUI = parts[0]
                 LAT = parts[1]
                 ISPREF = parts[6] if len(parts) > 7 else "N"
                 STR = parts[14] if len(parts) > 15 else ""
+                SAB = parts[11] if len(parts) > 12 else ""
+                TTY = parts[12] if len(parts) > 13 else ""
+
+                # Language and term type filters
                 if LAT != "ENG":
                     continue
                 if not self.cfg.include_all_eng_terms and ISPREF != "Y":
                     continue
+                # if SAB not in valid_sabs:
+                #     continue
+                # if TTY != "PT":  # preferred term
+                #     continue
                 if not STR:
                     continue
+
                 term = normalize(STR)
                 if not term:
                     continue
+
+                # Handle ambiguous mappings
                 if self.cfg.include_ambiguous_mappings:
                     lst = term2cuis.get(term)
                     if lst is None:
@@ -89,11 +104,12 @@ class UmlsConceptExtractor:
                     elif CUI not in lst:
                         lst.append(CUI)
                 else:
-                    # Keep first seen mapping to avoid flipping between CUIs for ambiguous strings
                     if term not in term2cuis:
                         term2cuis[term] = [CUI]
+
         if not term2cuis:
             raise RuntimeError("No English terms loaded from MRCONSO; check file or filters.")
+
         self._gazetteer = term2cuis
 
     def save_gazetteer(self, path: str) -> None:

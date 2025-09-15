@@ -179,9 +179,9 @@ class ModelEvaluator:
         }
 
         # Per-class metrics
-        f1_per_class = f1_score(y_true, y_pred, average=None, zero_division=0)
-        precision_per_class = precision_score(y_true, y_pred, average=None, zero_division=0)
-        recall_per_class = recall_score(y_true, y_pred, average=None, zero_division=0)
+        f1_per_class = f1_score(y_true, y_pred, average=None, zero_division=0, labels=list(range(len(class_names))))
+        precision_per_class = precision_score(y_true, y_pred, average=None, zero_division=0, labels=list(range(len(class_names))))
+        recall_per_class = recall_score(y_true, y_pred, average=None, zero_division=0, labels=list(range(len(class_names))))
 
         metrics['per_class'] = {
             class_names[i]: {

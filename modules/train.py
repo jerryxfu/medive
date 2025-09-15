@@ -15,7 +15,7 @@ from torch.utils.data import DataLoader, Dataset
 from tqdm.rich import tqdm
 from transformers import get_linear_schedule_with_warmup
 
-from .concepts import PAD_ID, NO_CUI_ID
+from .concepts import PAD_ID, NO_CUI_ID, UNK_CUI_ID
 from .embedding import TextEmbeddingEncoder
 from utils import format_duration
 
@@ -57,11 +57,16 @@ def pad_concepts(seqs: List[List[int]], pad_id: int = PAD_ID, max_len: int | Non
     out = torch.full((len(seqs), max_len), pad_id, dtype=torch.long)
     mask = torch.zeros((len(seqs), max_len), dtype=torch.long)
     for i, s in enumerate(seqs):
-        if not s:
-            s = [NO_CUI_ID]
+        # Treat empty or [NO_CUI] as no concept signal: keep pad, keep mask zeros
+        if not s or (len(s) == 1 and s[0] == NO_CUI_ID):
+            console.log(f"Sequence {i} has no CUIs extracted; using all-pad input.")
+            continue
         trunc = s[:max_len]
-        out[i, :len(trunc)] = torch.tensor(trunc, dtype=torch.long)
-        mask[i, :len(trunc)] = 1
+        t = torch.tensor(trunc, dtype=torch.long)
+        out[i, :len(trunc)] = t
+        # mask 1 only for real concept IDs (exclude UNK_CUI)
+        valid = (t != UNK_CUI_ID).long()
+        mask[i, :len(trunc)] = valid
     return out, mask
 
 
@@ -220,12 +225,18 @@ class TorchTrainer:
                     torch.nn.utils.clip_grad_norm_(self.classifier.parameters(), self.max_grad_norm)
                     torch.nn.utils.clip_grad_norm_([p for p in self.encoder.model.parameters() if p.requires_grad], self.max_grad_norm)
 
-                    # Optimizer step via scaler, then scheduler
+                    # Optimizer step via scaler, then scheduler gated on real step
+                    scale_before = float(self.scaler.get_scale())
                     self.scaler.step(self.optimizer)
                     self.scaler.update()
-                    scheduler.step()
+                    scale_after = float(self.scaler.get_scale())
+                    did_step = scale_after >= scale_before  # if overflow occurred, scale decreases and step was skipped
+
+                    if did_step:
+                        scheduler.step()
+                        global_step += 1
+
                     self.optimizer.zero_grad(set_to_none=True)
-                    global_step += 1
 
                     pbar.set_postfix({  # Progress bar update
                         "loss": f"{running_loss / max(1, step):.4f}",

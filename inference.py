@@ -12,7 +12,7 @@ from rich.table import Table
 
 from modules.embedding import TextEmbeddingEncoder
 from modules.models import HybridTextCUIClassifier
-from modules.concepts import UmlsConceptExtractor, ConceptExtractionConfig, map_concepts_to_ids, PAD_ID, NO_CUI_ID
+from modules.concepts import UmlsConceptExtractor, ConceptExtractionConfig, map_concepts_to_ids, PAD_ID, NO_CUI_ID, UNK_CUI_ID
 
 console = Console()
 run_id = "001"
@@ -98,14 +98,18 @@ def build_models(cfg: Dict, device: str, cui_vocab: Dict[str, int]) -> Tuple[Tex
 def _pad_concepts(seqs: List[List[int]], pad_id: int = PAD_ID) -> Tuple[torch.Tensor, torch.Tensor]:
     if not seqs:
         return torch.zeros(0, 0, dtype=torch.long), torch.zeros(0, 0, dtype=torch.long)
-    max_len = max(len(s) for s in seqs)
+    max_len = max(len(s) for s in seqs) if any(len(s) > 0 for s in seqs) else 0
     out = torch.full((len(seqs), max_len), pad_id, dtype=torch.long)
     mask = torch.zeros((len(seqs), max_len), dtype=torch.long)
     for i, s in enumerate(seqs):
-        if not s:
-            s = [NO_CUI_ID]
-        out[i, : len(s)] = torch.tensor(s, dtype=torch.long)
-        mask[i, : len(s)] = 1
+        # Treat empty or [NO_CUI] as no-concept: keep all pads and zero mask
+        if not s or (len(s) == 1 and s[0] == NO_CUI_ID):
+            console.log(f"Sequence {i} has no CUIs extracted; using all-pad input.")
+            continue
+        t = torch.tensor(s[:max_len], dtype=torch.long)
+        out[i, : t.numel()] = t
+        # mask 1 only for real concept IDs (exclude UNK_CUI)
+        mask[i, : t.numel()] = (t != UNK_CUI_ID).long()
     return out, mask
 
 
@@ -174,8 +178,8 @@ def main() -> None:
     cui_vocab = load_cui_vocab(CUI_VOCAB_PATH)
     encoder, classifier, classes = build_models(cfg, args.device, cui_vocab)
 
-    min_score = float(cfg.get("min_cui_score", 0.85))
-    max_cuis = int(cfg.get("max_cuis_per_doc", 32))
+    min_score = float(cfg.get("min_cui_score"))
+    max_cuis = int(cfg.get("max_cuis_per_doc"))
     subset_gazetteer_path = cfg.get("gazetteer_subset_path")
 
     # Build or load extractor once

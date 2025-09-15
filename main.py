@@ -29,7 +29,7 @@ OUTPUT_DIR = os.path.join(os.getcwd(), "artifacts")
 LOG_EVERY = 50
 
 # Data config
-DATASET_PATH = os.path.join(os.getcwd(), "data", "positives-f800-15k.csv")
+DATASET_PATH = os.path.join(os.getcwd(), "data", "positives-f800-50k.csv")
 VAL_RATIO = 0.15
 TEST_RATIO = 0.15
 
@@ -40,27 +40,27 @@ FINE_TUNE_ENCODER = True
 FREEZE_LAYER_NORM = True
 
 # Concept (CUI) config
-CUI_EMB_DIM = 128  # dimension of CUI embeddings
+CUI_EMB_DIM = 256  # dimension of CUI embeddings
 MAX_CUIS_PER_DOC = 32  # max CUIs to extract per document
-MIN_CUI_SCORE = 0.85  # minimum confidence score to keep CUI (not used for exact matcher)
-CUI_VOCAB_MAX_SIZE = 8000  # max size of CUI vocabulary (most frequent)
+MIN_CUI_SCORE = 0.80  # minimum confidence score to keep CUI (not used for exact matcher)
+CUI_VOCAB_MAX_SIZE = 12000  # max size of CUI vocabulary (most frequent)
 
 # Model config
 MLP_HIDDEN_DIM = 256  # hidden layer dimension in MLP head
-MLP_DROPOUT = 0.1  # dropout in MLP head
+MLP_DROPOUT = 0.15  # dropout in MLP head
 
 # Training config
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 EPOCHS = 6
-BATCH_SIZE = 64
+BATCH_SIZE = 64  # multiples of 8 for modern GPUs and mixed precision (320 safe on 24GB VRAM)
 LEARNING_RATE = 3e-5
 ENCODER_LEARNING_RATE = 3e-5
-HEAD_LEARNING_RATE = 1e-4
+HEAD_LEARNING_RATE = 2e-4
 WEIGHT_DECAY = 1e-4  # L2 regularization
 WARMUP_RATIO = 0.06  # proportion of training for linear LR warmup
 GRAD_ACCUM_STEPS = 1  # gradient accumulation steps
 MAX_GRAD_NORM = 1.0  # gradient clipping
-LABEL_SMOOTHING = 0.0  # 0.0 to disable
+LABEL_SMOOTHING = 0.04  # 0.0 to disable
 
 # --------------------
 # Orchestration
@@ -252,7 +252,7 @@ def main() -> None:
 
     # Comprehensive analysis with confusion matrix and embedding plots
     console.log(f"[bold blue]\\[analysis][/bold blue] Running comprehensive analysis...")
-    analysis_results = compute_metrics(
+    compute_metrics(
         test_symptoms=test_symptoms,
         test_conditions=test_conditions,
         test_logits=test_logits,

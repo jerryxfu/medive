@@ -3,6 +3,8 @@ from __future__ import annotations
 import torch
 import torch.nn as nn
 
+from typing import Optional
+
 """
 A simple MLP classifier on top of text embeddings.
 """
@@ -27,6 +29,7 @@ class HybridTextCUIClassifier(nn.Module):
 
     Expects forward(text_emb, concept_ids, concept_mask)
     """
+
     def __init__(
         self,
         text_dim: int,
@@ -67,19 +70,25 @@ class HybridTextCUIClassifier(nn.Module):
         mask:    [B, Lc] (1 for real, 0 for pad)
         Returns context vector [B, D_c] after attention and projection.
         """
+        # If all sequences have zero valid CUIs, return zeros directly
+        if mask.numel() == 0 or (mask.sum(dim=1) == 0).all():
+            return torch.zeros(text_emb.size(0), self.cui_emb.embedding_dim, device=text_emb.device, dtype=text_emb.dtype)
+
         # Project to attention space
         q = self.text_to_attn(text_emb).unsqueeze(1)  # [B,1,D_a]
-        k = self.cui_to_attn(cui_emb)                 # [B,Lc,D_a]
-        v = k                                         # use same proj for V
+        k = self.cui_to_attn(cui_emb)  # [B,Lc,D_a]
+        v = k  # use same proj for V
         # key_padding_mask: True for pads
         key_padding_mask = (mask == 0)  # [B, Lc]
         # MultiheadAttention expects (B, S, E) with batch_first=True
         attn_out, _ = self.attn(q, k, v, key_padding_mask=key_padding_mask)  # [B,1,D_a]
         ctx = attn_out.squeeze(1)  # [B,D_a]
+        # Guard against NaNs if a row had all positions masked
+        ctx = torch.nan_to_num(ctx, nan=0.0, posinf=0.0, neginf=0.0)
         ctx_cui_space = self.context_out(ctx)  # [B,D_c]
         return ctx_cui_space
 
-    def forward(self, text_emb: torch.Tensor, concept_ids: torch.Tensor | None = None, concept_mask: torch.Tensor | None = None) -> torch.Tensor:
+    def forward(self, text_emb: torch.Tensor, concept_ids: Optional[torch.Tensor] = None, concept_mask: Optional[torch.Tensor] = None) -> torch.Tensor:
         if concept_ids is not None and concept_mask is not None:
             cui_emb = self.cui_emb(concept_ids)  # [B,Lc,D_c]
             ctx = self.attend_concepts(text_emb, cui_emb, concept_mask)
