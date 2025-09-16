@@ -27,6 +27,166 @@ except Exception:
     pass
 
 
+def sort_classes_alphabetically(unique_labels: List[int], class_names: List[str]) -> List[int]:
+    """
+    Sort class labels alphabetically by their corresponding class names.
+
+    Args:
+        unique_labels: List of unique class label indices
+        class_names: List of class names corresponding to indices
+
+    Returns:
+        List of label indices sorted alphabetically by class name
+    """
+    class_name_label_pairs = [(class_names[label], label) for label in unique_labels]
+    class_name_label_pairs.sort(key=lambda x: x[0].lower())  # Sort alphabetically (case-insensitive)
+    return [pair[1] for pair in class_name_label_pairs]
+
+
+def sort_classes_by_body_system(unique_labels: List[int], class_names: List[str]) -> List[int]:
+    """
+    Sort class labels by body system/medical category.
+    Groups related conditions together (heart, respiratory, neurological, etc.)
+    """
+    # Define medical system categories with keywords
+    system_categories = {
+        'cardiovascular': ['heart', 'cardiac', 'cardio', 'blood pressure', 'hypertension', 'hypotension',
+                           'arrhythmia', 'tachycardia', 'bradycardia', 'myocardial', 'angina', 'coronary',
+                           'circulation', 'vascular', 'valve', 'aortic', 'mitral'],
+
+        'respiratory': ['lung', 'respiratory', 'breathing', 'asthma', 'pneumonia', 'bronchitis',
+                        'copd', 'tuberculosis', 'cough', 'dyspnea', 'shortness of breath',
+                        'pulmonary', 'bronchial', 'chest congestion'],
+
+        'neurological': ['brain', 'nerve', 'neurological', 'stroke', 'seizure', 'epilepsy',
+                         'migraine', 'headache', 'dementia', 'alzheimer', 'parkinson',
+                         'multiple sclerosis', 'paralysis', 'neuropathy'],
+
+        'gastrointestinal': ['stomach', 'intestinal', 'digestive', 'gastro', 'bowel', 'colon',
+                             'diarrhea', 'constipation', 'nausea', 'vomiting', 'ulcer',
+                             'hepatitis', 'liver', 'gallbladder', 'pancreatic'],
+
+        'musculoskeletal': ['bone', 'joint', 'muscle', 'arthritis', 'fracture', 'osteoporosis',
+                            'back pain', 'spine', 'tendon', 'ligament', 'rheumatoid',
+                            'fibromyalgia', 'muscular'],
+
+        'endocrine': ['diabetes', 'thyroid', 'hormone', 'insulin', 'glucose', 'metabolic',
+                      'endocrine', 'adrenal', 'pituitary', 'hypoglycemia', 'hyperglycemia'],
+
+        'infectious': ['infection', 'bacterial', 'viral', 'fungal', 'flu', 'influenza',
+                       'cold', 'fever', 'sepsis', 'pneumonia', 'meningitis', 'malaria'],
+
+        'dermatological': ['skin', 'rash', 'dermatitis', 'eczema', 'psoriasis', 'acne',
+                           'burn', 'wound', 'ulcer', 'melanoma', 'dermatological'],
+
+        'psychiatric': ['depression', 'anxiety', 'bipolar', 'schizophrenia', 'ptsd',
+                        'panic', 'psychiatric', 'mental health', 'mood disorder'],
+
+        'genitourinary': ['kidney', 'bladder', 'urinary', 'renal', 'prostate', 'urethral',
+                          'incontinence', 'uti', 'nephritis', 'cystitis'],
+
+        'reproductive': ['pregnancy', 'menstrual', 'ovarian', 'uterine', 'breast',
+                         'reproductive', 'gynecological', 'erectile', 'fertility'],
+
+        'ophthalmologic': ['eye', 'vision', 'glaucoma', 'cataract', 'retinal', 'optic',
+                           'blindness', 'ophthalmologic', 'visual'],
+
+        'otolaryngologic': ['ear', 'nose', 'throat', 'hearing', 'tinnitus', 'sinusitis',
+                            'otitis', 'laryngitis', 'pharyngitis']
+    }
+
+    def categorize_condition(name: str) -> str:
+        name_lower = name.lower()
+        for system, keywords in system_categories.items():
+            if any(keyword in name_lower for keyword in keywords):
+                return system
+        return 'other'  # For conditions that don't match any category
+
+    # Create pairs with category, then sort by category and within category alphabetically
+    categorized_pairs = []
+    for label in unique_labels:
+        name = class_names[label]
+        category = categorize_condition(name)
+        categorized_pairs.append((category, name.lower(), label))
+
+    # Sort by category first, then alphabetically within category
+    categorized_pairs.sort(key=lambda x: (x[0], x[1]))
+
+    return [pair[2] for pair in categorized_pairs]
+
+
+def sort_classes_by_severity(unique_labels: List[int], class_names: List[str]) -> List[int]:
+    """
+    Sort class labels by perceived medical severity (emergency -> chronic -> minor).
+    """
+    severity_categories = {
+        'emergency': ['heart attack', 'stroke', 'cardiac arrest', 'anaphylaxis', 'sepsis',
+                      'meningitis', 'pulmonary embolism', 'myocardial infarction', 'emergency',
+                      'shock', 'coma', 'seizure', 'overdose'],
+
+        'severe': ['cancer', 'tumor', 'pneumonia', 'diabetes', 'hypertension', 'kidney disease',
+                   'liver disease', 'copd', 'asthma', 'tuberculosis', 'hepatitis', 'cirrhosis'],
+
+        'moderate': ['arthritis', 'depression', 'anxiety', 'migraine', 'ulcer', 'gallstones',
+                     'bronchitis', 'sinusitis', 'gastritis', 'dermatitis', 'osteoporosis'],
+
+        'mild': ['cold', 'flu', 'headache', 'rash', 'acne', 'minor burn', 'bruise',
+                 'sprain', 'insomnia', 'nausea', 'fatigue', 'dizziness']
+    }
+
+    def get_severity(name: str) -> str:
+        name_lower = name.lower()
+        for severity, conditions in severity_categories.items():
+            if any(condition in name_lower for condition in conditions):
+                return severity
+        return 'moderate'  # Default category
+
+    # Create severity-ordered pairs
+    severity_order = {'emergency': 0, 'severe': 1, 'moderate': 2, 'mild': 3}
+    severity_pairs = []
+
+    for label in unique_labels:
+        name = class_names[label]
+        severity = get_severity(name)
+        severity_pairs.append((severity_order[severity], name.lower(), label))
+
+    # Sort by severity order, then alphabetically within severity
+    severity_pairs.sort(key=lambda x: (x[0], x[1]))
+
+    return [pair[2] for pair in severity_pairs]
+
+
+def sort_classes_by_frequency_keywords(unique_labels: List[int], class_names: List[str]) -> List[int]:
+    """
+    Sort class labels by common vs rare condition keywords.
+    """
+    common_conditions = ['cold', 'flu', 'headache', 'fever', 'cough', 'nausea', 'fatigue',
+                         'diarrhea', 'constipation', 'rash', 'back pain', 'arthritis',
+                         'hypertension', 'diabetes', 'asthma', 'depression', 'anxiety']
+
+    def is_common_condition(name: str) -> bool:
+        name_lower = name.lower()
+        return any(common in name_lower for common in common_conditions)
+
+    # Separate common and rare conditions
+    common_pairs = []
+    rare_pairs = []
+
+    for label in unique_labels:
+        name = class_names[label]
+        if is_common_condition(name):
+            common_pairs.append((name.lower(), label))
+        else:
+            rare_pairs.append((name.lower(), label))
+
+    # Sort each group alphabetically
+    common_pairs.sort()
+    rare_pairs.sort()
+
+    # Return common conditions first, then rare ones
+    return [pair[1] for pair in common_pairs] + [pair[1] for pair in rare_pairs]
+
+
 def evaluate_model(y_true: List[int], y_pred: List[int], num_classes: int) -> Dict[str, float]:
     """
     Basic evaluation function that returns key metrics.
@@ -130,7 +290,7 @@ class ModelEvaluator:
         Returns:
             Dictionary with embedding evaluation results
         """
-        with console.status(f"[bold blue]\\[embeddings][/bold blue] Evaluating embeddings using PCA → UMAP..."):
+        with console.status(f"[bold blue]\\[embeddings][/bold blue] Evaluating embeddings using PCA and UMAP..."):
             # Apply PCA to reduce noise and dimensionality
             with console.status("[bold blue]\\[embeddings][/bold blue] Applying PCA dimensionality reduction..."):
                 n_components = min(pca_components, embeddings.shape[1], embeddings.shape[0] - 1)
@@ -345,8 +505,8 @@ class ModelEvaluator:
                     embeddings_2d[mask, 1],
                     color=colors[idx % len(colors)],
                     label=class_names[label],
-                    alpha=0.6,
-                    s=10,
+                    alpha=0.2,
+                    s=12,
                 )
 
             ax.set_xlabel('Reduced embedding space component 1')
@@ -356,11 +516,77 @@ class ModelEvaluator:
             # Legend outside the plot
             ax.legend(
                 ncol=3, fontsize='small', loc='upper left',
-                bbox_to_anchor=(1.01, 1), borderaxespad=0.
+                bbox_to_anchor=(1.01, 1), borderaxespad=0.0
             )
 
             plt.savefig(os.path.join(self.plots_dir, 'embeddings.png'), dpi=300, bbox_inches='tight')
             plt.close()
+
+            # Generate grouped plots with 20 classes each, passing the sorting function
+            self._plot_embeddings_grouped(embeddings_2d, labels, class_names, grouping_fn=group_labels_alphabetically)
+            self._plot_embeddings_grouped(embeddings_2d, labels, class_names, grouping_fn=group_labels_by_body_system)
+            self._plot_embeddings_grouped(embeddings_2d, labels, class_names, grouping_fn=group_labels_by_severity)
+            self._plot_embeddings_grouped(embeddings_2d, labels, class_names, grouping_fn=group_labels_by_frequency_keywords)
+
+    def _plot_embeddings_grouped(self, embeddings_2d, labels, class_names, grouping_fn=None):
+        """Generate separate plots with a limited number of classes each.
+
+        Args:
+            embeddings_2d: 2D embeddings from dimensionality reduction
+            labels: True class labels
+            class_names: List of class names
+            grouping_fn: Function to group the labels
+        """
+        if grouping_fn is None:
+            return
+
+        # Determine method name for folder
+        method_name = grouping_fn.__name__.replace('group_labels_', '').replace('_', '-')
+        plots_dir = os.path.join(self.plots_dir, f'embeddings_grouped_{method_name}')
+        os.makedirs(plots_dir, exist_ok=True)
+
+        unique_labels = sorted(set(labels))
+
+        # Get label groups from the grouping function
+        label_groups = grouping_fn(unique_labels, class_names)
+
+        group_count = len(label_groups)
+
+        with console.status(f"[bold blue]\\[embeddings][/bold blue] Generating {group_count} grouped plots ({method_name})..."):
+            for group_idx, group_labels in enumerate(label_groups):
+                if not group_labels:  # Skip empty groups
+                    continue
+
+                # Generate colors for this group
+                colors = plt.cm.tab20(np.linspace(0, 1, len(group_labels)))
+
+                fig, ax = plt.subplots(figsize=(6, 4), constrained_layout=False)
+
+                for color_idx, label in enumerate(group_labels):
+                    mask = np.array(labels) == label
+                    if np.any(mask):  # Only plot if there are samples for this label
+                        ax.scatter(
+                            embeddings_2d[mask, 0],
+                            embeddings_2d[mask, 1],
+                            color=colors[color_idx % len(colors)],
+                            label=class_names[label],
+                            alpha=0.3,
+                            s=40,
+                        )
+
+                ax.set_xlabel('Reduced embedding space component 1')
+                ax.set_ylabel('Reduced embedding space component 2')
+                ax.set_title(f'Text Embeddings Visualization - Group {group_idx + 1}/{group_count} ({method_name})')
+
+                # Legend outside the plot
+                ax.legend(ncol=1, fontsize='small', loc='upper left', bbox_to_anchor=(1.01, 1), borderaxespad=0.0)
+
+                # Save grouped plot
+                plot_filename = f'embeddings{group_idx + 1:02d}_cls{min(group_labels) + 1}-{max(group_labels) + 1}.png'
+                plt.savefig(os.path.join(plots_dir, plot_filename), dpi=400, bbox_inches='tight')
+                plt.close()
+
+        console.log(f"[blue]Generated {group_count} grouped embedding plots using '{method_name}' sorting in {plots_dir}[/blue]")
 
     def _compute_embedding_stats(self, embeddings: np.ndarray, labels: List[int], class_names: List[str]) -> Dict[str, Any]:
         """Compute statistics about embeddings."""
@@ -412,6 +638,89 @@ class ModelEvaluator:
         console.print("\n")
 
 
+def group_by_size(groups: List[List[int]], size: int = 20) -> List[List[int]]:
+    """Split each input group into subgroups of at most `size`."""
+    result: List[List[int]] = []
+    for group in groups:
+        for i in range(0, len(group), size):
+            chunk = group[i:i + size]
+            if chunk:
+                result.append(chunk)
+    return result
+
+
+def group_labels_alphabetically(unique_labels: List[int], class_names: List[str]) -> List[List[int]]:
+    """Group all labels alphabetically, then split into chunks of 20."""
+    sorted_labels = sort_classes_alphabetically(unique_labels, class_names)
+    return group_by_size([sorted_labels], size=20)
+
+
+def group_labels_by_body_system(unique_labels: List[int], class_names: List[str]) -> List[List[int]]:
+    """Group labels by body system/category, then split each category into chunks of 20."""
+    from collections import defaultdict
+    system_categories = {
+        'cardiovascular': ['heart', 'cardiac', 'cardio', 'blood pressure', 'hypertension', 'hypotension',
+                           'arrhythmia', 'tachycardia', 'bradycardia', 'myocardial', 'angina', 'coronary',
+                           'circulation', 'vascular', 'valve', 'aortic', 'mitral'],
+        'respiratory': ['lung', 'respiratory', 'breathing', 'asthma', 'pneumonia', 'bronchitis',
+                        'copd', 'tuberculosis', 'cough', 'dyspnea', 'shortness of breath',
+                        'pulmonary', 'bronchial', 'chest congestion'],
+        'neurological': ['brain', 'nerve', 'neurological', 'stroke', 'seizure', 'epilepsy',
+                         'migraine', 'headache', 'dementia', 'alzheimer', 'parkinson',
+                         'multiple sclerosis', 'paralysis', 'neuropathy'],
+        'gastrointestinal': ['stomach', 'intestinal', 'digestive', 'gastro', 'bowel', 'colon',
+                             'diarrhea', 'constipation', 'nausea', 'vomiting', 'ulcer',
+                             'hepatitis', 'liver', 'gallbladder', 'pancreatic'],
+        'musculoskeletal': ['bone', 'joint', 'muscle', 'arthritis', 'fracture', 'osteoporosis',
+                            'back pain', 'spine', 'tendon', 'ligament', 'rheumatoid',
+                            'fibromyalgia', 'muscular'],
+        'endocrine': ['diabetes', 'thyroid', 'hormone', 'insulin', 'glucose', 'metabolic',
+                      'endocrine', 'adrenal', 'pituitary', 'hypoglycemia', 'hyperglycemia'],
+        'infectious': ['infection', 'bacterial', 'viral', 'fungal', 'flu', 'influenza',
+                       'cold', 'fever', 'sepsis', 'pneumonia', 'meningitis', 'malaria'],
+        'dermatological': ['skin', 'rash', 'dermatitis', 'eczema', 'psoriasis', 'acne',
+                           'burn', 'wound', 'ulcer', 'melanoma', 'dermatological'],
+        'psychiatric': ['depression', 'anxiety', 'bipolar', 'schizophrenia', 'ptsd',
+                        'panic', 'psychiatric', 'mental health', 'mood disorder'],
+        'genitourinary': ['kidney', 'bladder', 'urinary', 'renal', 'prostate', 'urethral',
+                          'incontinence', 'uti', 'nephritis', 'cystitis'],
+        'reproductive': ['pregnancy', 'menstrual', 'ovarian', 'uterine', 'breast',
+                         'reproductive', 'gynecological', 'erectile', 'fertility'],
+        'ophthalmologic': ['eye', 'vision', 'glaucoma', 'cataract', 'retinal', 'optic',
+                           'blindness', 'ophthalmologic', 'visual'],
+        'otolaryngologic': ['ear', 'nose', 'throat', 'hearing', 'tinnitus', 'sinusitis',
+                            'otitis', 'laryngitis', 'pharyngitis']
+    }
+
+    def categorize_condition(name: str) -> str:
+        name_lower = name.lower()
+        for system, keywords in system_categories.items():
+            if any(keyword in name_lower for keyword in keywords):
+                return system
+        return 'other'
+
+    category_to_labels = defaultdict(list)
+    for label in unique_labels:
+        category = categorize_condition(class_names[label])
+        category_to_labels[category].append(label)
+
+    # Keep categories in insertion order; split each bucket by size
+    buckets = [labels for _, labels in category_to_labels.items()]
+    return group_by_size(buckets, size=20)
+
+
+def group_labels_by_severity(unique_labels: List[int], class_names: List[str]) -> List[List[int]]:
+    """Group labels by severity order (using sort wrapper), then split into chunks of 20."""
+    sorted_labels = sort_classes_by_severity(unique_labels, class_names)
+    return group_by_size([sorted_labels], size=20)
+
+
+def group_labels_by_frequency_keywords(unique_labels: List[int], class_names: List[str]) -> List[List[int]]:
+    """Group labels by common->rare order (using sort wrapper), then split into chunks of 20."""
+    sorted_labels = sort_classes_by_frequency_keywords(unique_labels, class_names)
+    return group_by_size([sorted_labels], size=20)
+
+
 def compute_metrics(
     test_symptoms: List[str],
     test_conditions: List[int],
@@ -431,19 +740,19 @@ def compute_metrics(
     # Get predictions from logits
     test_preds = [int(torch.tensor(logit).argmax().item()) for logit in test_logits]
 
-    with console.status(f"[bold green]\\[evaluation][/bold green] Running model evaluation..."):
-        # Evaluate predictions
-        prediction_results = evaluator.evaluate_predictions(
-            y_true=test_conditions,
-            y_pred=test_preds,
-            y_logits=test_logits,
-            class_names=class_names,
-            symptoms=test_symptoms,
-            save_plots=True
-        )
+    # with console.status(f"[bold green]\\[evaluation][/bold green] Running model evaluation..."):
+    # Evaluate predictions
+    # prediction_results = evaluator.evaluate_predictions(
+    #     y_true=test_conditions,
+    #     y_pred=test_preds,
+    #     y_logits=test_logits,
+    #     class_names=class_names,
+    #     symptoms=test_symptoms,
+    #     save_plots=True
+    # )
 
     # Print summary
-    evaluator.print_summary_table(prediction_results['metrics'])
+    # evaluator.print_summary_table(prediction_results['metrics'])
 
     # Evaluate embeddings if provided
     embedding_results = {}
@@ -464,6 +773,6 @@ def compute_metrics(
     console.log(f"[bold green]\\[evaluation][/bold green] Evaluation complete, plots saved to: {evaluator.plots_dir}")
 
     return {
-        'predictions': prediction_results,
+        # 'predictions': prediction_results,
         'embeddings': embedding_results
     }
