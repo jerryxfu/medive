@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import os
 
+from main import console
 from modules.dataset import SymptomsDataset
 
 
@@ -31,7 +32,6 @@ def next_run_id(artifact_dir: str) -> str:
 
 def print_dataset_stats(name: str, ds: SymptomsDataset) -> None:
     from collections import Counter
-    from main import console  # Move import here to avoid circular dependency
     console.rule(f"[bold]{name} stats")
     console.log({
         "size": len(ds),

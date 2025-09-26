@@ -15,7 +15,7 @@ from modules.models import HybridTextCUIClassifier
 from modules.concepts import UmlsConceptExtractor, ConceptExtractionConfig, map_concepts_to_ids, PAD_ID, NO_CUI_ID, UNK_CUI_ID
 
 console = Console()
-run_id = "001"
+run_id = "008"
 
 ARTIFACTS_DIR = os.path.join(os.getcwd(), "artifacts")
 RUN_SUMMARY = os.path.join(ARTIFACTS_DIR, f"run_summary_{run_id}.json")
